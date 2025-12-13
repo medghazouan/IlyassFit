@@ -1,6 +1,11 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
+        <!-- Mobile Logo -->
+        <a class="navbar-brand mobile-logo" href="index.php">
+            <img src="assets/images/static/logo.png" alt="Ilyass Fit Logo" class="logo-mobile">
+        </a>
+
         <div class="navbar-content">
             <!-- Left Navigation Links -->
             <ul class="navbar-nav navbar-left">
@@ -20,7 +25,7 @@
             <!-- Right Navigation Links -->
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMATIONS</a>
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">CONTACT</a>
@@ -43,7 +48,7 @@
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'pricing.php' ? 'active' : ''; ?>" href="pricing.php">PRICING</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMATIONS</a>
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">CONTACT</a>
