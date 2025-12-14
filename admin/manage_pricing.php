@@ -14,6 +14,8 @@ if (isset($_POST['add_plan'])) {
     $coachingType = $_POST['coaching_type'];
     $price = filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
     $duration = trim($_POST['duration']);
+    $bookingUrl = trim($_POST['booking_url']);
+    $buttonText = trim($_POST['button_text']);
     $description = trim($_POST['description']);
     $features = trim($_POST['features']);
     $displayOrder = filter_var($_POST['display_order'], FILTER_VALIDATE_INT);
@@ -24,6 +26,8 @@ if (isset($_POST['add_plan'])) {
             'coaching_type' => $coachingType,
             'price' => $price,
             'duration' => $duration,
+            'booking_url' => $bookingUrl,
+            'button_text' => $buttonText,
             'description' => $description,
             'features' => $features,
             'display_order' => $displayOrder,
@@ -47,6 +51,8 @@ if (isset($_POST['update_plan'])) {
     $coachingType = $_POST['coaching_type'];
     $price = filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
     $duration = trim($_POST['duration']);
+    $bookingUrl = trim($_POST['booking_url']);
+    $buttonText = trim($_POST['button_text']);
     $description = trim($_POST['description']);
     $features = trim($_POST['features']);
     $displayOrder = filter_var($_POST['display_order'], FILTER_VALIDATE_INT);
@@ -58,6 +64,8 @@ if (isset($_POST['update_plan'])) {
             'coaching_type' => $coachingType,
             'price' => $price,
             'duration' => $duration,
+            'booking_url' => $bookingUrl,
+            'button_text' => $buttonText,
             'description' => $description,
             'features' => $features,
             'display_order' => $displayOrder,
@@ -351,7 +359,7 @@ $onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'disp
                 <div class="form-row">
                     <div class="form-group">
                         <label for="plan_name">Plan Name *</label>
-                        <input type="text" id="plan_name" name="plan_name" 
+                        <input readonly type="text" id="plan_name" name="plan_name" 
                                value="<?php echo $editPlan ? htmlspecialchars($editPlan['plan_name']) : ''; ?>" required>
                     </div>
                     
@@ -376,6 +384,20 @@ $onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'disp
                         <input type="text" id="duration" name="duration" 
                                placeholder="e.g., per month, per session" 
                                value="<?php echo $editPlan ? htmlspecialchars($editPlan['duration']) : ''; ?>">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="booking_url">Booking URL</label>
+                        <input type="text" id="booking_url" name="booking_url" 
+                               value="<?php echo $editPlan ? htmlspecialchars($editPlan['booking_url'] ?? '') : ''; ?>" placeholder="e.g., contact.php">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="button_text">Button Text</label>
+                        <input type="text" id="button_text" name="button_text" 
+                               value="<?php echo $editPlan ? htmlspecialchars($editPlan['button_text'] ?? '') : ''; ?>" placeholder="Default: Get Started">
                     </div>
                 </div>
                 
