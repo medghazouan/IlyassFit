@@ -74,11 +74,9 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Creative Hover Effect */
+/* Creative Hover Effect - NO SHADOW */
 .transformation-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(227, 64, 48, 0.4), 
-                0 0 40px rgba(227, 64, 48, 0.2);
     border-color: var(--primary-red);
 }
 
@@ -133,7 +131,7 @@
     transform: scale(1.05);
 }
 
-/* Client Name Button */
+/* Client Name Button - NO SHADOW */
 .client-name-wrapper {
     display: flex;
     justify-content: center;
@@ -150,7 +148,6 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 5px 15px rgba(227, 64, 48, 0.4);
     transition: all 0.3s ease;
     text-align: center;
 }
@@ -158,7 +155,6 @@
 .transformation-card:hover .client-name-btn {
     background: #d63c2a;
     transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(227, 64, 48, 0.6);
 }
 
 /* Card Body - Review Text */
@@ -167,6 +163,7 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+    justify-content: center;  /* CENTER THE TEXT */
     background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
 }
 
@@ -175,8 +172,13 @@
     line-height: 1.7;
     color: #e0e0e0;
     margin: 0;
+    margin-top: 0;
     font-style: italic;
     text-align: center;
+    width: 100%;  /* FULL WIDTH FOR CENTERING */
+    word-wrap: break-word;     
+    overflow-wrap: break-word;  
+    word-break: break-word; 
 }
 
 .review-text .bi-quote {
@@ -264,4 +266,35 @@
     .transformation-card .card-body {
         padding: 20px;
     }
+}
+
+
+/* Section Title */
+.transformations-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.transformations-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-red), transparent);  /* GRADIENT */
+    border-radius: 0;
+}
+
+.transformations-subtitle {
+    font-size: 1.1rem;
+    color: #b0b0b0;
+    margin-top: 10px;
 }

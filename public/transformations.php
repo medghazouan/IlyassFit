@@ -23,12 +23,18 @@ include 'components/header.php';
 <!-- Transformations Section -->
 <section class="transformations-section">
     <div class="container py-5">
-        <div class="row g-4">
+        <!-- Section Title -->
+        <div class="text-center mb-5">
+            <h2 class="transformations-title">SUCCESS STORIES</h2>
+            <p class="transformations-subtitle">See the amazing transformations of our clients</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
             <?php if (!empty($reviews)): ?>
                 <?php foreach ($reviews as $review): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="transformation-card">
-                            <!-- Before/After Images -->
+                            <!-- Images Container -->
                             <div class="images-container">
                                 <div class="image-wrapper">
                                     <div class="image-label-top">Before</div>
