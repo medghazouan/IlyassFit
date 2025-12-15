@@ -22,41 +22,138 @@ include 'components/header.php';
     </div>
 </section>
 
+<?php
+// Fetch reviews for About section
+require_once __DIR__ . '/../includes/config/db_config.php';
+$aboutReviews = [];
+try {
+    $stmt = $pdo->query("SELECT * FROM reviews WHERE status = 'approved' ORDER BY id DESC LIMIT 5");
+    $aboutReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Reviews fetch error: " . $e->getMessage());
+}
+?>
+
 <!-- About Me Section -->
 <section class="about-me-section" id="about">
-    <div class="container">
-        <div class="about-me-container">
-            <!-- Image Side -->
-            <div class="about-me-image-wrapper">
-                <img src="assets/images/static/contact_img1.jpg" alt="Ilyass - Personal Trainer" class="about-me-image">
-            </div>
-
+    <div class="about-background-image"></div>
+    <div class="container h-100">
+        <div class="about-me-container h-100">
             <!-- Content Side -->
-            <div class="about-me-content">
-                <h1 class="about-me-title">ABOUT ME</h1>
+            <div class="about-me-content slide-in-right">
+                <div class="about-header">
+                    <span class="about-subtitle">ILYASS PT</span>
+                    <h1 class="about-me-title">Get to<br>know me.</h1>
+                </div>
 
                 <p class="about-me-text">
-                    Ilyass started as a passionate fitness enthusiast in Marrakech, aiming to help people transform
-                    their lives through proper training and nutrition. What began as a personal journey soon became a
-                    mission to guide others beyond their limits and help them achieve their dream physique.
+                    Since my early years, physical excellence has always been my passion.
                 </p>
 
                 <p class="about-me-text">
-                    Currently, I offer personalized training programs, nutrition coaching, and group classes to help my
-                    clients find their strongest, healthiest selves. I believe in a holistic approach to fitness -
-                    combining strength training, cardio, flexibility, and mindset coaching to create lasting
-                    transformations.
+                    Over the years, I have studied and tried many strategies to achieve it, 
+                    realizing that the journey itself is as valuable as the destination and that 
+                    having a structurally sound plan in place is of paramount importance.
                 </p>
 
                 <p class="about-me-text">
-                    My philosophy is simple: consistency beats perfection. Whether you're just starting out or looking
-                    to break through plateaus, I'm here to support you every step of the way. Together, we'll build not
-                    just a better body, but a stronger mindset and healthier lifestyle.
+                    Therefore, I am confident in stating that with my knowledge and first-hand experience, 
+                    I will guide you to reach your goals faster and injury-free by creating bespoke programs 
+                    tailored to your personal needs and current limitations.
                 </p>
+
+                <p class="about-me-text">
+                    Let me help you unlock the fittest version of yourself.
+                </p>
+
+                <!-- Testimonial -->
+                <?php if (!empty($aboutReviews)): ?>
+                <div class="about-testimonial mt-4 slide-in-left">
+                    <div class="testimonial-content">
+                        <i class="fas fa-chevron-left testimonial-arrow" id="prevReview"></i>
+                        <div class="testimonial-text-wrapper">
+                            <?php foreach ($aboutReviews as $index => $review): ?>
+                                <div class="review-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                                    <p class="testimonial-quote">"<?php echo htmlspecialchars($review['review_text']); ?>"</p>
+                                    <p class="testimonial-author"><?php echo htmlspecialchars($review['client_name']); ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                            <div class="testimonial-dots">
+                                <?php foreach ($aboutReviews as $index => $review): ?>
+                                    <span class="dot <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>"></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right testimonial-arrow" id="nextReview"></i>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll Animations
+    const observerOptions = {
+        threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // If it's the section, trigger the background animation
+                if (entry.target.classList.contains('about-me-section')) {
+                    document.querySelector('.about-background-image').classList.add('visible');
+                }
+            }
+        });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.slide-in-right, .slide-in-left');
+    animatedElements.forEach(el => observer.observe(el));
+    
+    // Observer for the section itself to trigger background animation
+    const section = document.querySelector('.about-me-section');
+    if(section) observer.observe(section);
+
+    // Testimonial Slider
+    const reviews = document.querySelectorAll('.review-item');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevReview');
+    const nextBtn = document.getElementById('nextReview');
+    let currentIndex = 0;
+
+    function showReview(index) {
+        reviews.forEach(review => review.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        reviews[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + reviews.length) % reviews.length;
+            showReview(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % reviews.length;
+            showReview(currentIndex);
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentIndex = parseInt(dot.getAttribute('data-index'));
+                showReview(currentIndex);
+            });
+        });
+    }
+});
+</script>
 
 
 <!-- Gallery section -->
