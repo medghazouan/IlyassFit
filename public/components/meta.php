@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="assets/css/hero.css"> 
     <link rel="stylesheet" href="assets/css/about.css">
     <link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="assets/css/transformations.css">
 
     
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - Ilyass Fit' : 'Ilyass Fit - Transform Your Body'; ?></title>
