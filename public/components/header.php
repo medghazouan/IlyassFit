@@ -14,11 +14,11 @@
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php#about' ? 'active' : ''; ?>" href="index.php#about">ABOUT</a>
+                    <a class="nav-link" href="index.php#about">ABOUT</a>
                 </li>
                
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php#gallery' ? 'active' : ''; ?>" href="index.php#gallery">GALLERY</a>
+                    <a class="nav-link" href="index.php#gallery">GALLERY</a>
                 </li>
                
                
@@ -81,6 +81,43 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navbar.classList.remove('scrolled');
         }
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function setActiveByHash(hash) {
+        if (!hash) return;
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.navbar-nav .nav-link[href*="' + hash + '"]').forEach(l => l.classList.add('active'));
+    }
+
+    // On load, if there's a hash (e.g. index.php#about), activate corresponding links
+    if (location.hash) {
+        setActiveByHash(location.hash);
+    }
+
+    // Update on hash change (back/forward or anchor links)
+    window.addEventListener('hashchange', function() {
+        setActiveByHash(location.hash);
+    });
+
+    // IntersectionObserver to update active state while scrolling on the index page
+    const idsToObserve = ['about', 'gallery'];
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                if (!id) return;
+                document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.navbar-nav .nav-link[href*="#' + id + '"]').forEach(l => l.classList.add('active'));
+            }
+        });
+    }, { threshold: 0.5 });
+
+    idsToObserve.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
     });
 });
 </script>

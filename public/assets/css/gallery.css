@@ -5,6 +5,9 @@
     background: var(--dark-bg);
     padding: 100px 0;
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
 }
 
 .gallery-section .section-title {
@@ -25,6 +28,8 @@
 /* Gallery Layout */
 .gallery-img {
     width: 100%;
+    height: auto;
+    object-fit: cover;
     display: block;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -41,6 +46,13 @@
     cursor: pointer;
 }
 
+/* Masonry-style gallery layout */
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Sticky Column Logic */
 @media (min-width: 992px) {
     .gallery-sticky-content {
@@ -51,9 +63,6 @@
         /* Ensure it behaves nicely */
     }
 
-    .gallery-col-scroll {
-        /* Standard flow */
-    }
 
     /* Force Aspect Ratio: Landscape for Middle (Sticky) */
     .gallery-sticky-content .gallery-img {
@@ -255,6 +264,8 @@
 
     .gallery-section {
         padding: 60px 0;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
     }
 
     .gallery-section .section-title {
@@ -288,6 +299,10 @@
         justify-content: center;
         padding: 15px 35px;
     }
+
+    .gallery-item {
+        border-radius: 8px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -301,5 +316,28 @@
 
     .gallery-cta {
         padding: 30px 20px;
+    }
+}
+
+/* Enable a mobile-safe sticky behavior so the middle column can remain fixed
+   while scrolling on narrower screens. Use a top offset that accounts for the
+   fixed header (body padding-top: 80px). Remove translateY centering which
+   can cause the element to jump on small viewports. */
+@media (max-width: 991px) {
+    .gallery-sticky-content {
+        position: -webkit-sticky; /* for older iOS */
+        position: sticky;
+        top: calc(80px + 12px);
+        transform: none;
+        z-index: 11000; /* above navbar background but below toggler if needed */
+        margin-bottom: 1rem;
+    }
+
+    /* Ensure images in sticky column scale appropriately on mobile */
+    .gallery-sticky-content .gallery-img {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        height: auto;
+        max-width: 100%;
     }
 }

@@ -60,7 +60,7 @@ button,
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 11000;
     transition: all 0.4s ease;
 }
 
@@ -766,9 +766,6 @@ button,
         /* Ensure it behaves nicely */
     }
 
-    .gallery-col-scroll {
-        /* Standard flow */
-    }
 
     /* Force Aspect Ratio: Landscape for Middle (Sticky) */
     .gallery-sticky-content .gallery-img {

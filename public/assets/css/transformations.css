@@ -456,3 +456,50 @@
     color: #b0b0b0;
     margin-top: 10px;
 }
+
+
+/* Responsive adjustments for the title to avoid overlapping header on small screens */
+@media (max-width: 992px) {
+    .transformations-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        padding-bottom: 12px;
+        display: block;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .transformations-title::after {
+        width: 120px;
+    }
+
+    .transformations-hero {
+        /* Don't use fixed background on tablets/phones (can interfere with header stacking) */
+        background-attachment: scroll;
+        min-height: 300px;
+        margin-top: -60px;
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .transformations-title {
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+        padding-bottom: 8px;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .transformations-title::after {
+        width: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .transformations-hero {
+        margin-top: -56px;
+        padding-top: 56px;
+    }
+}
