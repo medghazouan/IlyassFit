@@ -8,7 +8,15 @@ include 'components/header.php';
 ?>
 
 <!-- Hero Section -->
+<!-- Hero Section -->
 <section class="hero">
+    <div class="hero-video-container">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/images/static/hero_contact2.png">
+            <source src="assets/video/hero.webm" type="video/webm">
+            <source src="assets/video/hero.mp4" type="video/mp4">
+            <!-- Fallback text/image if video fails is handled by poster and CSS background -->
+        </video>
+    </div>
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
