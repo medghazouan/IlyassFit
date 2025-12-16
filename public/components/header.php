@@ -13,8 +13,14 @@
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'pricing.php' ? 'active' : ''; ?>" href="pricing.php">PRICING</a>
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php#about' ? 'active' : ''; ?>" href="index.php#about">ABOUT</a>
                 </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php#gallery' ? 'active' : ''; ?>" href="index.php#gallery">GALLERY</a>
+                </li>
+                
+                
             </ul>
             
             <!-- Center Logo -->
@@ -25,11 +31,15 @@
             <!-- Right Navigation Links -->
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'pricing.php' ? 'active' : ''; ?>" href="pricing.php">PRICING</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">CONTACT</a>
                 </li>
+                
             </ul>
         </div>
         
