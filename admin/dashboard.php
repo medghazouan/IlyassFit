@@ -1,8 +1,30 @@
 <?php
+require_once '../includes/config/db_config.php';
 require_once '../includes/functions/auth.php';
+require_once '../includes/functions/crud.php';
 
-// Protect this page - redirect to login if not authenticated
 requireLogin();
+
+// Handle marking message as seen
+if (isset($_GET['mark_seen'])) {
+    $messageId = filter_var($_GET['mark_seen'], FILTER_VALIDATE_INT);
+    if ($messageId) {
+        update($pdo, 'messages', ['status' => 'seen'], $messageId);
+        header("Location: manage_messages.php?view=" . $messageId);
+        exit();
+    }
+}
+
+// Get statistics
+$totalMessages = countRecords($pdo, 'messages');
+$totalReviews = countRecords($pdo, 'reviews');
+$totalGallery = countRecords($pdo, 'gallery');
+$unseenMessages = countRecords($pdo, 'messages', 'status', 'not seen');
+
+// Get unseen messages
+$stmt = $pdo->prepare("SELECT * FROM messages WHERE status = 'not seen' ORDER BY id DESC");
+$stmt->execute();
+$unseenMessagesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,85 +32,101 @@ requireLogin();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .navbar {
-            background: #333;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar h1 { font-size: 24px; }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            background: #667eea;
-            border-radius: 5px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .welcome {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .menu-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .menu-card:hover { transform: translateY(-5px); }
-        .menu-card a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-        <h1>Admin Dashboard</h1>
-        <div>
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
-            <a href="logout.php">Logout</a>
-        </div>
-    </div>
+    <?php include 'includes/navbar.php'; ?>
     
-    <div class="container">
-        <div class="welcome">
-            <h2>Welcome to Admin Panel</h2>
-            <p>Manage your bodybuilding website content from here.</p>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+            </div>
         </div>
         
-        <div class="menu-grid">
-            <div class="menu-card">
-                <a href="manage_reviews.php">📝 Manage Reviews</a>
+        <div class="content-wrapper">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon messages">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalMessages; ?></h2>
+                        <p>Total Messages</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon reviews">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalReviews; ?></h2>
+                        <p>Total Reviews</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon gallery">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalGallery; ?></h2>
+                        <p>Gallery Items</p>
+                    </div>
+                </div>
             </div>
-            <div class="menu-card">
-                <a href="manage_gallery.php">🖼️ Manage Gallery</a>
-            </div>
-            <div class="menu-card">
-                <a href="manage_messages.php">💬 View Messages</a>
-            </div>
-            <div class="menu-card">
-                <a href="manage_pricing.php">💰 Manage Pricing</a>
+            
+            <!-- Unseen Messages Section -->
+            <div class="messages-section">
+                <div class="section-header">
+                    <h2>Unseen Messages</h2>
+                    <span class="badge"><?php echo $unseenMessages; ?> New</span>
+                </div>
+                
+                <?php if (count($unseenMessagesList) > 0): ?>
+                    <div class="messages-list">
+                        <?php foreach ($unseenMessagesList as $msg): ?>
+                            <div class="message-item">
+                                <div class="message-header">
+                                    <div class="sender-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span class="sender-name"><?php echo htmlspecialchars($msg['full_name']); ?></span>
+                                    </div>
+                                    <span class="message-id">#<?php echo $msg['id']; ?></span>
+                                </div>
+                                <div class="message-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <span><?php echo htmlspecialchars($msg['email']); ?></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                    </div>
+                                </div>
+                                <div class="message-content">
+                                    <p><?php echo htmlspecialchars($msg['message']); ?></p>
+                                </div>
+                                <div class="message-actions">
+                                    <a href="dashboard.php?mark_seen=<?php echo $msg['id']; ?>" class="btn-view">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-messages">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No unseen messages. You're all caught up!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

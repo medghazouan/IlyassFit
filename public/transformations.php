@@ -2,7 +2,7 @@
 require_once '../includes/config/db_config.php';
 
 // Fetch approved reviews from database
-$stmt = $pdo->prepare("SELECT * FROM reviews WHERE status = 'approved' ORDER BY id DESC");
+$stmt = $pdo->prepare("SELECT * FROM reviews ORDER BY id DESC");
 $stmt->execute();
 $reviews = $stmt->fetchAll();
 

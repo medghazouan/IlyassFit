@@ -110,7 +110,7 @@ include 'components/header.php';
                         <div class="plan-price">
                             <span class="currency">MAD</span>
                             <span class="amount"><?php echo number_format($plan['price'], 0); ?></span>
-                            <span class="duration">/ <?php echo htmlspecialchars($plan['duration']); ?></span>
+                            <span class="duration">/ <?php echo htmlspecialchars($plan['duration'] ); ?></span>
                         </div>
                         
                         <div class="plan-features">
