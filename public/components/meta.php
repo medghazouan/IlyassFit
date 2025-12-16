@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="assets/css/about.css">
     <link rel="stylesheet" href="assets/css/contact.css">
     <link rel="stylesheet" href="assets/css/transformations.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - Ilyass Fit' : 'Ilyass Fit - Transform Your Body'; ?></title>
