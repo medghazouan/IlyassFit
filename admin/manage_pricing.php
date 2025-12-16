@@ -359,7 +359,7 @@ $onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'disp
                 <div class="form-row">
                     <div class="form-group">
                         <label for="plan_name">Plan Name *</label>
-                        <input readonly type="text" id="plan_name" name="plan_name" 
+                        <input type="text" id="plan_name" name="plan_name" 
                                value="<?php echo $editPlan ? htmlspecialchars($editPlan['plan_name']) : ''; ?>" required>
                     </div>
                     

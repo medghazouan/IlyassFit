@@ -268,6 +268,7 @@ button,
 }
 
 @keyframes wave {
+
     0%,
     100% {
         transform: translateX(0);
@@ -713,16 +714,64 @@ button,
     margin-bottom: 3rem;
 }
 
-.gallery-section .rounded {
-    border-radius: 15px !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    overflow: hidden;
+/* Gallery Layout */
+.gallery-img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.gallery-section .rounded:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(252, 4, 4, 0.4);
+.gallery-item:hover .gallery-img {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(252, 4, 4, 0.4);
+}
+
+/* Sticky Column Logic */
+@media (min-width: 992px) {
+    .gallery-sticky-content {
+        position: sticky;
+        top: 20%;
+        /* Centered vertically relative to viewport roughly */
+        z-index: 10;
+        /* Ensure it behaves nicely */
+    }
+
+    .gallery-col-scroll {
+        /* Standard flow */
+    }
+
+    /* Force Aspect Ratio: Landscape for Middle (Sticky) */
+    .gallery-sticky-content .gallery-img {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    /* Force Aspect Ratio: Portrait for Sides (Scrolling) */
+    .gallery-col-scroll .gallery-img {
+        aspect-ratio: 3/4;
+        object-fit: cover;
+    }
+}
+
+/* Instagram Button */
+.btn-instagram {
+    border-width: 2px;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-instagram:hover {
+    background: #d62976;
+    /* Instagram gradient dominant color or brand color */
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(214, 41, 118, 0.4);
+    transform: translateY(-3px);
 }
 
 /* Gallery CTA (inside gallery section) */
@@ -798,6 +847,187 @@ button,
     align-items: center;
     gap: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   NEW SERVICES SECTION (CUSTOM)
+   ============================================ */
+.services-custom-section {
+    background-color: var(--dark-bg);
+    /* Matching Gallery Section */
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-content-wrapper {
+    position: relative;
+    padding: 2rem;
+}
+
+.services-main-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--text-white);
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+/* Yellow Cross Decorations */
+.service-decor {
+    position: absolute;
+    display: flex;
+    gap: 5px;
+    z-index: 1;
+}
+
+.service-decor i {
+    color: #ffcc00;
+    /* Yellow color from reference */
+    font-size: 1.5rem;
+    transform: rotate(15deg);
+}
+
+.service-decor.top-left {
+    top: -20px;
+    left: -10px;
+    flex-wrap: wrap;
+    width: 60px;
+}
+
+.service-decor.bottom-right {
+    bottom: -20px;
+    right: 50%;
+    transform: rotate(-15deg);
+}
+
+/* Slider Styles */
+.services-slider {
+    position: relative;
+    min-height: 300px;
+    /* Reserve space */
+}
+
+.service-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.service-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+    /* Make it take up flow space when active if needed, or stick to absolute stack */
+}
+
+/* To ensure proper stacking if using absolute, we need Javascript to handle height or just set a fixed min-height. 
+   Let's keep absolute for smooth cross-fade but ensure container has height. */
+
+.service-item-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.service-item-desc {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 90%;
+}
+
+/* Right Side Image */
+.service-image-container {
+    position: relative;
+    height: 100%;
+    min-height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.service-static-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 500px;
+    /* Ensure tall image */
+}
+
+/* Dots Navigation */
+.service-dots-nav {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 5px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.service-dot {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-dot.active {
+    background-color: var(--text-white);
+    transform: scale(1.3);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .services-main-title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .services-content-wrapper {
+        text-align: center;
+        padding: 0;
+        margin-bottom: 3rem;
+    }
+
+    .service-item-desc {
+        margin: 0 auto;
+    }
+
+    .service-dots-nav {
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: 20px;
+        transform: translateX(-50%);
+        flex-direction: row;
+    }
+
+    .service-decor {
+        display: none;
+        /* Simplify on mobile */
+    }
 }
 
 .gallery-cta-btn:hover {
@@ -1024,7 +1254,8 @@ button,
 }
 
 .gallery-header {
-    text-align: center;        /* CHANGE from center to left */
+    text-align: center;
+    /* CHANGE from center to left */
     margin-bottom: 50px;
 }
 
@@ -1036,16 +1267,21 @@ button,
     margin-bottom: 15px;
     position: relative;
     display: inline-block;
-    padding-bottom: 20px;    /* ADD padding for border */
+    padding-bottom: 20px;
+    /* ADD padding for border */
 }
 
 .gallery-title::after {
     content: '';
     position: absolute;
-    bottom: 0;               /* CHANGE from -10px to 0 */
-    left: 0;                 /* CHANGE from 50% to 0 */
-    transform: none;         /* REMOVE translateX */
-    width: 150px;            /* ADJUST width */
+    bottom: 0;
+    /* CHANGE from -10px to 0 */
+    left: 0;
+    /* CHANGE from 50% to 0 */
+    transform: none;
+    /* REMOVE translateX */
+    width: 150px;
+    /* ADJUST width */
     height: 5px;
     background: linear-gradient(to right, var(--primary-red), transparent);
 }
@@ -1054,7 +1290,8 @@ button,
     font-size: 1.1rem;
     color: var(--text-gray);
     font-weight: 400;
-    margin-top: 10px;        /* REDUCE from 25px */
+    margin-top: 10px;
+    /* REDUCE from 25px */
     margin-bottom: 0;
 }
 
@@ -1072,23 +1309,27 @@ button,
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .gallery-header {
-        text-align: left;    /* CHANGE from center to left */
+        text-align: left;
+        /* CHANGE from center to left */
         padding: 0 15px;
     }
-    
+
     .gallery-title {
         font-size: 2rem;
         letter-spacing: 2px;
-        display: inline-block;  /* CHANGE from block */
-        text-align: left;       /* CHANGE from center */
+        display: inline-block;
+        /* CHANGE from block */
+        text-align: left;
+        /* CHANGE from center */
     }
-    
+
     .gallery-subtitle {
         font-size: 1rem;
-        text-align: left;       /* CHANGE from center */
+        text-align: left;
+        /* CHANGE from center */
         padding: 0 10px;
     }
-    
+
     .gallery-section {
         padding: 60px 0;
     }
