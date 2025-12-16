@@ -15,7 +15,7 @@ include 'components/header.php';
             <h1 class="hero-title">TRANSFORM YOUR BODY</h1>
             <p class="hero-subtitle">Professional Training | Nutrition Coaching | Results Guaranteed</p>
             <div class="hero-buttons">
-                <a href="contact.php" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
                 <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
             </div>
         </div>

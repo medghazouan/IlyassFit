@@ -17,6 +17,10 @@ include 'components/header.php';
     <div class="hero-content">
         <h1 class="hero-title">CLIENT TRANSFORMATIONS</h1>
         <p class="hero-subtitle">Real Results, Real People</p>
+        <div class="hero-buttons">
+                <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="contact.php" class="btn btn-outline-light btn-lg">Learn More</a>
+        </div>
     </div>
 </section>
 
@@ -29,10 +33,10 @@ include 'components/header.php';
             <p class="transformations-subtitle">See the amazing transformations of our clients</p>
         </div>
         
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4">  <!-- REMOVE justify-content-center -->
             <?php if (!empty($reviews)): ?>
-                <?php foreach ($reviews as $review): ?>
-                    <div class="col-md-6 col-lg-4">
+                <?php foreach ($reviews as $index => $review): ?>
+                    <div class="col-md-6 col-lg-4 <?php echo ($index < 3) ? 'first-row' : ''; ?>">
                         <div class="transformation-card">
                             <!-- Images Container -->
                             <div class="images-container">
@@ -96,5 +100,38 @@ include 'components/header.php';
         </div>
     </div>
 </section>
+<!-- Enhanced CTA Section -->
+<section class="pricing-cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Not Sure Which Plan is Right for You?</h2>
+            <p class="cta-subtitle">Contact me for a free consultation and let's discuss your fitness goals</p>
+            
+            <div class="cta-features">
+                <div class="cta-feature">
+                    <i class="fa-regular fa-comment"></i>
+                    <h4>Free Consultation</h4>
+                    <p>Discuss your goals</p>
+                </div>
+                <div class="cta-feature">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <h4>Personalized Plan</h4>
+                    <p>Tailored to your needs</p>
+                </div>
+                <div class="cta-feature">
+                    <i class="fa-solid fa-ranking-star"></i>
+                    <h4>Track Progress</h4>
+                    <p>See real results</p>
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="contact.php" class="btn btn-outline-light btn-lg">Contact Me Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <?php include 'components/footer.php'; ?>

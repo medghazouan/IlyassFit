@@ -603,14 +603,6 @@ button,
     position: relative;
 }
 
-.section-title::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background-color: var(--primary-red);
-    margin: 1rem auto 0;
-}
 
 .section-subtitle {
     font-family: 'Inter', sans-serif;
@@ -1023,6 +1015,7 @@ button,
     }
 }
 
+
 /* Gallery Section Styles */
 
 .gallery-section {
@@ -1031,7 +1024,7 @@ button,
 }
 
 .gallery-header {
-    text-align: center;
+    text-align: center;        /* CHANGE from center to left */
     margin-bottom: 50px;
 }
 
@@ -1043,24 +1036,25 @@ button,
     margin-bottom: 15px;
     position: relative;
     display: inline-block;
+    padding-bottom: 20px;    /* ADD padding for border */
 }
 
 .gallery-title::after {
     content: '';
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(to right, var(--primary-red), var(--light-gray));
+    bottom: 0;               /* CHANGE from -10px to 0 */
+    left: 0;                 /* CHANGE from 50% to 0 */
+    transform: none;         /* REMOVE translateX */
+    width: 150px;            /* ADJUST width */
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-red), transparent);
 }
 
 .gallery-subtitle {
     font-size: 1.1rem;
     color: var(--text-gray);
     font-weight: 400;
-    margin-top: 25px;
+    margin-top: 10px;        /* REDUCE from 25px */
     margin-bottom: 0;
 }
 
@@ -1078,20 +1072,20 @@ button,
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .gallery-header {
-        text-align: center;
+        text-align: left;    /* CHANGE from center to left */
         padding: 0 15px;
     }
     
     .gallery-title {
         font-size: 2rem;
         letter-spacing: 2px;
-        display: block;
-        text-align: center;
+        display: inline-block;  /* CHANGE from block */
+        text-align: left;       /* CHANGE from center */
     }
     
     .gallery-subtitle {
         font-size: 1rem;
-        text-align: center;
+        text-align: left;       /* CHANGE from center */
         padding: 0 10px;
     }
     
