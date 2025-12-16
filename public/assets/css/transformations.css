@@ -53,7 +53,7 @@
    TRANSFORMATIONS SECTION
    ============================================ */
 .transformations-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: var(--dark-bg);
     padding: 80px 0;
     min-height: 100vh;
 }
@@ -186,6 +186,164 @@
     font-size: 1.3rem;
     opacity: 0.7;
     vertical-align: middle;
+}
+
+/* Center first row only */
+.transformations-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Center first 3 items (first row) when total count is less than or equal to 3 */
+.transformations-section .row:has(.first-row:nth-child(3):last-child) {
+    justify-content: center;
+}
+
+/* Center first 2 items when only 2 cards */
+.transformations-section .row:has(.col-md-6:nth-child(2):last-child) {
+    justify-content: center;
+}
+
+/* Center single card */
+.transformations-section .row:has(.col-md-6:only-child) {
+    justify-content: center;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.pricing-cta {
+    position: relative;
+    padding: 6rem 0;
+    background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(0, 0, 0, 0.95)),
+        url('../images/static/pic2.jpeg') center/cover no-repeat fixed;
+    border-top: 3px solid var(--primary-red);
+    overflow: hidden;
+}
+
+.pricing-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(252, 4, 4, 0.1),
+            transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.pricing-cta .container {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+}
+
+.cta-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-gray);
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.cta-features {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+.cta-feature {
+    text-align: center;
+}
+
+.cta-feature i {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.cta-feature h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+}
+
+.cta-feature p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-gray);
+}
+
+.btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-red), #ff2020);
+    border: 3px solid var(--primary-red);
+    color: var(--text-white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 1.5rem 4rem;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(252, 4, 4, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-cta:hover::before {
+    left: 100%;
+}
+
+.btn-cta:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(252, 4, 4, 0.6);
+    background: linear-gradient(135deg, #ff2020, var(--primary-red));
 }
 
 /* ============================================

@@ -72,7 +72,7 @@ include 'components/header.php';
                             ?>
                         </div>
                         
-                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-plan">
+                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary btn-lg">
                             <?php echo $plan['button_text'] ?? 'Get Started'; ?>
                         </a>
                     </div>
@@ -87,7 +87,7 @@ include 'components/header.php';
     <div class="container">
         <div class="section-header">
             <h2 class="coaching-type-title">
-                <i class="fas fa-laptop"></i> Online Coaching Plans
+                <i class="fa-solid fa-earth-americas"></i> Online Coaching Plans
             </h2>
             <p class="coaching-type-subtitle">Train anywhere, anytime with personalized online coaching</p>
         </div>
@@ -129,7 +129,7 @@ include 'components/header.php';
                             ?>
                         </div>
                         
-                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-plan">
+                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary btn-lg">
                             <?php echo $plan['button_text'] ?? 'Get Started'; ?>
                         </a>
                     </div>
@@ -148,23 +148,25 @@ include 'components/header.php';
             
             <div class="cta-features">
                 <div class="cta-feature">
-                    <i class="fas fa-comments"></i>
+                    <i class="fa-regular fa-comment"></i>
                     <h4>Free Consultation</h4>
                     <p>Discuss your goals</p>
                 </div>
                 <div class="cta-feature">
-                    <i class="fas fa-bullseye"></i>
+                    <i class="fa-regular fa-circle-check"></i>
                     <h4>Personalized Plan</h4>
                     <p>Tailored to your needs</p>
                 </div>
                 <div class="cta-feature">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fa-solid fa-ranking-star"></i>
                     <h4>Track Progress</h4>
                     <p>See real results</p>
                 </div>
             </div>
             
-            <a href="contact.php" class="btn btn-cta">Contact Me Now</a>
+            <div class="hero-buttons">
+                <a href="contact.php" class="btn btn-primary btn-lg">Contact Me Now</a>
+            </div>
         </div>
     </div>
 </section>

@@ -16,6 +16,9 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">Start Your Journey Now</h1>
+                <div class="hero-buttons">
+                    <a href="#form" class="btn btn-primary btn-lg">Contact Me Now</a>
+            </div>
             </div>
         </div>
     </section>
@@ -79,7 +82,7 @@
     </section>
 
     <!-- Contact Form Section -->
-    <section class="contact-form-section">
+    <section class="contact-form-section" id="form">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
