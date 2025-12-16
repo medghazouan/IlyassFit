@@ -1,0 +1,305 @@
+/* ============================================
+   GALLERY SECTION
+   ============================================ */
+.gallery-section {
+    background: var(--dark-bg);
+    padding: 100px 0;
+    position: relative;
+}
+
+.gallery-section .section-title {
+    color: var(--text-white);
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+}
+
+.gallery-section .section-subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+/* Gallery Layout */
+.gallery-img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-section .img-fluid {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-section .img-fluid:hover,
+.gallery-item:hover .gallery-img {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(252, 4, 4, 0.4);
+    cursor: pointer;
+}
+
+/* Sticky Column Logic */
+@media (min-width: 992px) {
+    .gallery-sticky-content {
+        position: sticky;
+        top: 50vh;
+        transform: translateY(-50%);
+        z-index: 10;
+        /* Ensure it behaves nicely */
+    }
+
+    .gallery-col-scroll {
+        /* Standard flow */
+    }
+
+    /* Force Aspect Ratio: Landscape for Middle (Sticky) */
+    .gallery-sticky-content .gallery-img {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    /* Force Aspect Ratio: Portrait for Sides (Scrolling) */
+    .gallery-col-scroll .gallery-img {
+        aspect-ratio: 3/4;
+        object-fit: cover;
+    }
+}
+
+/* Instagram Button */
+.btn-instagram {
+    border-width: 2px;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-instagram:hover {
+    background: #d62976;
+    /* Instagram gradient dominant color or brand color */
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(214, 41, 118, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Gallery CTA (inside gallery section) */
+.gallery-cta {
+    margin-top: 80px;
+    padding: 60px 50px;
+    background: linear-gradient(135deg, var(--primary-red) 0%, #d60303 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(252, 4, 4, 0.3);
+}
+
+.gallery-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.gallery-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.gallery-cta .row {
+    position: relative;
+    z-index: 1;
+}
+
+.gallery-cta-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-white);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.gallery-cta-text {
+    color: var(--text-white);
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.gallery-cta-btn {
+    background: var(--text-white);
+    color: var(--primary-red);
+    font-weight: 700;
+    padding: 18px 45px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 3px solid var(--text-white);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-cta-btn:hover {
+    background: transparent;
+    color: var(--text-white);
+    border-color: var(--text-white);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-cta-btn i {
+    transition: transform 0.3s ease;
+}
+
+.gallery-cta-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Gallery Header Layout (From Responsive Block) */
+.gallery-header {
+    text-align: center;
+    /* Default for desktop */
+    margin-bottom: 50px;
+}
+
+.gallery-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.gallery-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-red), transparent);
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .gallery-section {
+        padding: 80px 0;
+    }
+
+    .gallery-section .section-title {
+        font-size: 2.5rem;
+    }
+
+    .gallery-cta {
+        margin-top: 60px;
+        padding: 50px 40px;
+    }
+
+    .gallery-cta-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-header {
+        text-align: left;
+        padding: 0 15px;
+    }
+
+    .gallery-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+        text-align: left;
+    }
+
+    .gallery-subtitle {
+        font-size: 1rem;
+        text-align: left;
+        padding: 0 10px;
+    }
+
+    .gallery-section {
+        padding: 60px 0;
+    }
+
+    .gallery-section .section-title {
+        font-size: 2rem;
+        text-align: left;
+    }
+
+    .gallery-section .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .gallery-cta {
+        margin-top: 50px;
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .gallery-cta-title {
+        font-size: 1.75rem;
+        margin-bottom: 15px;
+    }
+
+    .gallery-cta-text {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+
+    .gallery-cta-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 15px 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-section .section-title {
+        font-size: 1.75rem;
+    }
+
+    .gallery-cta-title {
+        font-size: 1.5rem;
+    }
+
+    .gallery-cta {
+        padding: 30px 20px;
+    }
+}

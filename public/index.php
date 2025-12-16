@@ -51,7 +51,7 @@ include 'components/header.php';
 require_once __DIR__ . '/../includes/config/db_config.php';
 $aboutReviews = [];
 try {
-    $stmt = $pdo->query("SELECT * FROM reviews WHERE status = 'approved' ORDER BY id DESC LIMIT 5");
+    $stmt = $pdo->query("SELECT * FROM reviews  ORDER BY id DESC LIMIT 5");
     $aboutReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log("Reviews fetch error: " . $e->getMessage());
@@ -60,7 +60,7 @@ try {
 // Fetch 3 latest transformations for snippet
 $transformations = [];
 try {
-    $stmt = $pdo->query("SELECT * FROM reviews WHERE status = 'approved' ORDER BY id DESC LIMIT 3");
+    $stmt = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 3");
     $transformations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log("Transformations fetch error: " . $e->getMessage());
