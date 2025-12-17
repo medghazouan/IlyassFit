@@ -200,6 +200,87 @@ button,
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(252, 4, 4, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+/* Close Icon (X) Styles */
+.navbar-close-icon {
+    display: none;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-red);
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+/* When menu is open, show X and hide hamburger */
+.navbar-toggler.open .navbar-toggler-icon {
+    display: none;
+}
+
+.navbar-toggler.open .navbar-close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover effect for close icon */
+.navbar-toggler.open:hover .navbar-close-icon {
+    transform: rotate(90deg);
+    color: var(--text-white);
+}
+
+/* Navbar Close Button (X) - positioned in same place as hamburger */
+.navbar-close-btn {
+    display: none;
+    /* Hidden by default */
+    background: transparent;
+    border: 2px solid var(--primary-red);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 11001;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin-left: auto;
+}
+
+.navbar-close-btn span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-red);
+    line-height: 1;
+    display: block;
+    margin-top: -2px;
+}
+
+.navbar-close-btn:hover {
+    background: var(--primary-red);
+    transform: rotate(90deg);
+}
+
+.navbar-close-btn:hover span {
+    color: var(--text-white);
+}
+
+/* When menu is open: show X, hide hamburger */
+body.menu-open .navbar-close-btn {
+    display: flex;
+}
+
+body.menu-open .navbar-toggler {
+    display: none !important;
+}
+
+/* Make navbar collapse position relative for close button positioning */
+#navbarMobile {
+    position: relative;
 }
 
 
@@ -1202,6 +1283,9 @@ button,
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
+/* ============================================
+   RESPONSIVE DESIGN - DESKTOP
+   ============================================ */
 @media (max-width: 992px) {
     body {
         padding-top: 70px;
@@ -1216,21 +1300,20 @@ button,
     }
 
     .footer-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .footer-heading {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .footer {
-        padding: 4rem 0 2rem;
+        padding: 3rem 0 1.5rem;
     }
 
     .section-title {
         font-size: 2.5rem;
     }
-
 
     .services-section,
     .gallery-section {
@@ -1251,84 +1334,114 @@ button,
     }
 }
 
+/* ============================================
+   RESPONSIVE DESIGN - TABLET
+   ============================================ */
+/* ============================================
+   RESPONSIVE DESIGN - TABLET
+   ============================================ */
 @media (max-width: 768px) {
     body {
         padding-top: 60px;
     }
 
     .footer-wave-top {
-        height: 80px;
-        margin-top: 2rem;
-        margin-bottom: -40px;
+        height: 60px;
+        margin-top: 1.5rem;
+        margin-bottom: -30px;
     }
 
     .footer {
-        padding: 1rem 0 2rem;
+        padding: 0.5rem 0 1rem;
+    }
+
+    .footer .row {
+        margin-bottom: 0;
     }
 
     .footer-brand {
         align-items: center;
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 1.5rem;
         padding-left: 0;
     }
 
+    .footer-logo-img {
+        width: 50px;
+        margin-bottom: 0.8rem;
+    }
+
     .footer-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
     }
 
     .footer-tagline {
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    .footer-heading {
-        text-align: center;
-        padding-left: 0;
-    }
-
-    .footer-heading::after {
-        left: 50%;
-        transform: translateX(-50%);
+        margin-top: 0.8rem;
+        font-size: 0.85rem;
+        max-width: 280px;
     }
 
     .social-icons {
         justify-content: center;
+        margin-top: 1rem;
+        gap: 12px;
+    }
+
+    .social-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    /* HIDE FOOTER HEADINGS ON MOBILE */
+    .footer-heading {
+        display: none;
+    }
+
+    /* HIDE QUICK LINKS COLUMN ON MOBILE */
+    .footer .col-lg-4:last-child {
+        display: none;
     }
 
     .contact-info {
         align-items: center;
         padding-left: 0;
+        gap: 0.8rem;
+        margin-top: 0;
     }
 
     .contact-item {
         justify-content: center;
+        padding: 0.3rem 0;
+        font-size: 0.9rem;
     }
 
-    .footer-links {
-        align-items: center;
-        text-align: center;
-        padding-left: 0;
+    .contact-item i {
+        width: 26px;
+        height: 26px;
+        font-size: 1.1rem;
     }
 
-    .footer-links li a::before {
-        display: none;
+    .footer > .container > .row > div {
+        margin-bottom: 1.5rem;
     }
 
-    .footer-links li a:hover {
-        padding-left: 0;
+    .footer .mt-5 {
+        margin-top: 1.5rem !important;
     }
 
-    .footer>.container>.row>div {
-        margin-bottom: 2.5rem;
+    .footer .pt-4 {
+        padding-top: 1rem !important;
     }
 
     .section-title {
         font-size: 2rem;
     }
-
-
 
     .services-section,
     .gallery-section {
@@ -1336,37 +1449,22 @@ button,
     }
 
     .gallery-section .section-title {
-        font-size: 2rem;
-    }
-
-    .gallery-section .section-subtitle {
-        font-size: 1rem;
+        font-size: 2.5rem;
     }
 
     .gallery-cta {
-        margin-top: 50px;
-        padding: 40px 30px;
-        border-radius: 15px;
-        text-align: center;
+        margin-top: 60px;
+        padding: 50px 40px;
     }
 
     .gallery-cta-title {
-        font-size: 1.75rem;
-        margin-bottom: 15px;
-    }
-
-    .gallery-cta-text {
-        font-size: 1rem;
-        margin-bottom: 25px;
-    }
-
-    .gallery-cta-btn {
-        width: 100%;
-        justify-content: center;
-        padding: 15px 35px;
+        font-size: 2rem;
     }
 }
 
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE
+   ============================================ */
 @media (max-width: 576px) {
     .hero-title {
         font-size: 2rem;
@@ -1395,6 +1493,85 @@ button,
 
     .gallery-cta {
         padding: 30px 20px;
+    }
+
+    /* Extra compact footer for very small screens */
+    .footer-wave-top {
+        height: 50px;
+        margin-top: 1rem;
+        margin-bottom: -25px;
+    }
+
+    .footer {
+        padding: 0.5rem 0 0.8rem;
+    }
+
+    .footer-logo-img {
+        width: 45px;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .footer-tagline {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        max-width: 250px;
+    }
+
+    .social-icons {
+        margin-top: 0.8rem;
+        gap: 10px;
+    }
+
+    .social-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.95rem;
+    }
+
+    /* QUICK LINKS ALREADY HIDDEN FROM TABLET BREAKPOINT */
+    
+    .contact-info {
+        gap: 0.6rem;
+    }
+
+    .contact-item {
+        font-size: 0.85rem;
+        padding: 0.2rem 0;
+    }
+
+    .contact-item i {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
+    }
+
+    .footer > .container > .row > div {
+        margin-bottom: 1.2rem;
+    }
+
+    .footer > .container > .row > div:last-child {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer .mt-5 {
+        margin-top: 1rem !important;
+    }
+
+    .footer .pt-4 {
+        padding-top: 0.8rem !important;
+    }
+
+    .footer .border-top {
+        padding-top: 0.8rem !important;
+    }
+
+    .footer .text-white-50 {
+        font-size: 0.75rem !important;
     }
 }
 

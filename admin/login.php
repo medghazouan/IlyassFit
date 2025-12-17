@@ -15,20 +15,20 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    
+
     if (!empty($username) && !empty($password)) {
         try {
             $stmt = $pdo->prepare("SELECT * FROM admin WHERE username = ?");
             $stmt->execute([$username]);
             $admin = $stmt->fetch();
-            
+
             if ($admin && password_verify($password, $admin['password'])) {
                 // Regenerate session ID to prevent session fixation
                 regenerateSession();
-                
+
                 $_SESSION['admin_id'] = $admin['id'];
                 $_SESSION['admin_username'] = $admin['username'];
-                
+
                 header('Location: dashboard.php');
                 exit;
             } else {
@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,6 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             --gray: #b0b0b0;
         }
 
+        html {
+            height: 100%;
+            overflow: hidden;
+            /* Prevent scrolling on html */
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1b1f22 0%, #2d3436 100%);
@@ -72,8 +79,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative;
+            height: 100vh;
+            /* Fixed height */
+            position: fixed;
+            /* Changed from relative to fixed */
+            width: 100%;
+            /* Full width */
             overflow: hidden;
+            /* Prevent scrolling */
+            top: 0;
+            left: 0;
         }
 
         /* Animated background */
@@ -100,8 +115,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .login-container {
@@ -111,9 +133,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 400px;
+            max-height: 90vh;
+            /* Prevent container from being too tall */
+            overflow-y: auto;
+            /* Allow scrolling inside container if needed */
             position: relative;
             z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .login-container::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
         }
 
         .logo-container {
@@ -248,45 +280,109 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* Responsive */
         @media (max-width: 480px) {
             .login-container {
-                padding: 25px 20px;
-                margin: 15px;
+                padding: 20px 18px;
+                margin: 10px;
+                max-height: 95vh;
+                /* More height on small screens */
+            }
+
+            .logo-container {
+                margin-bottom: 15px;
             }
 
             .logo-container img {
-                max-width: 120px;
+                max-width: 100px;
             }
 
             h2 {
-                font-size: 22px;
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                padding: 10px 12px 10px 38px;
+                font-size: 13px;
+            }
+
+            .input-wrapper i {
+                left: 12px;
+                font-size: 14px;
+            }
+
+            button {
+                padding: 11px;
+                font-size: 14px;
+            }
+
+            .footer-text {
+                margin-top: 15px;
+                font-size: 11px;
+            }
+
+            .error {
+                padding: 8px 10px;
+                font-size: 12px;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .login-container {
+                padding: 18px 15px;
+            }
+
+            .logo-container img {
+                max-width: 90px;
+            }
+
+            h2 {
+                font-size: 18px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="logo-container">
             <img src="logo.png" alt="Logo">
         </div>
-        
+
         <h2>Admin Login</h2>
         <p class="subtitle">Sign in to access your dashboard</p>
-        
+
         <?php if ($error): ?>
             <div class="error">
                 <i class="fas fa-exclamation-circle"></i>
                 <?php echo htmlspecialchars($error); ?>
             </div>
         <?php endif; ?>
-        
+
         <form method="POST" action="">
             <div class="form-group">
                 <label for="username">Username</label>
                 <div class="input-wrapper">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required autofocus>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required
+                        autofocus>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-wrapper">
@@ -294,14 +390,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
             </div>
-            
+
             <button type="submit">
                 <i class="fas fa-sign-in-alt"></i>
                 Sign In
             </button>
         </form>
-        
+
         <p class="footer-text">© <?php echo date('Y'); ?> Ilyass Fit. All rights reserved.</p>
     </div>
 </body>
+
 </html>

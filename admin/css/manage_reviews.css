@@ -382,30 +382,416 @@ tbody tr:hover {
     font-size: 16px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Mobile Landscape & Small Tablets (max-width: 767px) */
+@media (max-width: 767px) {
+    /* Statistics Card */
+    .stats {
+        margin-bottom: 20px;
     }
     
+    .stat-card {
+        padding: 15px;
+        gap: 15px;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    
+    .stat-info h3 {
+        font-size: 28px;
+        margin-bottom: 3px;
+    }
+    
+    .stat-info p {
+        font-size: 13px;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .alert i {
+        font-size: 18px;
+    }
+    
+    /* Form Container */
+    .form-container {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-container h2 {
+        margin-bottom: 20px;
+        font-size: 18px;
+        word-break: break-word;
+    }
+    
+    .form-container h2 i {
+        font-size: 16px;
+    }
+    
+    /* Form Row */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    
+    .form-group label {
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+    }
+    
+    /* File Input */
+    .form-group input[type="file"] {
+        padding: 10px;
+    }
+    
+    .form-group input[type="file"]::file-selector-button {
+        padding: 10px 15px;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+    
+    /* Current Image */
+    .current-image {
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
+    .current-image p {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .current-image img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .image-note {
+        font-size: 11px;
+        margin-top: 4px;
+    }
+    
+    /* Form Actions */
     .form-actions {
         flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
     }
     
     .btn {
         width: 100%;
         justify-content: center;
+        padding: 12px 20px;
+        font-size: 13px;
+        box-sizing: border-box;
     }
     
-    .stat-card {
-        max-width: 100%;
+    .btn i {
+        font-size: 13px;
     }
     
+    /* Table Container */
+    .table-container {
+        padding: 20px 15px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .table-container h2 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        word-break: break-word;
+    }
+    
+    .table-container h2 i {
+        font-size: 16px;
+    }
+    
+    /* Table Responsive */
     .table-responsive {
-        overflow-x: scroll;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
     }
     
     table {
         min-width: 800px;
+        width: 100%;
+    }
+    
+    th {
+        padding: 12px 10px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    td {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+    
+    .review-img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .review-text {
+        max-width: 250px;
+        font-size: 13px;
+    }
+    
+    .action-buttons {
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+    
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+    
+    /* No Data */
+    .no-data {
+        padding: 40px 15px;
+    }
+    
+    .no-data i {
+        font-size: 48px;
+        margin-bottom: 12px;
+    }
+    
+    .no-data p {
+        font-size: 14px;
+    }
+}
+
+/* Mobile Portrait (max-width: 575px) */
+@media (max-width: 575px) {
+    /* Statistics Card */
+    .stats {
+        margin-bottom: 15px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .stat-info h3 {
+        font-size: 24px;
+        margin-bottom: 2px;
+    }
+    
+    .stat-info p {
+        font-size: 12px;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        font-size: 12px;
+    }
+    
+    .alert i {
+        font-size: 16px;
+    }
+    
+    /* Form Container */
+    .form-container {
+        padding: 15px 12px;
+        margin-bottom: 15px;
+    }
+    
+    .form-container h2 {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+    
+    .form-container h2 i {
+        font-size: 14px;
+    }
+    
+    /* Form Elements */
+    .form-row {
+        gap: 12px;
+    }
+    
+    .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 12px;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group textarea {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+    
+    .form-group textarea {
+        min-height: 90px;
+    }
+    
+    /* File Input */
+    .form-group input[type="file"] {
+        padding: 8px;
+        font-size: 12px;
+    }
+    
+    .form-group input[type="file"]::file-selector-button {
+        padding: 8px 12px;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    
+    /* Current Image */
+    .current-image {
+        padding: 10px;
+        margin: 6px 0;
+    }
+    
+    .current-image p {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+    
+    .current-image img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .image-note {
+        font-size: 10px;
+        margin-top: 3px;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+    
+    .btn i {
+        font-size: 12px;
+    }
+    
+    /* Table Container */
+    .table-container {
+        padding: 15px 10px;
+    }
+    
+    .table-container h2 {
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+    
+    .table-container h2 i {
+        font-size: 14px;
+    }
+    
+    /* Table */
+    table {
+        min-width: 700px;
+    }
+    
+    th {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+    
+    td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+    
+    .review-img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .review-text {
+        max-width: 200px;
+        font-size: 12px;
+    }
+    
+    .action-buttons {
+        gap: 5px;
+    }
+    
+    .btn-action {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    /* No Data */
+    .no-data {
+        padding: 30px 12px;
+    }
+    
+    .no-data i {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+    
+    .no-data p {
+        font-size: 13px;
     }
 }
