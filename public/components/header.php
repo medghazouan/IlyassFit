@@ -44,9 +44,14 @@
             </ul>
         </div>
        
-        <!-- Mobile Toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile">
+        <!-- Mobile Toggle (Hamburger - shown when menu closed) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Mobile Close Button (X - shown when menu open) -->
+        <button type="button" class="navbar-close-btn" id="mobileMenuClose" aria-label="Close menu">
+            <span>&times;</span>
         </button>
        
         <!-- Mobile Menu -->
@@ -88,6 +93,50 @@ document.addEventListener('DOMContentLoaded', function() {
             navbar.classList.remove('scrolled');
         }
     });
+});
+</script>
+
+<!-- Mobile Menu Toggle Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.getElementById('navbarMobile');
+    const navbarCloseBtn = document.getElementById('mobileMenuClose');
+    
+    if (navbarCollapse) {
+        // Listen for Bootstrap collapse events to toggle the 'menu-open' class on body
+        navbarCollapse.addEventListener('show.bs.collapse', function() {
+            document.body.classList.add('menu-open');
+            if (navbarToggler) {
+                navbarToggler.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        navbarCollapse.addEventListener('hide.bs.collapse', function() {
+            document.body.classList.remove('menu-open');
+            if (navbarToggler) {
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        // Close button (X) click handler
+        if (navbarCloseBtn) {
+            navbarCloseBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
+                bsCollapse.hide();
+            });
+        }
+        
+        // Close mobile menu when clicking on a nav link
+        const mobileNavLinks = navbarCollapse.querySelectorAll('.nav-link');
+        mobileNavLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
+                bsCollapse.hide();
+            });
+        });
+    }
 });
 </script>
 <script>
