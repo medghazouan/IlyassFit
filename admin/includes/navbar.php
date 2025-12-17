@@ -36,5 +36,35 @@
             <span>Logout</span>
         </a>
     </div>
+        <script>
+            // Per-tab session binding: generate a tab id and notify server.
+            (function(){
+                try {
+                    const storageKey = 'admin_tab_id';
+                    let tabId = sessionStorage.getItem(storageKey);
+                    if (!tabId) {
+                        // generate random id
+                        tabId = 'tab_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+                        sessionStorage.setItem(storageKey, tabId);
+                    }
+
+                    fetch('validate_tab.php', {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({tab_id: tabId})
+                    }).then(resp => {
+                        if (!resp.ok) {
+                            // session invalid -> redirect to login
+                            window.location.href = 'login.php';
+                        }
+                    }).catch(err => {
+                        console.warn('Tab validation failed', err);
+                    });
+                } catch (e) {
+                    console.warn('Tab binding error', e);
+                }
+            })();
+        </script>
 </div>
 
