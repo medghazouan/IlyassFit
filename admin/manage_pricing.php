@@ -35,7 +35,9 @@ if (isset($_POST['add_plan'])) {
         ];
         
         if (create($pdo, 'pricing_plans', $data)) {
-            $success = "Pricing plan added successfully";
+            // Redirect to clear form and show success message
+            header('Location: manage_pricing.php?success=added');
+            exit;
         } else {
             $error = "Failed to add pricing plan";
         }
@@ -43,6 +45,7 @@ if (isset($_POST['add_plan'])) {
         $error = "Please fill all required fields";
     }
 }
+
 
 // Handle update pricing plan
 if (isset($_POST['update_plan'])) {
@@ -73,12 +76,15 @@ if (isset($_POST['update_plan'])) {
         ];
         
         if (update($pdo, 'pricing_plans', $data, $id)) {
-            $success = "Pricing plan updated successfully";
+            // Redirect to clear form and show success message
+            header('Location: manage_pricing.php?success=updated');
+            exit;
         } else {
             $error = "Failed to update pricing plan";
         }
     }
 }
+
 
 // Handle delete
 if (isset($_GET['delete'])) {
@@ -136,10 +142,7 @@ $onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'disp
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="plan_name">Plan Name *</label>
-                        <input type="text" id="plan_name" name="plan_name" 
-                               value="<?php echo $editPlan ? htmlspecialchars($editPlan['plan_name']) : ''; ?>" required>
-
+                        
         <div class="content-wrapper">
             <!-- Alerts -->
             <?php if ($success): ?>

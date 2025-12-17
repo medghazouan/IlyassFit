@@ -1,7 +1,10 @@
 <!-- Sidebar Navigation Component -->
 <div class="sidebar">
     <div class="logo-container">
-        <img src="adminlogo.png" alt="Logo" class="logo">
+        <picture>
+            <source media="(max-width: 768px)" srcset="logo.png">
+            <img src="adminlogo.png" alt="Logo" class="logo">
+        </picture>
     </div>
     
     <nav class="nav-menu">
@@ -34,3 +37,4 @@
         </a>
     </div>
 </div>
+

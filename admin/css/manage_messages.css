@@ -281,29 +281,429 @@
     font-size: 16px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* ============================================
+   FIX MESSAGE CARD WIDTH ON MOBILE
+   ============================================ */
+
+/* Mobile Landscape & Small Tablets (max-width: 767px) */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 10px 8px;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+    
+    .content-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px 15px;
+    }
+    
+    .top-bar h1 {
+        font-size: 1.4rem;
+        word-break: break-word;
+    }
+    
+    .user-info {
+        font-size: 0.85rem;
+    }
+    
+    /* Statistics Grid */
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+        width: 100%;
+    }
+    
+    .stat-card {
+        padding: 12px 15px;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    .stat-info {
+        text-align: left;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.6rem;
+        margin-bottom: 2px;
+    }
+    
+    .stat-info p {
+        font-size: 0.85rem;
+    }
+    
+    /* Alert Messages */
+    .alert {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .alert i {
+        font-size: 1rem;
+    }
+    
+    /* Messages Section */
+    .messages-section {
+        margin-top: 20px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .section-header {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .section-header h2 {
+        font-size: 1.3rem;
+        word-break: break-word;
+    }
+    
+    .section-header h2 i {
+        font-size: 1.1rem;
+    }
+    
+    /* Messages Grid */
+    .messages-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0;
+        width: 100%;
+    }
+    
+    /* Message Card - FIX WIDTH */
+    .message-card {
+        padding: 15px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
     
     .message-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
+        gap: 10px;
+        margin-bottom: 12px;
+        width: 100%;
     }
     
+    .sender-info {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    
+    .sender-details {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+    
+    .sender-details h4 {
+        font-size: 1.05rem;
+        word-break: break-word;
+        margin-bottom: 3px;
+    }
+    
+    .message-id {
+        font-size: 0.8rem;
+    }
+    
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        align-self: flex-start;
+    }
+    
+    /* Contact Info - FIX OVERFLOW */
     .contact-info {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+        margin-bottom: 12px;
+        width: 100%;
     }
     
+    .contact-item {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+        width: 100%;
+        box-sizing: border-box;
+        word-break: break-all;
+        overflow-wrap: break-word;
+    }
+    
+    .contact-item i {
+        font-size: 0.95rem;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+    
+    .contact-item span {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    
+    /* Message Content - FIX TEXT OVERFLOW */
+    .message-content {
+        padding: 12px;
+        margin-bottom: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .message-content p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Message Actions */
     .message-actions {
-        justify-content: stretch;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
     }
     
     .btn {
         width: 100%;
         justify-content: center;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+    
+    .btn i {
+        font-size: 0.95rem;
+    }
+    
+    /* No Data Message */
+    .no-data {
+        padding: 30px 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .no-data i {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+    }
+    
+    .no-data p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Portrait (max-width: 575px) */
+@media (max-width: 575px) {
+    .main-content {
+        padding: 8px 5px;
+        overflow-x: hidden;
+    }
+    
+    .content-wrapper {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .top-bar {
+        padding: 10px 12px;
+    }
+    
+    .top-bar h1 {
+        font-size: 1.2rem;
+    }
+    
+    .user-info {
+        font-size: 0.8rem;
+    }
+    
+    /* Statistics */
+    .stats-grid {
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .stat-card {
+        padding: 10px 12px;
+        gap: 12px;
+        width: 100%;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.4rem;
+    }
+    
+    .stat-info p {
+        font-size: 0.8rem;
+    }
+    
+    /* Alert Messages */
+    .alert {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        width: 100%;
+    }
+    
+    /* Section Header */
+    .section-header {
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        width: 100%;
+    }
+    
+    .section-header h2 {
+        font-size: 1.15rem;
+    }
+    
+    .section-header h2 i {
+        font-size: 1rem;
+    }
+    
+    /* Messages Grid */
+    .messages-grid {
+        gap: 12px;
+        width: 100%;
+        padding: 0;
+    }
+    
+    /* Message Card */
+    .message-card {
+        padding: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .message-header {
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .sender-info {
+        gap: 10px;
+    }
+    
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .sender-details h4 {
+        font-size: 1rem;
+    }
+    
+    .message-id {
+        font-size: 0.75rem;
+    }
+    
+    .status-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .status-badge i {
+        font-size: 0.6rem;
+    }
+    
+    /* Contact Info */
+    .contact-info {
+        gap: 6px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .contact-item {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        width: 100%;
+    }
+    
+    .contact-item i {
+        font-size: 0.85rem;
+        margin-right: 6px;
+    }
+    
+    /* Message Content */
+    .message-content {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .message-content p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    /* Message Actions */
+    .message-actions {
+        gap: 6px;
+        width: 100%;
+    }
+    
+    .btn {
+        padding: 9px 12px;
+        font-size: 0.85rem;
+        width: 100%;
+    }
+    
+    .btn i {
+        font-size: 0.85rem;
+    }
+    
+    /* No Data */
+    .no-data {
+        padding: 25px 12px;
+    }
+    
+    .no-data i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .no-data p {
+        font-size: 0.85rem;
     }
 }
