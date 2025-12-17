@@ -5,9 +5,14 @@
     background: var(--dark-bg);
     padding: 100px 0;
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    /* Removed conflicting grid display as inner content uses Bootstrap rows */
+}
+
+/* Constrain Gallery Width */
+.gallery-grid-custom {
+    max-width: 1000px;
+    margin: 0 auto;
+    /* Center the grid */
 }
 
 .gallery-section .section-title {
@@ -53,291 +58,99 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Sticky Column Logic */
-@media (min-width: 992px) {
+/* Sticky Column Logic - Global (Desktop & Mobile) */
+.gallery-sticky-content {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 100px;
+    /* Adjust based on navbar height to prevent overlap */
+    z-index: 10;
+    width: 100%;
+    /* Standard sticky behavior aligns top at start and bottom at end */
+    /* Remove gap in sticky container so images touch or have minimal space if desired,
+       but HTML has gap-0 on sticky wrapper, so it's fine. */
+}
+
+/* Force Aspect Ratio for Middle (Sticky) images */
+.gallery-sticky-content .gallery-img {
+    aspect-ratio: 16/9;
+    /* Landscape format */
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    margin-bottom: 0;
+}
+
+/* Side Columns (Scrolling) */
+.gallery-col-scroll .gallery-img {
+    aspect-ratio: 3/4;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+
+    /* Reduce gutter on mobile for the 3-column layout */
+    .gallery-grid-custom {
+        --bs-gutter-x: 0.25rem;
+        width: 100%;
+    }
+
     .gallery-sticky-content {
-        position: sticky;
-        top: 50vh;
-        transform: translateY(-50%);
-        z-index: 10;
-        /* Ensure it behaves nicely */
+        top: 100px;
     }
 
-
-    /* Force Aspect Ratio: Landscape for Middle (Sticky) */
+    /* Reduce image height significantly on mobile */
+    .gallery-col-scroll .gallery-img,
     .gallery-sticky-content .gallery-img {
-        aspect-ratio: 16/9;
-        object-fit: cover;
-    }
-
-    /* Force Aspect Ratio: Portrait for Sides (Scrolling) */
-    .gallery-col-scroll .gallery-img {
-        aspect-ratio: 3/4;
+        min-height: auto;
+        height: 20vh;
+        /* Much smaller height */
+        aspect-ratio: auto;
+        /* Let height dictate on mobile if needed, or keep aspect ratio */
         object-fit: cover;
     }
 }
 
-/* Instagram Button */
-.btn-instagram {
+/* Custom Buttons for Gallery */
+.btn-instagram-custom {
     border-width: 2px;
-    padding: 15px 40px;
     border-radius: 50px;
-    text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
+    text-transform: uppercase;
     transition: all 0.3s ease;
+    background: transparent;
+    color: var(--text-white);
+    border-color: var(--text-white);
 }
 
-.btn-instagram:hover {
-    background: #d62976;
-    /* Instagram gradient dominant color or brand color */
+.btn-instagram-custom:hover {
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
     border-color: transparent;
+    color: white;
     box-shadow: 0 10px 30px rgba(214, 41, 118, 0.4);
     transform: translateY(-3px);
 }
 
-/* Gallery CTA (inside gallery section) */
-.gallery-cta {
-    margin-top: 80px;
-    padding: 60px 50px;
-    background: linear-gradient(135deg, var(--primary-red) 0%, #d60303 100%);
-    border-radius: 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(252, 4, 4, 0.3);
-}
-
-.gallery-cta::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
-    z-index: 0;
-}
-
-.gallery-cta::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: -5%;
-    width: 400px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50%;
-    z-index: 0;
-}
-
-.gallery-cta .row {
-    position: relative;
-    z-index: 1;
-}
-
-.gallery-cta-title {
-    font-size: 2.5rem;
-    font-weight: 900;
+.btn-watch-now {
+    background-color: var(--primary-red);
     color: var(--text-white);
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    line-height: 1.2;
-}
-
-.gallery-cta-text {
-    color: var(--text-white);
-    font-size: 1.1rem;
-    opacity: 0.95;
-    line-height: 1.7;
-    margin-bottom: 0;
-}
-
-.gallery-cta-btn {
-    background: var(--text-white);
-    color: var(--primary-red);
-    font-weight: 700;
-    padding: 18px 45px;
     border-radius: 50px;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    border: 3px solid var(--text-white);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.gallery-cta-btn:hover {
-    background: transparent;
-    color: var(--text-white);
-    border-color: var(--text-white);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-
-.gallery-cta-btn i {
-    transition: transform 0.3s ease;
-}
-
-.gallery-cta-btn:hover i {
-    transform: translateX(5px);
-}
-
-/* Gallery Header Layout (From Responsive Block) */
-.gallery-header {
-    text-align: center;
-    /* Default for desktop */
-    margin-bottom: 50px;
-}
-
-.gallery-title {
-    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    color: white;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 20px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    /* Adjust padding as needed since it is btn-lg */
 }
 
-.gallery-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 150px;
-    height: 5px;
-    background: linear-gradient(to right, var(--primary-red), transparent);
-}
-
-.gallery-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-gray);
-    font-weight: 400;
-    margin-top: 10px;
-    margin-bottom: 0;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-    .gallery-section {
-        padding: 80px 0;
-    }
-
-    .gallery-section .section-title {
-        font-size: 2.5rem;
-    }
-
-    .gallery-cta {
-        margin-top: 60px;
-        padding: 50px 40px;
-    }
-
-    .gallery-cta-title {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .gallery-header {
-        text-align: left;
-        padding: 0 15px;
-    }
-
-    .gallery-title {
-        font-size: 2rem;
-        letter-spacing: 2px;
-        text-align: left;
-    }
-
-    .gallery-subtitle {
-        font-size: 1rem;
-        text-align: left;
-        padding: 0 10px;
-    }
-
-    .gallery-section {
-        padding: 60px 0;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-    }
-
-    .gallery-section .section-title {
-        font-size: 2rem;
-        text-align: left;
-    }
-
-    .gallery-section .section-subtitle {
-        font-size: 1rem;
-    }
-
-    .gallery-cta {
-        margin-top: 50px;
-        padding: 40px 30px;
-        border-radius: 15px;
-        text-align: center;
-    }
-
-    .gallery-cta-title {
-        font-size: 1.75rem;
-        margin-bottom: 15px;
-    }
-
-    .gallery-cta-text {
-        font-size: 1rem;
-        margin-bottom: 25px;
-    }
-
-    .gallery-cta-btn {
-        width: 100%;
-        justify-content: center;
-        padding: 15px 35px;
-    }
-
-    .gallery-item {
-        border-radius: 8px;
-    }
-}
-
-@media (max-width: 576px) {
-    .gallery-section .section-title {
-        font-size: 1.75rem;
-    }
-
-    .gallery-cta-title {
-        font-size: 1.5rem;
-    }
-
-    .gallery-cta {
-        padding: 30px 20px;
-    }
-}
-
-/* Enable a mobile-safe sticky behavior so the middle column can remain fixed
-   while scrolling on narrower screens. Use a top offset that accounts for the
-   fixed header (body padding-top: 80px). Remove translateY centering which
-   can cause the element to jump on small viewports. */
-@media (max-width: 991px) {
-    .gallery-sticky-content {
-        position: -webkit-sticky; /* for older iOS */
-        position: sticky;
-        top: calc(80px + 12px);
-        transform: none;
-        z-index: 11000; /* above navbar background but below toggler if needed */
-        margin-bottom: 1rem;
-    }
-
-    /* Ensure images in sticky column scale appropriately on mobile */
-    .gallery-sticky-content .gallery-img {
-        aspect-ratio: 16/9;
-        object-fit: cover;
-        height: auto;
-        max-width: 100%;
-    }
+.btn-watch-now:hover {
+    background-color: white;
+    color: var(--primary-red);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(252, 4, 4, 0.4);
 }

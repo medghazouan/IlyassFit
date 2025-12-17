@@ -370,22 +370,12 @@ try {
 
         <div class="row g-4 gallery-grid-custom">
             <!-- Left Column (Scrolling) -->
-            <div class="col-lg-4 col-md-4 gallery-col-scroll">
-                <div class="d-flex flex-column">
-                    <!-- Top aligned images -->
-                    <?php foreach ($leftTop as $image): ?>
-                        <div class="gallery-item">
-                            <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery">
-                        </div>
-                    <?php endforeach; ?>
-
-                    <!-- Spacer to push bottom images down -->
-                    <div style="min-height: 600px;"></div>
-
-                    <!-- Bottom aligned images -->
-                    <?php foreach ($leftBottom as $image): ?>
+            <div class="col-3 gallery-col-scroll">
+                <div class="d-flex flex-column gap-3">
+                    <?php 
+                    $leftImages = array_merge($leftTop, $leftBottom);
+                    foreach ($leftImages as $image): 
+                    ?>
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
                                 src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
@@ -396,7 +386,7 @@ try {
             </div>
 
             <!-- Middle Column (Sticky) -->
-            <div class="col-lg-4 col-md-4 gallery-col-sticky-wrapper">
+            <div class="col-6 gallery-col-sticky-wrapper">
                 <div class="d-flex flex-column gap-4 gallery-sticky-content">
                     <?php foreach ($colMid as $image): ?>
                         <div class="gallery-item">
@@ -409,22 +399,12 @@ try {
             </div>
 
             <!-- Right Column (Scrolling) -->
-            <div class="col-lg-4 col-md-4 gallery-col-scroll">
-                <div class="d-flex flex-column">
-                    <!-- Top aligned images -->
-                    <?php foreach ($rightTop as $image): ?>
-                        <div class="gallery-item">
-                            <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery">
-                        </div>
-                    <?php endforeach; ?>
-
-                    <!-- Spacer to push bottom images down -->
-                    <div style="min-height: 600px;"></div>
-
-                    <!-- Bottom aligned images -->
-                    <?php foreach ($rightBottom as $image): ?>
+            <div class="col-3 gallery-col-scroll">
+                <div class="d-flex flex-column gap-3">
+                    <?php 
+                    $rightImages = array_merge($rightTop, $rightBottom);
+                    foreach ($rightImages as $image): 
+                    ?>
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
                                 src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"

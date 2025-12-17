@@ -721,64 +721,7 @@ button,
     letter-spacing: 1px;
 }
 
-/* Gallery Section */
-.gallery-section {
-    background: var(--dark-bg);
-    padding: 100px 0;
-    position: relative;
-}
 
-.gallery-section .section-title {
-    color: var(--text-white);
-    font-size: 3rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 1rem;
-}
-
-.gallery-section .section-subtitle {
-    color: #94a3b8;
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
-}
-
-/* Gallery Layout */
-.gallery-img {
-    width: 100%;
-    display: block;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.gallery-item:hover .gallery-img {
-    transform: scale(1.03);
-    box-shadow: 0 8px 25px rgba(252, 4, 4, 0.4);
-}
-
-/* Sticky Column Logic */
-@media (min-width: 992px) {
-    .gallery-sticky-content {
-        position: sticky;
-        top: 20%;
-        /* Centered vertically relative to viewport roughly */
-        z-index: 10;
-        /* Ensure it behaves nicely */
-    }
-
-
-    /* Force Aspect Ratio: Landscape for Middle (Sticky) */
-    .gallery-sticky-content .gallery-img {
-        aspect-ratio: 16/9;
-        object-fit: cover;
-    }
-
-    /* Force Aspect Ratio: Portrait for Sides (Scrolling) */
-    .gallery-col-scroll .gallery-img {
-        aspect-ratio: 3/4;
-        object-fit: cover;
-    }
-}
 
 /* Instagram Button */
 .btn-instagram {
@@ -1035,7 +978,8 @@ button,
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 120000; /* above navbar */
+    z-index: 120000;
+    /* above navbar */
     align-items: center;
     justify-content: center;
 }
@@ -1067,6 +1011,7 @@ button,
         opacity: 0;
         transform: scale(0.9);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -1077,7 +1022,7 @@ button,
     position: absolute;
     top: 10px;
     right: 10px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     border: none;
     color: var(--text-white);
     font-size: 1.6rem;
