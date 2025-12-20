@@ -105,10 +105,14 @@ if (isset($_GET['edit'])) {
     }
 }
 
-// Get all pricing plans
+// Get all pricing plans and filter in PHP (1 query instead of 3 for better performance)
 $allPlans = readAll($pdo, 'pricing_plans', 'display_order', 'ASC');
-$faceToFacePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'face_to_face', 'display_order', 'ASC');
-$onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'display_order', 'ASC');
+$faceToFacePlans = array_filter($allPlans, function($plan) {
+    return $plan['coaching_type'] === 'face_to_face';
+});
+$onlinePlans = array_filter($allPlans, function($plan) {
+    return $plan['coaching_type'] === 'online';
+});
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,17 +136,6 @@ $onlinePlans = readWhere($pdo, 'pricing_plans', 'coaching_type', 'online', 'disp
             </div>
         </div>
         
-
-        <div class="form-container">
-            <h2><?php echo $editPlan ? 'Edit Pricing Plan' : 'Add New Pricing Plan'; ?></h2>
-            <form method="POST">
-                <?php if ($editPlan): ?>
-                    <input type="hidden" name="plan_id" value="<?php echo $editPlan['id']; ?>">
-                <?php endif; ?>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        
         <div class="content-wrapper">
             <!-- Alerts -->
             <?php if ($success): ?>

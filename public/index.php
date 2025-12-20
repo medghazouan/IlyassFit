@@ -128,67 +128,7 @@ try {
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Scroll Animations
-        const observerOptions = {
-            threshold: 0.2
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // If it's the section, trigger the background animation
-                    if (entry.target.classList.contains('about-me-section')) {
-                        document.querySelector('.about-background-image').classList.add('visible');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        const animatedElements = document.querySelectorAll('.slide-in-right, .slide-in-left');
-        animatedElements.forEach(el => observer.observe(el));
-
-        // Observer for the section itself to trigger background animation
-        const section = document.querySelector('.about-me-section');
-        if (section) observer.observe(section);
-
-        // Testimonial Slider
-        const reviews = document.querySelectorAll('.review-item');
-        const dots = document.querySelectorAll('.dot');
-        const prevBtn = document.getElementById('prevReview');
-        const nextBtn = document.getElementById('nextReview');
-        let currentIndex = 0;
-
-        function showReview(index) {
-            reviews.forEach(review => review.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-
-            reviews[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + reviews.length) % reviews.length;
-                showReview(currentIndex);
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % reviews.length;
-                showReview(currentIndex);
-            });
-
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    currentIndex = parseInt(dot.getAttribute('data-index'));
-                    showReview(currentIndex);
-                });
-            });
-        }
-    });
-</script>
+<!-- Scripts moved to main.js for better performance -->
 
 <!-- Services Section Custom -->
 <section class="services-custom-section" id="services">
@@ -229,60 +169,7 @@ try {
     </div>
 </section>
 
-<script>
-    let currentServiceIndex = 0;
-    const serviceSlides = document.querySelectorAll('.service-slide');
-    const serviceDots = document.querySelectorAll('.service-dot');
-    const totalServices = serviceSlides.length;
-    let serviceInterval;
-
-    function showService(index) {
-        // Reset all
-        serviceSlides.forEach(slide => {
-            slide.classList.remove('active');
-            slide.style.opacity = '0';
-            slide.style.transform = 'translateY(20px)';
-        });
-        serviceDots.forEach(dot => dot.classList.remove('active'));
-
-        // Activate current
-        serviceSlides[index].classList.add('active');
-        serviceDots[index].classList.add('active');
-
-        // Slight delay for animation effect
-        setTimeout(() => {
-            serviceSlides[index].style.opacity = '1';
-            serviceSlides[index].style.transform = 'translateY(0)';
-        }, 50);
-
-        currentServiceIndex = index;
-    }
-
-    function nextService() {
-        let nextIndex = (currentServiceIndex + 1) % totalServices;
-        showService(nextIndex);
-    }
-
-    function goToService(index) {
-        clearInterval(serviceInterval); // Pause auto-slide on interaction
-        showService(index);
-        startServiceSlider(); // Restart
-    }
-
-    function startServiceSlider() {
-        serviceInterval = setInterval(nextService, 5000); // Change every 5 seconds
-    }
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initial state for first slide
-        if (serviceSlides.length > 0) {
-            serviceSlides[0].style.opacity = '1';
-            serviceSlides[0].style.transform = 'translateY(0)';
-            startServiceSlider();
-        }
-    });
-</script>
+<!-- Services slider script moved to main.js -->
 
 <!-- Transformations Snippet Section -->
 <section class="transformations-section" style="padding-top: 50px; padding-bottom: 50px;">
@@ -343,8 +230,7 @@ try {
         </div>
 
         <?php
-        // Include database configuration
-        require_once __DIR__ . '/../includes/config/db_config.php';
+        // Database configuration already loaded at line 49
 
         try {
             // Fetch 13 images from gallery table
@@ -379,7 +265,8 @@ try {
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
                                 src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery">
+                                alt="Gym Gallery"
+                                loading="lazy">
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -392,7 +279,8 @@ try {
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
                                 src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery">
+                                alt="Gym Gallery"
+                                loading="lazy">
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -408,7 +296,8 @@ try {
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
                                 src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery">
+                                alt="Gym Gallery"
+                                loading="lazy">
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -449,57 +338,8 @@ try {
     </div>
 </div>
 
-<script>
-// Video Modal Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const videoModal = document.getElementById('videoModal');
-    const openVideoBtn = document.getElementById('openVideoModal');
-    const closeVideoBtn = document.getElementById('closeVideoModal');
-    const videoModalOverlay = document.getElementById('videoModalOverlay');
-    const modalVideo = document.getElementById('modalVideo');
-
-    // Open modal (NO AUTOPLAY)
-    if (openVideoBtn) {
-        openVideoBtn.addEventListener('click', function() {
-            videoModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            // Removed modalVideo.play() - user must click play manually
-        });
-    }
-
-    // Close modal function
-    function closeModal() {
-        videoModal.classList.remove('active');
-        document.body.style.overflow = '';
-        modalVideo.pause();
-        modalVideo.currentTime = 0;
-    }
-
-    // Close button
-    if (closeVideoBtn) {
-        closeVideoBtn.addEventListener('click', closeModal);
-    }
-
-    // Click outside to close
-    if (videoModalOverlay) {
-        videoModalOverlay.addEventListener('click', closeModal);
-    }
-
-    // ESC key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-
-    // Prevent video controls from closing modal
-    if (modalVideo) {
-        modalVideo.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-</script>
+<!-- JavaScript externalized to main.js for better performance and caching -->
+<script src="assets/js/main.js"></script>
 
 
 <?php

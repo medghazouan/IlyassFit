@@ -1,3 +1,15 @@
+<?php
+// Navigation configuration - Single source of truth for all nav menus
+$navLinks = [
+    ['href' => 'index.php', 'label' => 'HOME', 'page' => 'index.php'],
+    ['href' => 'index.php#about', 'label' => 'ABOUT', 'page' => 'index.php'],
+    ['href' => 'index.php#gallery', 'label' => 'GALLERY', 'page' => 'index.php'],
+    ['href' => 'pricing.php', 'label' => 'PRICING', 'page' => 'pricing.php'],
+    ['href' => 'transformations.php', 'label' => 'TRANSFORMS', 'page' => 'transformations.php'],
+    ['href' => 'contact.php', 'label' => 'CONTACT', 'page' => 'contact.php']
+];
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
@@ -10,18 +22,12 @@
         <div class="navbar-content">
             <!-- Left Navigation Links -->
             <ul class="navbar-nav navbar-left">
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php#about">ABOUT</a>
-                </li>
-               
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php#gallery">GALLERY</a>
-                </li>
-               
-               
+                <?php foreach (array_slice($navLinks, 0, 3) as $link): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $currentPage == $link['page'] ? 'active' : ''; ?>" 
+                           href="<?php echo $link['href']; ?>"><?php echo $link['label']; ?></a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
            
             <!-- Center Logo -->
@@ -31,16 +37,12 @@
            
             <!-- Right Navigation Links -->
             <ul class="navbar-nav navbar-right">
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'pricing.php' ? 'active' : ''; ?>" href="pricing.php">PRICING</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">CONTACT</a>
-                </li>
-               
+                <?php foreach (array_slice($navLinks, 3, 3) as $link): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $currentPage == $link['page'] ? 'active' : ''; ?>" 
+                           href="<?php echo $link['href']; ?>"><?php echo $link['label']; ?></a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
        
@@ -57,24 +59,12 @@
         <!-- Mobile Menu -->
         <div class="collapse navbar-collapse" id="navbarMobile">
             <ul class="navbar-nav mobile-nav">
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php#about">ABOUT</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php#gallery">GALLERY</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'pricing.php' ? 'active' : ''; ?>" href="pricing.php">PRICING</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'transformations.php' ? 'active' : ''; ?>" href="transformations.php">TRANSFORMS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="contact.php">CONTACT</a>
-                </li>
+                <?php foreach ($navLinks as $link): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $currentPage == $link['page'] ? 'active' : ''; ?>" 
+                           href="<?php echo $link['href']; ?>"><?php echo $link['label']; ?></a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>

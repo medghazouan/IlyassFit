@@ -12,10 +12,32 @@ ob_start();
 try {
     require_once '../includes/config/db_config.php';
     require_once '../includes/functions/crud.php';
+    require_once '../includes/functions/security.php';
+    require_once '../includes/functions/auth.php';
+    
+    // Start session for CSRF validation
+    startSecureSession();
 
     $response = ['success' => false, 'message' => ''];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Check rate limit first (10 messages / 1 hour - balanced protection)
+        if (isRateLimited('contact', 10, 3600)) {
+            $remainingTime = getRateLimitResetTime('contact', 3600);
+            $response['message'] = formatRateLimitMessage($remainingTime);
+            ob_end_clean();
+            echo json_encode($response);
+            exit;
+        }
+        
+        // Validate CSRF token
+        if (!validateCsrfToken($_POST['csrf_token'] ?? '')) {
+            $response['message'] = 'Invalid security token. Please refresh the page and try again.';
+            incrementRateLimit('contact'); // Count CSRF failure
+            ob_end_clean();
+            echo json_encode($response);
+            exit;
+        }
         $fullName = trim($_POST['full_name'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $telephone = trim($_POST['telephone'] ?? '');
@@ -37,6 +59,7 @@ try {
             if (create($pdo, 'messages', $data)) {
                 $response['success'] = true;
                 $response['message'] = "Message sent successfully! We'll get back to you soon.";
+                incrementRateLimit('contact'); // Count successful submission
             } else {
                 $response['message'] = "Failed to send message. Please try again.";
             }

@@ -1,3 +1,9 @@
+<?php
+// Initialize security functions and session for CSRF protection
+require_once '../includes/functions/security.php';
+require_once '../includes/functions/auth.php';
+startSecureSession();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,6 +107,7 @@
                         <div id="alertContainer"></div>
 
                         <form id="contactForm">
+                            <?php echo csrfTokenField(); ?>
                             <div class="mb-3">
                                 <input type="text" class="form-control" name="full_name" placeholder="Full Name"
                                     required>
