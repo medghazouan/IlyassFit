@@ -1331,6 +1331,7 @@ body.menu-open .navbar-toggler {
         font-size: 2rem;
     }
 }
+
 /* ============================================
    RESPONSIVE DESIGN - TABLET
    ============================================ */
@@ -1421,7 +1422,7 @@ body.menu-open .navbar-toggler {
         font-size: 1.1rem;
     }
 
-    .footer > .container > .row > div {
+    .footer>.container>.row>div {
         margin-bottom: 1.5rem;
     }
 
@@ -1460,9 +1461,7 @@ body.menu-open .navbar-toggler {
    RESPONSIVE DESIGN - MOBILE
    ============================================ */
 @media (max-width: 576px) {
-    .hero-title {
-        font-size: 2rem;
-    }
+
 
     .service-title {
         font-size: 1.25rem;
@@ -1476,7 +1475,7 @@ body.menu-open .navbar-toggler {
     .service-icon i {
         font-size: 2rem;
     }
-    
+
     .gallery-section .section-title {
         font-size: 1.75rem;
     }
@@ -1528,7 +1527,7 @@ body.menu-open .navbar-toggler {
     }
 
     /* QUICK LINKS ALREADY HIDDEN FROM TABLET BREAKPOINT */
-    
+
     .contact-info {
         gap: 0.6rem;
     }
@@ -1544,11 +1543,11 @@ body.menu-open .navbar-toggler {
         font-size: 1rem;
     }
 
-    .footer > .container > .row > div {
+    .footer>.container>.row>div {
         margin-bottom: 1.2rem;
     }
 
-    .footer > .container > .row > div:last-child {
+    .footer>.container>.row>div:last-child {
         margin-bottom: 0.5rem;
     }
 

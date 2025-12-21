@@ -1,53 +1,4 @@
-/* Hero Section */
-.hero-section {
-    position: relative;
-    height: 100vh;
-    min-height: 600px;
-    background-image: url('../images/static/hero_contact.png');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -80px;
-    padding-top: 80px;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 900;
-    color: var(--text-white);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 0;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-.hero-buttons {
-    margin-top: 25px;  /* space between title and button */
-}
-
-/* optional: center & spacing if needed */
-.hero-buttons .btn {
-    padding: 0.9rem 2.5rem;
-}
+/* Hero Section styles moved to hero.css */
 
 /* Contact Info Section */
 .contact-info-section {
@@ -98,7 +49,8 @@
 }
 
 .icon-svg {
-    width: 40px; /* Actual icon size */
+    width: 40px;
+    /* Actual icon size */
     height: 40px;
     fill: var(--primary-red);
     transition: all 0.3s ease;
@@ -301,7 +253,7 @@
         width: 100%;
         max-width: 100%;
     }
-    
+
     .contact-form-wrapper {
         margin-left: 0;
     }
@@ -358,7 +310,7 @@
     .form-subtitle {
         margin-top: 20px;
     }
-    
+
     .hero-section {
         height: 80vh;
         min-height: 400px;
@@ -407,7 +359,7 @@
         height: 55px;
         padding: 10px;
     }
-    
+
 }
 
 

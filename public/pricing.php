@@ -20,12 +20,13 @@ include 'components/header.php';
 ?>
 
 <!-- Pricing Hero Section -->
-<section class="pricing-hero">
-    <div class="container">
-        <h1 class="section-title">Choose Your Transformation Path</h1>
-        <p class="section-subtitle">Invest in yourself. Choose the plan that fits your goals and lifestyle.</p>
-    </div>
-</section>
+<!-- Pricing Hero Section -->
+<?php 
+$heroTitle = "Choose Your Transformation Path";
+$heroSubtitle = "Invest in yourself. Choose the plan that fits your goals and lifestyle.";
+$heroBackground = "hero-bg-pricing";
+include 'components/hero.php'; 
+?>
 
 <!-- Face-to-Face Coaching Plans -->
 <section class="pricing-section section-padding">

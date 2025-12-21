@@ -1,53 +1,7 @@
 /* ============================================
    TRANSFORMATIONS HERO SECTION
    ============================================ */
-.transformations-hero {
-    position: relative;
-    height: 100vh;
-    min-height: 400px;
-    background-image: url('../images/static/hero_contact2.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -80px;
-    padding-top: 80px;
-    z-index: 1;
-}
-
-.transformations-hero .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-}
-
-.transformations-hero .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: var(--text-white);
-}
-
-.transformations-hero .hero-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-    letter-spacing: 3px;
-}
-
-.transformations-hero .hero-subtitle {
-    font-size: 1.3rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
+/* Hero Section styles moved to hero.css */
 
 /* ============================================
    TRANSFORMATIONS SECTION
@@ -163,7 +117,8 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
-    justify-content: center;  /* CENTER THE TEXT */
+    justify-content: center;
+    /* CENTER THE TEXT */
     background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
 }
 
@@ -175,10 +130,11 @@
     margin-top: 0;
     font-style: italic;
     text-align: center;
-    width: 100%;  /* FULL WIDTH FOR CENTERING */
-    word-wrap: break-word;     
-    overflow-wrap: break-word;  
-    word-break: break-word; 
+    width: 100%;
+    /* FULL WIDTH FOR CENTERING */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .review-text .bi-quote {
@@ -239,6 +195,7 @@
     0% {
         left: -100%;
     }
+
     100% {
         left: 100%;
     }
@@ -447,7 +404,8 @@
     left: 0;
     width: 150px;
     height: 5px;
-    background: linear-gradient(to right, var(--primary-red), transparent);  /* GRADIENT */
+    background: linear-gradient(to right, var(--primary-red), transparent);
+    /* GRADIENT */
     border-radius: 0;
 }
 
@@ -502,7 +460,8 @@
 
     /* Make image wrappers square */
     .image-wrapper {
-        aspect-ratio: 1 / 1; /* KEY PART */
+        aspect-ratio: 1 / 1;
+        /* KEY PART */
     }
 
     /* Keep images inside wrapper without stretching */

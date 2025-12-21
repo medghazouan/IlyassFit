@@ -17,17 +17,17 @@ startSecureSession();
     <?php include 'components/header.php'; ?>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Start Your Journey Now</h1>
-                <div class="hero-buttons">
-                    <a href="#form" class="btn btn-primary btn-lg">Contact Me Now</a>
-            </div>
-            </div>
-        </div>
-    </section>
+    <!-- Hero Section -->
+    <?php 
+    $heroTitle = "Start Your Journey Now";
+    $heroBackground = "hero-bg-contact";
+    ob_start(); 
+    ?>
+    <a href="#form" class="btn btn-primary btn-lg">Contact Me Now</a>
+    <?php 
+    $heroButtons = ob_get_clean();
+    include 'components/hero.php'; 
+    ?>
 
     <!-- Contact Info Section -->
     <section class="contact-info-section">

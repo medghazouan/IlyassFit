@@ -12,17 +12,19 @@ include 'components/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="transformations-hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1 class="hero-title">CLIENT TRANSFORMATIONS</h1>
-        <p class="hero-subtitle">Real Results, Real People</p>
-        <div class="hero-buttons">
-                <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
-                <a href="contact.php" class="btn btn-outline-light btn-lg">Learn More</a>
-        </div>
-    </div>
-</section>
+<!-- Hero Section -->
+<?php 
+$heroTitle = "CLIENT TRANSFORMATIONS";
+$heroSubtitle = "Real Results, Real People";
+$heroBackground = "hero-bg-transformations";
+ob_start(); 
+?>
+<a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
+<a href="contact.php" class="btn btn-outline-light btn-lg">Learn More</a>
+<?php 
+$heroButtons = ob_get_clean();
+include 'components/hero.php'; 
+?>
 
 <!-- Transformations Section -->
 <section class="transformations-section">

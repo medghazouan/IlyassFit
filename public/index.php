@@ -24,25 +24,19 @@ include 'components/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="hero">
-    <div class="hero-video-container">
-        <video class="hero-video" autoplay muted loop playsinline poster="assets/images/static/hero_contact2.png">
-            <source src="assets/video/hero.webm" type="video/webm">
-            <source src="assets/video/hero.mp4" type="video/mp4">
-        </video>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">TRANSFORM YOUR BODY</h1>
-            <p class="hero-subtitle">Professional Training | Nutrition Coaching | Results Guaranteed</p>
-            <div class="hero-buttons">
-                <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
-                <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Hero Section -->
+<?php 
+$heroTitle = "TRANSFORM YOUR BODY";
+$heroSubtitle = "Professional Training | Nutrition Coaching | Results Guaranteed";
+$heroBackground = "hero-bg-video";
+ob_start(); 
+?>
+<a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
+<a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+<?php 
+$heroButtons = ob_get_clean();
+include 'components/hero.php'; 
+?>
 
 <?php
 // Fetch reviews for About section

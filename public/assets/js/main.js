@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
     cards.forEach(card => observer.observe(card));
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.pricing-card');
 
@@ -306,6 +307,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cards.forEach(card => observer.observe(card));
 });
+
+// =======================================
+// Contact SECTION - Scroll Animations 
+// =======================================
 
 document.addEventListener('DOMContentLoaded', () => {
     // Contact info cards
