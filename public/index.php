@@ -157,6 +157,7 @@ try {
                 <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;">
                     <img src="assets/images/static/pic1.jpeg" alt="Fitness Services"
                         class="img-fluid service-static-img">
+
                     <div class="service-dots-nav">
                         <?php foreach ($services as $index => $service): ?>
                             <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>"
@@ -165,6 +166,7 @@ try {
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -231,7 +233,7 @@ try {
 
         <?php
         // Database configuration already loaded at line 49
-
+        
         try {
             // Fetch 13 images from gallery table
             $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY id ASC LIMIT 13");
@@ -258,14 +260,13 @@ try {
             <!-- Left Column (Scrolling) -->
             <div class="col-3 gallery-col-scroll">
                 <div class="d-flex flex-column gap-3">
-                    <?php 
+                    <?php
                     $leftImages = array_merge($leftTop, $leftBottom);
-                    foreach ($leftImages as $image): 
-                    ?>
+                    foreach ($leftImages as $image):
+                        ?>
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery"
+                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
                                 loading="lazy">
                         </div>
                     <?php endforeach; ?>
@@ -278,8 +279,7 @@ try {
                     <?php foreach ($colMid as $image): ?>
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery"
+                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
                                 loading="lazy">
                         </div>
                     <?php endforeach; ?>
@@ -289,14 +289,13 @@ try {
             <!-- Right Column (Scrolling) -->
             <div class="col-3 gallery-col-scroll">
                 <div class="d-flex flex-column gap-3">
-                    <?php 
+                    <?php
                     $rightImages = array_merge($rightTop, $rightBottom);
-                    foreach ($rightImages as $image): 
-                    ?>
+                    foreach ($rightImages as $image):
+                        ?>
                         <div class="gallery-item">
                             <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>"
-                                alt="Gym Gallery"
+                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
                                 loading="lazy">
                         </div>
                     <?php endforeach; ?>

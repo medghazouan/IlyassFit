@@ -482,24 +482,62 @@
     }
 }
 
+/* ============================================
+   MOBILE CARD SIZE OPTIMIZATION
+   ============================================ */
+/* ============================================
+   MOBILE CARD FORM (SCREENSHOT STYLE)
+   ============================================ */
 @media (max-width: 576px) {
-    .transformations-title {
-        font-size: 1.6rem;
-        letter-spacing: 1px;
-        padding-bottom: 8px;
-        display: block;
+
+    /* Card width & spacing */
+    .transformation-card {
+        max-width: 92%;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+
+    /* Compact image container */
+    .images-container {
+        padding: 6px;
+        gap: 4px;
+    }
+
+    /* Make image wrappers square */
+    .image-wrapper {
+        aspect-ratio: 1 / 1; /* KEY PART */
+    }
+
+    /* Keep images inside wrapper without stretching */
+    .transformation-img {
+        height: 100%;
         width: 100%;
-        text-align: center;
+        object-fit: cover;
     }
 
-    .transformations-title::after {
-        width: 80px;
-        left: 50%;
-        transform: translateX(-50%);
+    /* Smaller divider */
+    .divider-line {
+        width: 2px;
+        margin: 0;
     }
 
-    .transformations-hero {
-        margin-top: -56px;
-        padding-top: 56px;
+    /* Compact client name */
+    .client-name-wrapper {
+        padding: 10px;
+    }
+
+    .client-name-btn {
+        font-size: 0.85rem;
+        padding: 8px 20px;
+    }
+
+    /* Compact review */
+    .transformation-card .card-body {
+        padding: 12px;
+    }
+
+    .review-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
     }
 }

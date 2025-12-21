@@ -1280,9 +1280,7 @@ body.menu-open .navbar-toggler {
     transform: translateX(5px);
 }
 
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
+
 /* ============================================
    RESPONSIVE DESIGN - DESKTOP
    ============================================ */
@@ -1333,10 +1331,6 @@ body.menu-open .navbar-toggler {
         font-size: 2rem;
     }
 }
-
-/* ============================================
-   RESPONSIVE DESIGN - TABLET
-   ============================================ */
 /* ============================================
    RESPONSIVE DESIGN - TABLET
    ============================================ */
@@ -1482,7 +1476,7 @@ body.menu-open .navbar-toggler {
     .service-icon i {
         font-size: 2rem;
     }
-
+    
     .gallery-section .section-title {
         font-size: 1.75rem;
     }
@@ -1729,5 +1723,48 @@ body.menu-open .navbar-toggler {
 @media (max-width: 768px) and (orientation: landscape) {
     .video-wrapper video {
         max-height: 90vh;
+    }
+}
+
+/* iPad / small-desktop tweaks (e.g., iPad Pro 1024px) */
+@media (min-width: 992px) and (max-width: 1200px) {
+    .navbar-content {
+        gap: 3rem;
+        padding: 0 1rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        gap: 3rem;
+    }
+
+    .logo-center {
+        width: 100px;
+    }
+
+    .logo-center:hover {
+        transform: none;
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        padding: 0.4rem 0 !important;
+    }
+
+    .navbar.scrolled {
+        padding: 0.3rem 0;
+    }
+
+    body {
+        padding-top: 75px;
     }
 }
