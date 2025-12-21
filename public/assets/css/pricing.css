@@ -632,3 +632,26 @@
         font-size: 0.95rem;
     }
 }
+
+/* === Scroll reveal base state === */
+.pricing-card {
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+}
+
+/* Start off-screen */
+.pricing-card.from-left {
+    transform: translateX(-80px);
+}
+
+.pricing-card.from-right {
+    transform: translateX(80px);
+}
+
+/* When visible */
+.pricing-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+

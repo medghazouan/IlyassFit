@@ -5,6 +5,8 @@ $pageTitle = "Pricing Plans";
 // Include database config
 require_once '../includes/config/db_config.php';
 
+
+
 // Fetch pricing plans
 $face_to_face_query = "SELECT * FROM pricing_plans WHERE coaching_type = 'face_to_face' AND is_active = 1 ORDER BY display_order ASC";
 $online_query = "SELECT * FROM pricing_plans WHERE coaching_type = 'online' AND is_active = 1 ORDER BY display_order ASC";

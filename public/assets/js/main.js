@@ -191,3 +191,75 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// =======================================
+// 1. Pricing SECTION - Scroll Animations 
+// =======================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.pricing-card');
+
+    if (!cards.length) return;
+
+    // If no explicit direction class, alternate them in JS
+    cards.forEach((card, index) => {
+        if (!card.classList.contains('from-left') && !card.classList.contains('from-right')) {
+            const dirClass = index % 2 === 0 ? 'from-right' : 'from-left';
+            card.classList.add(dirClass);
+        }
+    });
+
+    const observerOptions = {
+        threshold: 0.2
+    };
+
+    const onIntersect = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Remove this if you want the animation every time on scroll
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(onIntersect, observerOptions);
+
+    cards.forEach(card => observer.observe(card));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.pricing-card');
+
+    // Quick debug
+    console.log('Pricing cards found:', cards.length);
+
+    if (!cards.length) return;
+
+    // Alternate directions if not set in PHP
+    cards.forEach((card, index) => {
+        if (!card.classList.contains('from-left') &&
+            !card.classList.contains('from-right')) {
+            card.classList.add(index % 2 === 0 ? 'from-right' : 'from-left');
+        }
+    });
+
+    // Fallback for old browsers
+    if (!('IntersectionObserver' in window)) {
+        cards.forEach(card => card.classList.add('visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    cards.forEach(card => observer.observe(card));
+});
