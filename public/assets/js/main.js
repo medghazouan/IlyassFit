@@ -263,3 +263,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cards.forEach(card => observer.observe(card));
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.pricing-card, .transformation-card');
+
+    console.log('Scroll cards found:', cards.length); // debug
+
+    if (!cards.length) return;
+
+    // Alternate direction per section
+    cards.forEach((card, index) => {
+        if (!card.classList.contains('from-left') &&
+            !card.classList.contains('from-right')) {
+
+            // If you want independent alternating inside each section:
+            const parentSection = card.closest('.pricing-section, .transformations-section');
+            const siblings = parentSection
+                ? parentSection.querySelectorAll('.pricing-card, .transformation-card')
+                : cards;
+
+            const localIndex = Array.from(siblings).indexOf(card);
+            const dirClass = localIndex % 2 === 0 ? 'from-right' : 'from-left';
+            card.classList.add(dirClass);
+        }
+    });
+
+    if (!('IntersectionObserver' in window)) {
+        cards.forEach(card => card.classList.add('visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    cards.forEach(card => observer.observe(card));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Contact info cards
+    const contactCards = document.querySelectorAll('.contact-card');
+    // Contact form section columns (image + form)
+    const contactCols = document.querySelectorAll('.contact-form-section .col-lg-6');
+
+    const items = [...contactCards, ...contactCols];
+    console.log('Contact scroll items:', items.length);
+
+    if (!items.length) return;
+
+    // Assign directions inside their groups
+    items.forEach(item => {
+        const parent = item.closest('.contact-info-section, .contact-form-section, .row');
+        const siblings = parent
+            ? parent.querySelectorAll('.contact-card, .contact-form-section .col-lg-6')
+            : items;
+
+        const localIndex = Array.from(siblings).indexOf(item);
+        const dirClass = localIndex % 2 === 0 ? 'from-right' : 'from-left';
+
+        if (!item.classList.contains('from-left') &&
+            !item.classList.contains('from-right')) {
+            item.classList.add(dirClass);
+        }
+    });
+
+    // Fallback if IntersectionObserver not supported
+    if (!('IntersectionObserver' in window)) {
+        items.forEach(el => el.classList.add('visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    items.forEach(el => observer.observe(el));
+});

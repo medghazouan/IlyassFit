@@ -409,3 +409,44 @@
     }
     
 }
+
+
+/* Scroll reveal - contact cards */
+.contact-card {
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+}
+
+.contact-card.from-left {
+    transform: translateX(-80px);
+}
+
+.contact-card.from-right {
+    transform: translateX(80px);
+}
+
+.contact-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Scroll reveal - contact form image + form columns */
+.contact-form-section .col-lg-6 {
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+}
+
+.contact-form-section .col-lg-6.from-left {
+    transform: translateX(-80px);
+}
+
+.contact-form-section .col-lg-6.from-right {
+    transform: translateX(80px);
+}
+
+.contact-form-section .col-lg-6.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
