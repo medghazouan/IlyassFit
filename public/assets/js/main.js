@@ -125,6 +125,65 @@ document.addEventListener('DOMContentLoaded', function () {
         serviceInterval = setInterval(nextService, 5000); // Change every 5 seconds
     }
 
+    // Responsive: move slider into image on small screens and add touch-swipe support
+    const serviceWrapper = document.querySelector('.services-slider');
+    const imageContainer = document.querySelector('.service-image-container');
+    const originalParent = serviceWrapper ? serviceWrapper.parentElement : null;
+    const dotsNav = document.querySelector('.service-dots-nav');
+    const dotsOriginalParent = dotsNav ? dotsNav.parentElement : null;
+    const dotsNextSibling = dotsNav ? dotsNav.nextSibling : null;
+
+    function moveSliderIntoImage() {
+        if (!serviceWrapper) return;
+        if (window.innerWidth <= 991 && imageContainer && !serviceWrapper.classList.contains('mobile-overlay')) {
+            imageContainer.appendChild(serviceWrapper);
+            serviceWrapper.classList.add('mobile-overlay');
+            // Move dots inside overlay so mobile CSS targets them correctly
+            if (dotsNav && dotsNav.parentElement !== serviceWrapper) {
+                serviceWrapper.appendChild(dotsNav);
+            }
+        } else if (window.innerWidth > 991 && originalParent && serviceWrapper.classList.contains('mobile-overlay')) {
+            originalParent.appendChild(serviceWrapper);
+            serviceWrapper.classList.remove('mobile-overlay');
+            // Restore dots to their original parent
+            if (dotsNav) {
+                if (dotsOriginalParent) {
+                    if (dotsNextSibling) {
+                        dotsOriginalParent.insertBefore(dotsNav, dotsNextSibling);
+                    } else {
+                        dotsOriginalParent.appendChild(dotsNav);
+                    }
+                } else if (imageContainer) {
+                    imageContainer.appendChild(dotsNav);
+                }
+            }
+        }
+    }
+
+    // Basic touch swipe handling on the image container (mobile)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 40;
+
+    function handleTouchStart(e) {
+        touchStartX = e.changedTouches[0].clientX;
+    }
+
+    function handleTouchEnd(e) {
+        touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextService();
+            } else {
+                const prevIndex = (currentServiceIndex - 1 + totalServices) % totalServices;
+                showService(prevIndex);
+            }
+            clearInterval(serviceInterval);
+            startServiceSlider();
+        }
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         // Initial state for first slide
@@ -132,6 +191,16 @@ document.addEventListener('DOMContentLoaded', function () {
             serviceSlides[0].style.opacity = '1';
             serviceSlides[0].style.transform = 'translateY(0)';
             startServiceSlider();
+        }
+
+        // Place slider correctly on load and on resize
+        moveSliderIntoImage();
+        window.addEventListener('resize', moveSliderIntoImage);
+
+        // Attach touch events to image container for swipe gestures
+        if (imageContainer) {
+            imageContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+            imageContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
         }
     });
 })();

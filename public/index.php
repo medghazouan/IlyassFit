@@ -122,7 +122,7 @@ try {
     </div>
 </section>
 
-<!-- Scripts moved to main.js for better performance -->
+
 
 <!-- Services Section Custom -->
 <section class="services-custom-section" id="services">
@@ -152,12 +152,7 @@ try {
                     <img src="assets/images/static/pic1.jpeg" alt="Fitness Services"
                         class="img-fluid service-static-img">
 
-                    <div class="service-dots-nav">
-                        <?php foreach ($services as $index => $service): ?>
-                            <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>"
-                                onclick="goToService(<?php echo $index; ?>)"></span>
-                        <?php endforeach; ?>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -165,7 +160,7 @@ try {
     </div>
 </section>
 
-<!-- Services slider script moved to main.js -->
+
 
 <!-- Transformations Snippet Section -->
 <section class="transformations-section" style="padding-top: 50px; padding-bottom: 50px;">

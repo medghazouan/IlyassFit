@@ -47,6 +47,7 @@
     flex: 1;
     position: relative;
     overflow: hidden;
+    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Before/After Labels at Top */
@@ -71,6 +72,7 @@
     background: var(--primary-red);
     margin: 0 2px;
     box-shadow: 0 0 10px var(--primary-red);
+    flex-shrink: 0;
 }
 
 .transformation-img {
@@ -83,6 +85,14 @@
 
 .transformation-card:hover .transformation-img {
     transform: scale(1.05);
+}
+
+.image-wrapper:hover {
+    flex: 2;
+}
+
+.image-wrapper:hover .transformation-img {
+    transform: scale(1.15);
 }
 
 /* Client Name Button - NO SHADOW */
@@ -456,12 +466,12 @@
     .images-container {
         padding: 6px;
         gap: 4px;
+        aspect-ratio: 1 / 2;
     }
 
-    /* Make image wrappers square */
     .image-wrapper {
-        aspect-ratio: 1 / 1;
-        /* KEY PART */
+        aspect-ratio: auto;
+        height: auto;
     }
 
     /* Keep images inside wrapper without stretching */

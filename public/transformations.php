@@ -11,7 +11,7 @@ include 'components/meta.php';
 include 'components/header.php';
 ?>
 
-<!-- Hero Section -->
+
 <!-- Hero Section -->
 <?php 
 $heroTitle = "CLIENT TRANSFORMATIONS";
