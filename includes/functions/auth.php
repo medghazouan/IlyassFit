@@ -3,10 +3,14 @@
 function startSecureSession() {
     if (session_status() === PHP_SESSION_NONE) {
         // Secure session configuration
+        // Check if connection is HTTPS
+        $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+        
         ini_set('session.cookie_httponly', 1);
         ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_secure', 0); // Set to 1 if using HTTPS
+        ini_set('session.cookie_secure', $isHttps ? 1 : 0); // Auto-enable for HTTPS
         ini_set('session.cookie_samesite', 'Strict');
+        
         session_start();
     }
 }

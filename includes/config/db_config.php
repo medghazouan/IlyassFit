@@ -1,9 +1,22 @@
 <?php
 // Database configuration
-$host = 'localhost';
-$db = 'ilyassfitdb';  // Change to your database name
-$user = 'root';           // Change to your MySQL username
-$pass = '';               // Change to your MySQL password
+// Detect environment
+$isLocal = ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1');
+
+if ($isLocal) {
+    // Localhost (XAMPP) Credentials
+    $host = 'localhost';
+    $db = 'ilyassfitdb'; 
+    $user = 'root';
+    $pass = '';
+} else {
+    // Production (Hostinger) Credentials - UPDATE THESE BEFORE DEPLOYING
+    $host = 'localhost';
+    $db = 'u123456789_ilyassfit'; // Example: u123456789_dbname
+    $user = 'u123456789_admin';   // Example: u123456789_username
+    $pass = 'YourStrongPassword123!'; 
+}
+
 $charset = 'utf8mb4';
 
 // PDO options for better security and error handling
@@ -18,8 +31,9 @@ try {
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    // Log error instead of displaying in production
+    // Log error securely
     error_log("Database connection failed: " . $e->getMessage());
-    die("Connection failed. Please try again later.");
+    // Generic error message for user
+    die("Service temporarily unavailable. Please try again later.");
 }
 ?>

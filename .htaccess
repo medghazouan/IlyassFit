@@ -6,16 +6,24 @@
 # Enable Rewrite Engine
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    # RewriteBase /
     
     # ============================================
     # HTTPS REDIRECTION (ACTIVATE IN PRODUCTION)
     # ============================================
-    # IMPORTANT: Uncomment these lines ONLY after installing SSL certificate
-    # To get free SSL: https://letsencrypt.org/
-    
-    # RewriteCond %{HTTPS} off
-    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    # Redirect to HTTPS if not localhost
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # ============================================
+    # ROUTE TO PUBLIC FOLDER
+    # ============================================
+    # Redirect all requests to public/ folder unless they are for admin/
+    RewriteCond %{REQUEST_URI} !/public/
+    RewriteCond %{REQUEST_URI} !/admin/
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
     
     # Force www (optional - uncomment if you want www)
     # RewriteCond %{HTTP_HOST} !^www\. [NC]
