@@ -292,7 +292,7 @@ try {
             </div>
         </div>
 
-        <!-- Instagram Button & Watch Now Button -->
+        
         <!-- Instagram Button & Watch Now Button -->
         <div class="text-center mt-5">
             <div class="d-flex flex-wrap justify-content-center gap-3 gallery-buttons">

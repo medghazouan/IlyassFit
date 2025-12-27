@@ -92,28 +92,42 @@
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
+  /* Reduce gutter on mobile for the 3-column layout */
+  .gallery-grid-custom {
+    --bs-gutter-x: 0.25rem;
+    width: 100%;
+  }
 
-    /* Reduce gutter on mobile for the 3-column layout */
-    .gallery-grid-custom {
-        --bs-gutter-x: 0.25rem;
-        width: 100%;
-    }
+  .gallery-sticky-content {
+    top: 100px;
+  }
 
-    .gallery-sticky-content {
-        top: 100px;
-    }
+  /* Reduce image height significantly on mobile */
+  .gallery-col-scroll .gallery-img,
+  .gallery-sticky-content .gallery-img {
+    min-height: auto;
+    height: 20vh;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
 
-    /* Reduce image height significantly on mobile */
-    .gallery-col-scroll .gallery-img,
-    .gallery-sticky-content .gallery-img {
-        min-height: auto;
-        height: 20vh;
-        /* Much smaller height */
-        aspect-ratio: auto;
-        /* Let height dictate on mobile if needed, or keep aspect ratio */
-        object-fit: cover;
-    }
+  /* Reduce button width on mobile and ensure centering */
+  .btn-instagram-custom,
+  .btn-watch-now {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    flex: 0 0 auto; /* Don't grow or shrink, natural size */
+    max-width: 150px;
+    min-width: auto;
+  }
+  
+  /* Ensure button container stays centered */
+  .gallery-buttons {
+    align-items: center;
+  }
 }
+
+
 
 /* Custom Buttons for Gallery */
 .btn-instagram-custom {

@@ -455,6 +455,15 @@
    ============================================ */
 @media (max-width: 576px) {
 
+    .transformations-title {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+        padding-bottom: 12px;
+        display: block;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
     /* Card width & spacing */
     .transformation-card {
         max-width: 92%;
