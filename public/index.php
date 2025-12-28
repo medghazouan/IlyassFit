@@ -63,11 +63,11 @@ try {
 <section class="about-me-section" id="about">
     <div class="about-background-image"></div>
     <div class="container h-100">
-        <div class="about-me-container h-100">
+        <div class="about-me-container h-100 ">
             <!-- Content Side -->
             <div class="about-me-content slide-in-right">
                 <div class="about-header">
-                    <span class="about-subtitle">ILYASS PT</span>
+                    <span class="about-subtitle">ILYASS FIT</span>
                     <h1 class="about-me-title">Get to<br>know me.</h1>
                 </div>
 
@@ -127,7 +127,7 @@ try {
 <!-- Services Section Custom -->
 <section class="services-custom-section" id="services">
     <div class="container h-100">
-        <div class="row h-100 align-items-center">
+        <div class="row h-100 align-items-center ">
             <!-- Left Side: Text Slider -->
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="services-content-wrapper">
