@@ -128,8 +128,8 @@ try {
 <section class="services-custom-section" id="services">
     <div class="container h-100">
         <div class="row h-100 align-items-center ">
-            <!-- Left Side: Text Slider -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
+            <!-- Left Side: Text Slider (Order 2 on mobile, Order 1 on Desktop) -->
+            <div class="col-lg-6 mb-4 mb-lg-0 order-2 order-lg-1">
                 <div class="services-content-wrapper">
                     <h2 class="services-main-title slide-in-left">OUR SERVICES.</h2>
                     <div class="services-slider slide-in-left" style="transition-delay: 0.6s;">
@@ -142,17 +142,29 @@ try {
                                 </p>
                             </div>
                         <?php endforeach; ?>
+                        
+                        <!-- Dots Navigation (Moved here to stay with content) -->
+                         <div class="service-dots-nav">
+                            <?php foreach ($services as $index => $service): ?>
+                                <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                      onclick="goToService(<?php echo $index; ?>)"></span>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side: Static Image -->
-            <div class="col-lg-6">
+            <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
+            <div class="col-lg-6 order-1 order-lg-2">
                 <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;">
                     <img src="assets/images/static/pic1.jpeg" alt="Fitness Services"
                         class="img-fluid service-static-img">
-
-                    
+                     <!-- Decor elements if needed -->
+                    <div class="service-decor top-left">
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus"></i>
+                    </div>
                 </div>
             </div>
 
@@ -184,7 +196,7 @@ try {
                                 }
                                 ?>
                                 <img src="<?php echo htmlspecialchars($beforePath); ?>" alt="Before"
-                                    class="transformation-img" style="height: 300px;">
+                                    class="transformation-img">
                             </div>
                             <div class="divider-line"></div>
                             <div class="image-wrapper">
@@ -196,7 +208,7 @@ try {
                                 }
                                 ?>
                                 <img src="<?php echo htmlspecialchars($afterPath); ?>" alt="After"
-                                    class="transformation-img" style="height: 300px;">
+                                    class="transformation-img">
                             </div>
                         </div>
                     </div>

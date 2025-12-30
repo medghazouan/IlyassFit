@@ -134,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const dotsNextSibling = dotsNav ? dotsNav.nextSibling : null;
 
     function moveSliderIntoImage() {
+        // Disabled overlay logic as per user request for stacked layout on mobile
+        /* 
         if (!serviceWrapper) return;
         if (window.innerWidth <= 991 && imageContainer && !serviceWrapper.classList.contains('mobile-overlay')) {
             imageContainer.appendChild(serviceWrapper);
@@ -158,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }
+        */
     }
 
     // Basic touch swipe handling on the image container (mobile)
@@ -425,3 +428,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     items.forEach(el => observer.observe(el));
 });
+

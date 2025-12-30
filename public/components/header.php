@@ -18,7 +18,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img src="assets/images/static/logo.png" alt="Ilyass Fit Logo" class="logo-mobile">
         </a>
 
-
         <div class="navbar-content">
             <!-- Left Navigation Links -->
             <ul class="navbar-nav navbar-left">
@@ -46,17 +45,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </ul>
         </div>
        
-        <!-- Mobile Toggle (Hamburger - shown when menu closed) -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Mobile Toggle (Hamburger) -->
+        <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <!-- Mobile Close Button (X - shown when menu open) -->
-        <button type="button" class="navbar-close-btn" id="mobileMenuClose" aria-label="Close menu">
-            <span>&times;</span>
-        </button>
        
-        <!-- Mobile Menu -->
+        <!-- Mobile Menu - Slides in from right -->
         <div class="collapse navbar-collapse" id="navbarMobile">
             <ul class="navbar-nav mobile-nav">
                 <?php foreach ($navLinks as $link): ?>
@@ -70,19 +64,46 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
 </nav>
 
-
-<!-- Navbar Scroll Script -->
+<!-- Navbar Scroll & Sticky Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
-   
+    const gallerySection = document.getElementById('gallery');
+    
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
+        const scrollPosition = window.scrollY;
+        
+        // Add scrolled class for background change
+        if (scrollPosition > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+        
+        // Make navbar sticky only after reaching gallery section
+        if (gallerySection) {
+            const galleryOffset = gallerySection.offsetTop;
+            
+            if (scrollPosition >= galleryOffset) {
+                navbar.classList.add('sticky');
+            } else {
+                navbar.classList.remove('sticky');
+            }
+        } else {
+            // If no gallery section (like on other pages), navbar is always sticky
+            navbar.classList.add('sticky');
+        }
     });
+    
+    // Initial check on page load
+    const initialScroll = window.scrollY;
+    if (initialScroll > 50) {
+        navbar.classList.add('scrolled');
+    }
+    
+    if (!document.getElementById('gallery')) {
+        navbar.classList.add('sticky');
+    }
 });
 </script>
 
@@ -91,44 +112,63 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const navbarToggler = document.querySelector('.navbar-toggler');
     const navbarCollapse = document.getElementById('navbarMobile');
-    const navbarCloseBtn = document.getElementById('mobileMenuClose');
+    const body = document.body;
     
-    if (navbarCollapse) {
-        // Listen for Bootstrap collapse events to toggle the 'menu-open' class on body
-        navbarCollapse.addEventListener('show.bs.collapse', function() {
-            document.body.classList.add('menu-open');
-            if (navbarToggler) {
+    if (navbarToggler && navbarCollapse) {
+        // Toggle menu on hamburger/X click
+        navbarToggler.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isOpen = navbarCollapse.classList.contains('show');
+            
+            if (isOpen) {
+                // Close menu
+                navbarCollapse.classList.remove('show');
+                body.classList.remove('menu-open');
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            } else {
+                // Open menu
+                navbarCollapse.classList.add('show');
+                body.classList.add('menu-open');
                 navbarToggler.setAttribute('aria-expanded', 'true');
             }
         });
         
-        navbarCollapse.addEventListener('hide.bs.collapse', function() {
-            document.body.classList.remove('menu-open');
-            if (navbarToggler) {
-                navbarToggler.setAttribute('aria-expanded', 'false');
+        // Close menu when clicking on backdrop
+        body.addEventListener('click', function(e) {
+            if (body.classList.contains('menu-open')) {
+                // Check if click is outside menu and not on toggler
+                if (!navbarCollapse.contains(e.target) && !navbarToggler.contains(e.target)) {
+                    navbarCollapse.classList.remove('show');
+                    body.classList.remove('menu-open');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                }
             }
         });
-        
-        // Close button (X) click handler
-        if (navbarCloseBtn) {
-            navbarCloseBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
-                bsCollapse.hide();
-            });
-        }
         
         // Close mobile menu when clicking on a nav link
         const mobileNavLinks = navbarCollapse.querySelectorAll('.nav-link');
         mobileNavLinks.forEach(function(link) {
             link.addEventListener('click', function() {
-                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
-                bsCollapse.hide();
+                navbarCollapse.classList.remove('show');
+                body.classList.remove('menu-open');
+                navbarToggler.setAttribute('aria-expanded', 'false');
             });
+        });
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && body.classList.contains('menu-open')) {
+                navbarCollapse.classList.remove('show');
+                body.classList.remove('menu-open');
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            }
         });
     }
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Only run the index/anchor scroll/hash active-link logic when we're
@@ -155,12 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // IntersectionObserver to update active state while scrolling on the index page
     const idsToObserve = ['about', 'gallery'];
-    // Use a more forgiving rootMargin so sections become active when they
-    // reach near the middle of the viewport, improving reliability for large
-    // sections like the gallery.
     const observer = new IntersectionObserver((entries) => {
-        // Track which observed sections are currently intersecting. We
-        // maintain a Set so we can know when none are visible (show HOME).
         entries.forEach(entry => {
             const id = entry.target.id;
             if (!id) return;
@@ -172,8 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Decide which nav link should be active.
-        // Priority: observed ids in `idsToObserve` order, otherwise HOME.
         let activated = false;
         for (const key of idsToObserve) {
             if (window._visibleSections && window._visibleSections.has(key)) {
@@ -185,9 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (!activated) {
-            // No observed section visible -> mark HOME active (index.php links)
             document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
-            // match links that point to index.php or to '/'
             const homeLink = document.querySelector('.navbar-nav .nav-link[href$="index.php"]') || document.querySelector('.navbar-nav .nav-link[href="/" ]');
             if (homeLink) homeLink.classList.add('active');
         }
@@ -198,10 +229,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (el) observer.observe(el);
     });
 
-    // Fallback: robust scroll-based visibility check using bounding rects.
-    // Some large sections (like a gallery) can be missed by IntersectionObserver
-    // depending on viewport and rootMargin; this checks visible area percentage
-    // and picks the section with the largest visible portion.
     function getMostVisibleSection() {
         let best = { id: null, ratio: 0 };
         idsToObserve.forEach(id => {
@@ -227,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll('.navbar-nav .nav-link[href*="#' + best.id + '"]').forEach(l => l.classList.add('active'));
             } else {
-                // default to HOME when none are sufficiently visible
                 document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
                 const homeLink = document.querySelector('.navbar-nav .nav-link[href$="index.php"]') || document.querySelector('.navbar-nav .nav-link[href="/" ]');
                 if (homeLink) homeLink.classList.add('active');
@@ -238,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', onScrollThrottled, { passive: true });
     window.addEventListener('resize', onScrollThrottled);
 
-    // Run once on load to set correct state
     onScrollThrottled();
 });
 </script>

@@ -1,11 +1,27 @@
 /* ============================================
+   CSS VARIABLES (Required for gallery styles)
+   ============================================ */
+:root {
+    --primary-red: #fc0404;
+    --dark-bg: #1b1f22;
+    --light-gray: #212529;
+    --text-white: #ffffff;
+    --text-gray: #b0b0b0;
+    --black: #000000;
+}
+
+/* ============================================
    GALLERY SECTION
    ============================================ */
 .gallery-section {
-    background: var(--dark-bg);
+    background-color: var(--dark-bg);
     padding: 100px 0;
     position: relative;
-    /* Removed conflicting grid display as inner content uses Bootstrap rows */
+}
+
+/* Gallery Gap Fix */
+.gap-4 {
+    gap: 1.5rem !important;
 }
 
 /* Constrain Gallery Width */
@@ -28,6 +44,42 @@
     color: #94a3b8;
     font-size: 1.1rem;
     margin-bottom: 3rem;
+}
+
+/* Gallery Header */
+.gallery-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.gallery-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 20px;
+}
+
+.gallery-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 150px;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-red), transparent);
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    font-weight: 400;
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 /* Gallery Layout */
@@ -66,9 +118,6 @@
     /* Adjust based on navbar height to prevent overlap */
     z-index: 10;
     width: 100%;
-    /* Standard sticky behavior aligns top at start and bottom at end */
-    /* Remove gap in sticky container so images touch or have minimal space if desired,
-       but HTML has gap-0 on sticky wrapper, so it's fine. */
 }
 
 /* Force Aspect Ratio for Middle (Sticky) images */
@@ -90,56 +139,138 @@
     object-fit: cover;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-  /* Reduce gutter on mobile for the 3-column layout */
-  .gallery-grid-custom {
-    --bs-gutter-x: 0.25rem;
-    width: 100%;
-  }
-
-  .gallery-sticky-content {
-    top: 100px;
-  }
-
-  /* Reduce image height significantly on mobile */
-  .gallery-col-scroll .gallery-img,
-  .gallery-sticky-content .gallery-img {
-    min-height: auto;
-    height: 20vh;
-    aspect-ratio: auto;
-    object-fit: cover;
-  }
-
-  /* Reduce button width on mobile and ensure centering */
-  .btn-instagram-custom,
-  .btn-watch-now {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.85rem;
-    flex: 0 0 auto; /* Don't grow or shrink, natural size */
-    max-width: 150px;
-    min-width: auto;
-  }
-  
-  /* Ensure button container stays centered */
-  .gallery-buttons {
-    align-items: center;
-  }
+/* Gallery CTA (inside gallery section) */
+.gallery-cta {
+    margin-top: 80px;
+    padding: 60px 50px;
+    background: linear-gradient(135deg, var(--primary-red) 0%, #d60303 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(252, 4, 4, 0.3);
 }
 
+.gallery-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    z-index: 0;
+}
 
+.gallery-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
 
-/* Custom Buttons for Gallery */
-.btn-instagram-custom {
-    border-width: 2px;
-    border-radius: 50px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+.gallery-cta .row {
+    position: relative;
+    z-index: 1;
+}
+
+.gallery-cta-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-white);
+    margin-bottom: 15px;
     text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.gallery-cta-text {
+    color: var(--text-white);
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.gallery-cta-btn {
+    background: var(--text-white);
+    color: var(--primary-red);
+    font-weight: 700;
+    padding: 18px 45px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
+    border: 3px solid var(--text-white);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-cta-btn:hover {
     background: transparent;
     color: var(--text-white);
     border-color: var(--text-white);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-cta-btn i {
+    transition: transform 0.3s ease;
+}
+
+.gallery-cta-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Gallery Buttons Container */
+.gallery-buttons {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Instagram Button */
+.btn-instagram {
+    border-width: 2px;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-instagram:hover {
+    background: #d62976;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(214, 41, 118, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Instagram Button Custom */
+.btn-instagram-custom {
+    background: transparent;
+    color: var(--text-white);
+    border: 2px solid var(--text-white);
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    border-width: 2px;
 }
 
 .btn-instagram-custom:hover {
@@ -150,21 +281,319 @@
     transform: translateY(-3px);
 }
 
+.btn-instagram-custom i {
+    font-size: 1.1rem;
+}
+
+/* Watch Now Button */
 .btn-watch-now {
-    background-color: var(--primary-red);
+    background: var(--primary-red);
     color: var(--text-white);
+    border: 2px solid var(--primary-red);
+    padding: 12px 30px;
     border-radius: 50px;
+    text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    text-transform: uppercase;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    /* Adjust padding as needed since it is btn-lg */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
 }
 
 .btn-watch-now:hover {
-    background-color: white;
+    background: transparent;
     color: var(--primary-red);
+    border-color: var(--primary-red);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(252, 4, 4, 0.4);
+}
+
+.btn-watch-now i {
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   VIDEO MODAL
+   ============================================ */
+.video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 120000;
+    /* above navbar */
+    align-items: center;
+    justify-content: center;
+}
+
+.video-modal.active {
+    display: flex;
+}
+
+.video-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
+}
+
+.video-modal-content {
+    position: relative;
+    z-index: 120001;
+    width: 90%;
+    max-width: 1000px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.video-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: var(--text-white);
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 120002;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.video-modal-close:hover {
+    color: var(--primary-red);
+    transform: rotate(90deg);
+}
+
+.video-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(252, 4, 4, 0.3);
+    position: relative;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+    max-height: 80vh;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Desktop (max-width: 992px) */
+@media (max-width: 992px) {
+
+    .services-section,
+    .gallery-section {
+        padding: 80px 0;
+    }
+
+    .gallery-section .section-title {
+        font-size: 2.5rem;
+    }
+
+    .gallery-cta {
+        margin-top: 60px;
+        padding: 50px 40px;
+    }
+
+    .gallery-cta-title {
+        font-size: 2rem;
+    }
+}
+
+/* Tablet (max-width: 768px) */
+@media (max-width: 768px) {
+    .gallery-section {
+        padding: 60px 0;
+    }
+
+    .gallery-header {
+        text-align: left;
+        padding: 0 15px;
+    }
+
+    .gallery-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .gallery-subtitle {
+        font-size: 1rem;
+        text-align: left;
+        padding: 0 10px;
+    }
+
+    .gallery-section .section-title {
+        font-size: 2.5rem;
+    }
+
+    .gallery-cta {
+        margin-top: 60px;
+        padding: 50px 40px;
+    }
+
+    .gallery-cta-title {
+        font-size: 2rem;
+    }
+
+    .gallery-section .d-flex.gap-3 {
+        flex-direction: column;
+    }
+
+    /* Reduce gutter on mobile for the 3-column layout */
+    .gallery-grid-custom {
+        --bs-gutter-x: 0.25rem;
+        width: 100%;
+    }
+
+    .gallery-sticky-content {
+        top: 100px;
+    }
+
+    /* Reduce image height significantly on mobile */
+    .gallery-col-scroll .gallery-img,
+    .gallery-sticky-content .gallery-img {
+        min-height: auto;
+        height: 20vh;
+        aspect-ratio: auto;
+        object-fit: cover;
+    }
+
+    /* Reduce button width on mobile and ensure centering */
+    .btn-instagram-custom,
+    .btn-watch-now {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+        flex: 0 0 auto;
+        max-width: 150px;
+        min-width: auto;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    /* Ensure button container stays centered */
+    .gallery-buttons {
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .btn-instagram,
+    .btn-watch-now {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .video-modal-content {
+        width: 95%;
+    }
+
+    .video-modal-close {
+        top: -40px;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .video-wrapper video {
+        max-height: 60vh;
+        border-radius: 8px;
+    }
+
+    .gallery-buttons {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .btn-instagram-custom,
+    .btn-watch-now {
+        width: auto;
+        /* Change from 100% to auto */
+        min-width: 200px;
+        /* Ensure they aren't too small */
+        max-width: 300px;
+        /* Ensure they aren't too wide */
+        justify-content: center;
+        padding: 14px 25px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .video-wrapper video {
+        max-height: 90vh;
+    }
+}
+
+/* Small Mobile (max-width: 576px) */
+@media (max-width: 576px) {
+    .gallery-section .section-title {
+        font-size: 1.75rem;
+    }
+
+    .gallery-cta-title {
+        font-size: 1.5rem;
+    }
+
+    .gallery-cta {
+        padding: 30px 20px;
+    }
+
+    .video-modal-close {
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+    }
+
+    .video-wrapper {
+        border-radius: 8px;
+    }
+
+    .btn-instagram-custom,
+    .btn-watch-now {
+        font-size: 0.9rem;
+        padding: 12px 20px;
+    }
+
+    .btn-instagram-custom i,
+    .btn-watch-now i {
+        font-size: 1rem;
+    }
 }
