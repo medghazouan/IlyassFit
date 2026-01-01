@@ -45,12 +45,19 @@ body {
 /* ============================================
    TYPOGRAPHY
    ============================================ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
 }
 
-button, .cta, .btn {
+button,
+.cta,
+.btn {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
@@ -74,7 +81,7 @@ button, .cta, .btn {
     background-color: var(--text-white);
     border-color: var(--text-white);
     color: var(--primary-red);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(252, 4, 4, 0.3);
 }
 
@@ -113,7 +120,12 @@ button, .cta, .btn {
     background-color: var(--text-white);
     border-color: var(--text-white);
     color: var(--dark-bg);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#seemorebtn{
+    border-radius: 50px;
 }
 
 /* ============================================
@@ -174,7 +186,7 @@ button, .cta, .btn {
     body {
         padding-top: 60px;
     }
-    
+
     .section-title {
         font-size: 2rem;
     }

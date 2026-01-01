@@ -264,6 +264,148 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// ============================================
+// 3.5 EXPANDABLE GALLERY - Modal & Navigation
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryModalOverlay = document.getElementById('galleryModalOverlay');
+    const closeGalleryBtn = document.getElementById('closeGalleryModal');
+    const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+    const galleryNextBtn = document.getElementById('galleryNextBtn');
+    const galleryModalImg = document.getElementById('galleryModalImg');
+    const galleryCurrentIndex = document.getElementById('galleryCurrentIndex');
+    const galleryTotalImages = document.getElementById('galleryTotalImages');
+
+    let allGalleryImages = [];
+    let currentGalleryImageIndex = 0;
+
+    // Collect all gallery images
+    function initializeGalleryImages() {
+        const galleryItems = document.querySelectorAll('.gallery-item-expandable');
+        allGalleryImages = [];
+        galleryItems.forEach(item => {
+            const img = item.querySelector('.gallery-img-expandable');
+            if (img && img.src) {
+                allGalleryImages.push(img.src);
+            }
+        });
+        if (galleryTotalImages) {
+            galleryTotalImages.textContent = allGalleryImages.length;
+        }
+    }
+
+    // Open gallery modal with specific image
+    function openGalleryModal(imageIndex) {
+        if (allGalleryImages.length === 0) return;
+
+        currentGalleryImageIndex = imageIndex % allGalleryImages.length;
+        updateGalleryModalImage();
+
+        if (galleryModal) {
+            galleryModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Update the displayed image
+    function updateGalleryModalImage() {
+        if (galleryModalImg && allGalleryImages[currentGalleryImageIndex]) {
+            galleryModalImg.src = allGalleryImages[currentGalleryImageIndex];
+        }
+        if (galleryCurrentIndex) {
+            galleryCurrentIndex.textContent = currentGalleryImageIndex + 1;
+        }
+    }
+
+    // Close gallery modal
+    function closeGalleryModal() {
+        if (galleryModal) {
+            galleryModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Navigate to next image
+    function goToNextImage() {
+        if (allGalleryImages.length > 0) {
+            currentGalleryImageIndex = (currentGalleryImageIndex + 1) % allGalleryImages.length;
+            updateGalleryModalImage();
+        }
+    }
+
+    // Navigate to previous image
+    function goToPrevImage() {
+        if (allGalleryImages.length > 0) {
+            currentGalleryImageIndex = (currentGalleryImageIndex - 1 + allGalleryImages.length) % allGalleryImages.length;
+            updateGalleryModalImage();
+        }
+    }
+
+    // Event listeners for gallery items
+    document.querySelectorAll('.gallery-item-expandable').forEach((item, index) => {
+        item.addEventListener('click', function (e) {
+            e.stopPropagation();
+            // Disable opening modal on desktop (width > 992px), keep hover effect only
+            // Allow opening on mobile and tablet
+            if (window.innerWidth > 992) {
+                return;
+            }
+            openGalleryModal(index);
+        });
+    });
+
+    // Close button
+    if (closeGalleryBtn) {
+        closeGalleryBtn.addEventListener('click', closeGalleryModal);
+    }
+
+    // Close overlay click
+    if (galleryModalOverlay) {
+        galleryModalOverlay.addEventListener('click', closeGalleryModal);
+    }
+
+    // Navigation buttons
+    if (galleryNextBtn) {
+        galleryNextBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            goToNextImage();
+        });
+    }
+
+    if (galleryPrevBtn) {
+        galleryPrevBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            goToPrevImage();
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function (e) {
+        if (galleryModal && galleryModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeGalleryModal();
+            } else if (e.key === 'ArrowRight') {
+                goToNextImage();
+            } else if (e.key === 'ArrowLeft') {
+                goToPrevImage();
+            }
+        }
+    });
+
+    // Prevent modal content click from closing
+    if (galleryModal) {
+        galleryModal.addEventListener('click', function (e) {
+            if (e.target === galleryModal) {
+                closeGalleryModal();
+            }
+        });
+    }
+
+    // Initialize on load
+    initializeGalleryImages();
+});
+
 // =======================================
 // 1. Pricing SECTION - Scroll Animations 
 // =======================================

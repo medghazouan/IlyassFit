@@ -466,7 +466,7 @@
 
     /* Card width & spacing */
     .transformation-card {
-        max-width: 92%;
+        max-width: 85%;
         margin: 0 auto;
         border-radius: 12px;
     }
@@ -485,7 +485,7 @@
 
     /* Keep images inside wrapper without stretching */
     .transformation-img {
-        height: 100%;
+        height: 250px;
         width: 100%;
         object-fit: cover;
     }

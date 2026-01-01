@@ -31,8 +31,8 @@ $heroSubtitle = "Professional Training | Nutrition Coaching | Results Guaranteed
 $heroBackground = "hero-bg-video";
 ob_start(); 
 ?>
-<a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
-<a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+<a href="pricing.php" class="btn btn-primary">Get Started</a>
+<a href="#about" class="btn btn-outline-light">Learn More</a>
 <?php 
 $heroButtons = ob_get_clean();
 include 'components/hero.php'; 
@@ -217,13 +217,12 @@ try {
         </div>
 
         <div class="text-center mt-5">
-            <a href="transformations.php" class="btn btn-primary btn-lg"
-                style="padding: 15px 40px; font-size: 1.1rem; border-radius: 50px;">See More</a>
+            <a href="transformations.php" id="seemorebtn" class="btn btn-outline-light">See More</a>
         </div>
     </div>
 </section>
 
-<!-- Gallery section -->
+<!-- Expandable Gallery Section -->
 <section class="gallery-section" id="gallery">
     <div class="container">
         <!-- Gallery Header -->
@@ -233,93 +232,124 @@ try {
         </div>
 
         <?php
-        // Database configuration already loaded at line 49
-        
+        // Fetch 12 images from gallery table (3 groups of 4)
         try {
-            // Fetch 13 images from gallery table
-            $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY id ASC LIMIT 13");
-            $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Distribute 13 images
-            $leftTop = array_slice($images, 0, 2);      // Images 0-1 (2 images)
-            $colMid = array_slice($images, 2, 3);       // Images 2-4 (3 images)
-            $rightTop = array_slice($images, 5, 2);     // Images 5-6 (2 images)
-            $rightBottom = array_slice($images, 7, 3);  // Images 7-9 (3 images)
-            $leftBottom = array_slice($images, 10, 3);  // Images 10-12 (3 images)
-        
+            $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY RAND() LIMIT 12");
+            $allImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Create paths for images
+            foreach ($allImages as &$img) {
+                $img['full_path'] = 'images/uploads/' . htmlspecialchars($img['image_path']);
+            }
         } catch (PDOException $e) {
             error_log("Gallery fetch error: " . $e->getMessage());
-            $leftTop = [];
-            $leftBottom = [];
-            $colMid = [];
-            $rightTop = [];
-            $rightBottom = [];
+            $allImages = [];
         }
         ?>
 
-        <div class="row g-4 gallery-grid-custom">
-            <!-- Left Column (Scrolling) -->
-            <div class="col-3 gallery-col-scroll">
-                <div class="d-flex flex-column gap-3">
-                    <?php
-                    $leftImages = array_merge($leftTop, $leftBottom);
-                    foreach ($leftImages as $image):
-                        ?>
-                        <div class="gallery-item">
-                            <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
-                                loading="lazy">
-                        </div>
-                    <?php endforeach; ?>
+        <!-- Expandable Gallery Container -->
+        <div class="expandable-gallery-wrapper">
+            <?php if (!empty($allImages)): ?>
+                <!-- Group 1 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="1">
+                        <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo $image['full_path']; ?>" 
+                                     alt="Gallery Image <?php echo $index + 1; ?>" 
+                                     class="gallery-img-expandable"
+                                     loading="lazy">
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Middle Column (Sticky) -->
-            <div class="col-6 gallery-col-sticky-wrapper">
-                <div class="d-flex flex-column gap-4 gallery-sticky-content">
-                    <?php foreach ($colMid as $image): ?>
-                        <div class="gallery-item">
-                            <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
-                                loading="lazy">
-                        </div>
-                    <?php endforeach; ?>
+                <!-- Group 2 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="2">
+                        <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo $image['full_path']; ?>" 
+                                     alt="Gallery Image <?php echo $index + 5; ?>" 
+                                     class="gallery-img-expandable"
+                                     loading="lazy">
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Right Column (Scrolling) -->
-            <div class="col-3 gallery-col-scroll">
-                <div class="d-flex flex-column gap-3">
-                    <?php
-                    $rightImages = array_merge($rightTop, $rightBottom);
-                    foreach ($rightImages as $image):
-                        ?>
-                        <div class="gallery-item">
-                            <img class="img-fluid gallery-img"
-                                src="images/uploads/<?php echo htmlspecialchars($image['image_path']); ?>" alt="Gym Gallery"
-                                loading="lazy">
-                        </div>
-                    <?php endforeach; ?>
+                <!-- Group 3 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="3">
+                        <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+                                <img src="<?php echo $image['full_path']; ?>" 
+                                     alt="Gallery Image <?php echo $index + 9; ?>" 
+                                     class="gallery-img-expandable"
+                                     loading="lazy">
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
+            <?php else: ?>
+                <div class="alert alert-info">Gallery images will be displayed here.</div>
+            <?php endif; ?>
         </div>
 
-        
-        <!-- Instagram Button & Watch Now Button -->
+        <!-- Gallery Navigation Buttons -->
         <div class="text-center mt-5">
             <div class="d-flex flex-wrap justify-content-center gap-3 gallery-buttons">
                 <a href="https://instagram.com" target="_blank"
-                    class="btn btn-outline-light btn-lg btn-instagram-custom">
+                    class="btn btn-outline-light btn-instagram-custom">
                     <i class="fab fa-instagram me-2"></i> See More
                 </a>
-                <button class="btn btn-lg btn-watch-now" id="openVideoModal">
+                <button class="btn btn-watch-now" id="openVideoModal">
                     <i class="fas fa-play-circle me-2"></i> Watch Now
                 </button>
             </div>
         </div>
-
     </div>
 </section>
+
+<!-- Image Expand Modal -->
+<div class="gallery-modal" id="galleryModal">
+    <div class="gallery-modal-overlay" id="galleryModalOverlay"></div>
+    <div class="gallery-modal-content">
+        <!-- Close Button -->
+        <button class="gallery-modal-close" id="closeGalleryModal">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Previous Button -->
+        <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+
+        <!-- Image Container -->
+        <div class="gallery-modal-image-container">
+            <img id="galleryModalImg" src="" alt="Expanded Image" class="gallery-modal-img">
+        </div>
+
+        <!-- Next Button -->
+        <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+
+        <!-- Image Counter -->
+        <div class="gallery-modal-counter">
+            <span id="galleryCurrentIndex">1</span> / <span id="galleryTotalImages">12</span>
+        </div>
+    </div>
+</div>
 
 <!-- Video Modal -->
 <div class="video-modal" id="videoModal">

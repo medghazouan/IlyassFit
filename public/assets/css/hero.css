@@ -72,16 +72,13 @@
 }
 
 .hero-buttons .btn {
-    padding: 15px 40px;
-    font-size: 1.1rem;
+    padding: 12px 30px;
+    font-size: 1rem;
     border-radius: 50px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hero-buttons .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
+
 
 /* ============================================
    BACKGROUND VARIANTS
