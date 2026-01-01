@@ -1,5 +1,10 @@
 /* ============================================
-   GLOBAL STYLES
+   GLOBAL STYLES - CLEANED VERSION
+   All duplicates removed, only core global styles remain
+   ============================================ */
+
+/* ============================================
+   RESET & BASE
    ============================================ */
 * {
     margin: 0;
@@ -7,6 +12,9 @@
     box-sizing: border-box;
 }
 
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
 :root {
     --primary-red: #fc0404;
     --dark-bg: #1b1f22;
@@ -16,37 +24,35 @@
     --black: #000000;
 }
 
+/* ============================================
+   BODY & HTML
+   ============================================ */
+html {
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     background-color: var(--dark-bg);
     color: var(--text-white);
     overflow-x: hidden;
-    max-width: 100%;
+    padding-top: 80px;
+    width: 100%;
+    max-width: 100vw;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
 }
 
-button,
-.cta,
-.btn {
+button, .cta, .btn {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-}
-
-/* ============================================
-   TOP BANNER WAVE (Remove if not needed)
-   ============================================ */
-.top-banner {
-    display: none;
 }
 
 /* ============================================
@@ -91,6 +97,25 @@ button,
     transform: translateY(-2px);
 }
 
+.btn-outline-light {
+    border: 2px solid var(--text-white);
+    color: var(--text-white);
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    padding: 12px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--text-white);
+    border-color: var(--text-white);
+    color: var(--dark-bg);
+    transform: translateY(-2px);
+}
+
 /* ============================================
    UTILITY CLASSES
    ============================================ */
@@ -130,22 +155,33 @@ button,
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   BOOTSTRAP OVERRIDES
+   ============================================ */
+.gap-4 {
+    gap: 1.5rem !important;
+}
+
+/* ============================================
+   RESPONSIVE - BODY PADDING
    ============================================ */
 @media (max-width: 992px) {
-    .section-title {
-        font-size: 2.5rem;
+    body {
+        padding-top: 75px;
     }
 }
 
 @media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+    }
+    
     .section-title {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 576px) {
-    .section-title {
-        font-size: 2rem;
+    body {
+        padding-top: 60px;
     }
 }
