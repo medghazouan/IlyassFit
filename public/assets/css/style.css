@@ -70,8 +70,8 @@ button,
     border-color: var(--primary-red);
     color: var(--text-white);
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    padding: 12px 30px;
+    font-weight: 500;
+    padding: 12px 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 50px;

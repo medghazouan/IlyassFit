@@ -75,7 +75,7 @@ include 'components/hero.php';
                             ?>
                         </div>
                         
-                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary btn-lg">
+                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary">
                             <?php echo $plan['button_text'] ?? 'Get Started'; ?>
                         </a>
                     </div>
@@ -132,7 +132,7 @@ include 'components/hero.php';
                             ?>
                         </div>
                         
-                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary btn-lg">
+                        <a href="<?php echo $plan['booking_url'] ?? 'contact.php'; ?>" class="btn btn-primary">
                             <?php echo $plan['button_text'] ?? 'Get Started'; ?>
                         </a>
                     </div>
