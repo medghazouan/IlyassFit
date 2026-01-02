@@ -129,7 +129,7 @@ try {
     <div class="container h-100">
         <div class="row h-100 align-items-center ">
             <!-- Left Side: Text Slider (Order 2 on mobile, Order 1 on Desktop) -->
-            <div class="col-lg-6 mb-4 mb-lg-0 order-2 order-lg-1">
+            <div class="col-lg-6 mb-3 mb-lg-0 order-2 order-lg-1">
                 <div class="services-content-wrapper">
                     <h2 class="services-main-title slide-in-left">OUR SERVICES.</h2>
                     <div class="services-slider slide-in-left" style="transition-delay: 0.6s;">
@@ -175,10 +175,10 @@ try {
 
 
 <!-- Transformations Snippet Section -->
-<section class="transformations-section" style="padding-top: 50px; padding-bottom: 50px;">
+<section class="transformations-section">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="transformations-title">LATEST TRANSFORMATIONS</h2>
+        <div class="gallery-header">
+            <h2 class="gallery-title">LATEST TRANSFORMATIONS</h2>
         </div>
 
         <div class="row g-4 justify-content-center">

@@ -40,7 +40,7 @@
     gap: 0;
     position: relative;
     background: #000;
-    padding: 20px;
+    padding: 8px;
 }
 
 .image-wrapper {
@@ -104,21 +104,22 @@
 }
 
 .client-name-btn {
-    background: var(--primary-red);
-    color: white;
-    padding: 12px 35px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 700;
+    background: transparent;
+    color: var(--primary-red);
+    padding: 10px 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
     text-align: center;
+    width: 100%;
 }
 
 .transformation-card:hover .client-name-btn {
-    background: #d63c2a;
-    transform: scale(1.05);
+    /* No hover effect on name */
+    transform: none;
+    background: transparent;
 }
 
 /* Card Body - Review Text */
@@ -351,7 +352,7 @@
     }
 
     .transformations-section {
-        padding: 60px 0;
+        padding: 0 0 50px 0;
     }
 
     .transformation-img {
@@ -359,8 +360,8 @@
     }
 
     .client-name-btn {
-        font-size: 0.9rem;
-        padding: 10px 25px;
+        font-size: 1.3rem;
+        padding: 5px 0;
     }
 
     .review-text {
@@ -375,168 +376,194 @@
 
     .images-container {
         flex-direction: column;
-        padding: 15px;
+        padding: 0;
+        gap: 0;
+        background: transparent;
+        align-items: stretch;
+
+        .divider-line {
+            width: 100%;
+            height: 3px;
+            margin: 0;
+            align-self: stretch;
+        }
+
+        .transformation-img {
+            height: 250px;
+        }
+
+        .transformation-card .card-body {
+            padding: 20px;
+        }
+
+        /* Disable hover/expand effects on mobile to prevent gaps when tapping images */
+        .image-wrapper {
+            flex: none;
+            margin: 0;
+            background: transparent;
+        }
+
+        .image-wrapper:hover,
+        .transformation-card:hover .image-wrapper {
+            flex: none;
+        }
+
+        .transformation-card:hover .transformation-img,
+        .image-wrapper:hover .transformation-img,
+        .image-wrapper:active .transformation-img,
+        .image-wrapper:focus .transformation-img {
+            transform: none !important;
+        }
     }
 
-    .divider-line {
-        width: 100%;
-        height: 3px;
-        margin: 2px 0;
-    }
 
-    .transformation-img {
-        height: 350px;
-    }
-
-    .transformation-card .card-body {
-        padding: 20px;
-    }
-}
-
-
-/* Section Title */
-.transformations-title {
-    font-size: 3rem;
-    font-weight: 900;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 20px;
-}
-
-.transformations-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 150px;
-    height: 5px;
-    background: linear-gradient(to right, var(--primary-red), transparent);
-    /* GRADIENT */
-    border-radius: 0;
-}
-
-.transformations-subtitle {
-    font-size: 1.1rem;
-    color: #b0b0b0;
-    margin-top: 10px;
-}
-
-
-/* Responsive adjustments for the title to avoid overlapping header on small screens */
-@media (max-width: 992px) {
+    /* Section Title */
     .transformations-title {
-        font-size: 2.2rem;
-        letter-spacing: 2px;
-        padding-bottom: 12px;
-        display: block;
-        word-wrap: break-word;
-        white-space: normal;
-    }
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 20px;
 
-    .transformations-title::after {
-        width: 120px;
-    }
+        .transformations-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-red), transparent);
+            /* GRADIENT */
+            border-radius: 0;
+        }
 
-    .transformations-hero {
-        /* Don't use fixed background on tablets/phones (can interfere with header stacking) */
-        background-attachment: scroll;
-        min-height: 300px;
-        margin-top: -60px;
-        padding-top: 60px;
-    }
-}
+        .transformations-subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-top: 10px;
+        }
 
-/* ============================================
+
+        /* Responsive adjustments for the title to avoid overlapping header on small screens */
+        @media (max-width: 992px) {
+            .transformations-title {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+                padding-bottom: 12px;
+                display: block;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+
+            .transformations-title::after {
+                width: 120px;
+            }
+
+            .transformations-hero {
+                /* Don't use fixed background on tablets/phones (can interfere with header stacking) */
+                background-attachment: scroll;
+                min-height: 300px;
+                margin-top: -60px;
+                padding-top: 60px;
+            }
+        }
+
+        /* ============================================
    MOBILE CARD FORM (SCREENSHOT STYLE)
    ============================================ */
-@media (max-width: 576px) {
+        @media (max-width: 576px) {
 
-    .transformations-title {
-        font-size: 1.8rem;
-        letter-spacing: 2px;
-        padding-bottom: 12px;
-        display: block;
-        word-wrap: break-word;
-        white-space: normal;
+            .transformations-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+                padding-bottom: 12px;
+                display: block;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+
+            /* Card width & spacing */
+            .transformation-card {
+                max-width: 85%;
+                margin: 0 auto;
+                border-radius: 12px;
+            }
+
+            /* Compact image container */
+            .images-container {
+                padding: 0;
+                gap: 0;
+                aspect-ratio: auto;
+            }
+
+            .image-wrapper {
+                aspect-ratio: auto;
+                height: auto;
+                margin: 0;
+                background: transparent;
+            }
+
+            /* Keep images inside wrapper without stretching */
+            .transformation-img {
+                height: 250px;
+                width: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            /* Smaller divider */
+            .divider-line {
+                width: 100%;
+                height: 3px;
+                margin: 0;
+            }
+
+            /* Compact client name */
+            .client-name-wrapper {
+                padding: 10px;
+            }
+
+            .client-name-btn {
+                font-size: 1.2rem;
+                padding: 5px 0;
+            }
+
+            /* Compact review */
+            .transformation-card .card-body {
+                padding: 12px;
+            }
+
+            .review-text {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+        }
+
+
+
+        /* === Scroll reveal for transformation cards === */
+        .transformation-card {
+            opacity: 0;
+            transform: translateX(0);
+            transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+        }
+
+        /* Start off-screen */
+        .transformation-card.from-left {
+            transform: translateX(-80px);
+        }
+
+        .transformation-card.from-right {
+            transform: translateX(80px);
+        }
+
+        /* When visible */
+        .transformation-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
-
-    /* Card width & spacing */
-    .transformation-card {
-        max-width: 85%;
-        margin: 0 auto;
-        border-radius: 12px;
-    }
-
-    /* Compact image container */
-    .images-container {
-        padding: 6px;
-        gap: 4px;
-        aspect-ratio: 1 / 2;
-    }
-
-    .image-wrapper {
-        aspect-ratio: auto;
-        height: auto;
-    }
-
-    /* Keep images inside wrapper without stretching */
-    .transformation-img {
-        height: 250px;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    /* Smaller divider */
-    .divider-line {
-        width: 2px;
-        margin: 0;
-    }
-
-    /* Compact client name */
-    .client-name-wrapper {
-        padding: 10px;
-    }
-
-    .client-name-btn {
-        font-size: 0.85rem;
-        padding: 8px 20px;
-    }
-
-    /* Compact review */
-    .transformation-card .card-body {
-        padding: 12px;
-    }
-
-    .review-text {
-        font-size: 0.85rem;
-        line-height: 1.4;
-    }
-}
-
-
-
-/* === Scroll reveal for transformation cards === */
-.transformation-card {
-    opacity: 0;
-    transform: translateX(0);
-    transition: transform 0.7s ease-out, opacity 0.7s ease-out;
-}
-
-/* Start off-screen */
-.transformation-card.from-left {
-    transform: translateX(-80px);
-}
-
-.transformation-card.from-right {
-    transform: translateX(80px);
-}
-
-/* When visible */
-.transformation-card.visible {
-    opacity: 1;
-    transform: translateX(0);
 }

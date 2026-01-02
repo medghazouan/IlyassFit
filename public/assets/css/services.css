@@ -238,7 +238,7 @@
 
     .services-section,
     .gallery-section {
-        padding: 80px 0;
+        padding: 50px 0;
     }
 }
 
@@ -252,7 +252,7 @@
     .services-content-wrapper {
         text-align: center;
         padding: 0;
-        margin-bottom: 3rem;
+        margin-bottom: 0;
     }
 
     .service-item-desc {
@@ -321,6 +321,11 @@
     .services-section,
     .gallery-section {
         padding: 60px 0;
+    }
+
+    .services-custom-section {
+        padding: 60px 0 30px 0;
+        /* Reduced bottom padding */
     }
 }
 

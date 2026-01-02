@@ -551,14 +551,12 @@
     }
 
     /* Reduce button width on mobile and ensure centering */
+
     .btn-instagram-custom,
     .btn-watch-now {
         padding: 0.4rem 0.75rem;
         font-size: 0.85rem;
         flex: 0 0 auto;
-        max-width: 150px;
-        min-width: auto;
-        width: 100%;
         justify-content: center;
         margin-bottom: 15px;
     }
@@ -571,46 +569,9 @@
         padding: 0 20px;
     }
 
-    .btn-instagram,
-    .btn-watch-now {
-        width: 100%;
+    .btn-instagram {
         justify-content: center;
         margin-bottom: 15px;
-    }
-
-    .video-modal-content {
-        width: 95%;
-    }
-
-    .video-modal-close {
-        top: -40px;
-        font-size: 1.5rem;
-        width: 40px;
-        height: 40px;
-    }
-
-    .video-wrapper video {
-        max-height: 60vh;
-        border-radius: 8px;
-    }
-
-    .gallery-buttons {
-        flex-direction: column;
-        width: 100%;
-        padding: 0 20px;
-    }
-
-    .btn-instagram-custom,
-    .btn-watch-now {
-        width: auto;
-        /* Change from 100% to auto */
-        min-width: 200px;
-        /* Ensure they aren't too small */
-        max-width: 300px;
-        /* Ensure they aren't too wide */
-        justify-content: center;
-        padding: 12px 30px;
-        font-size: 0.95rem;
     }
 }
 

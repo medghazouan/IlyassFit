@@ -19,7 +19,7 @@ include 'components/meta.php';
 include 'components/header.php';
 ?>
 
-<!-- Pricing Hero Section -->
+
 <!-- Pricing Hero Section -->
 <?php 
 $heroTitle = "Choose Your Transformation Path";
@@ -54,7 +54,7 @@ include 'components/hero.php';
                         </div>
                         
                         <div class="plan-price">
-                            <span class="currency">MAD</span>
+                            <span class="currency">$</span>
                             <span class="amount"><?php echo number_format($plan['price'], 0); ?></span>
                             <span class="duration">/ <?php echo htmlspecialchars($plan['duration']); ?></span>
                         </div>
@@ -111,7 +111,7 @@ include 'components/hero.php';
                         </div>
                         
                         <div class="plan-price">
-                            <span class="currency">MAD</span>
+                            <span class="currency">$</span>
                             <span class="amount"><?php echo number_format($plan['price'], 0); ?></span>
                             <span class="duration">/ <?php echo htmlspecialchars($plan['duration'] ); ?></span>
                         </div>

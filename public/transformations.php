@@ -129,7 +129,7 @@ include 'components/hero.php';
             
             <div class="hero-buttons">
                 <a href="pricing.php" class="btn btn-primary btn-lg">Get Started</a>
-                <a href="contact.php" class="btn btn-outline-light btn-lg">Contact Me Now</a>
+                <a href="contact.php" class="btn btn-outline-light btn-lg">Contact Me</a>
             </div>
         </div>
     </div>

@@ -176,10 +176,7 @@
         align-items: center;
     }
 
-    .hero-buttons .btn {
-        width: 100%;
-        max-width: 300px;
-    }
+
 }
 
 @media (max-width: 576px) {
@@ -192,7 +189,6 @@
     }
 
     .hero-buttons .btn {
-        max-width: 280px;
         padding: 12px 30px;
     }
 }
