@@ -19,7 +19,7 @@ $bgClass = $heroBackground ?? '';
     
     <?php if ($bgClass === 'hero-bg-video'): ?>
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline poster="assets/images/static/hero_contact2.png">
+            <video class="hero-video" autoplay muted loop playsinline>
                 <source src="assets/video/hero.webm" type="video/webm">
                 <source src="assets/video/hero.mp4" type="video/mp4">
             </video>
