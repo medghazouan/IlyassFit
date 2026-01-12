@@ -15,7 +15,6 @@ if (isset($_GET['delete'])) {
     if ($id) {
         $image = readOne($pdo, 'gallery', $id);
         if ($image) {
-            // Delete image file
             deleteImage($image['image_path'], '../public/images/uploads/');
             
             if (delete($pdo, 'gallery', $id)) {
@@ -98,240 +97,119 @@ $totalImages = countRecords($pdo, 'gallery');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Gallery</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .navbar {
-            background: #333;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar h1 { font-size: 24px; }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            background: #667eea;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .stats {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .stats h3 { color: #667eea; font-size: 32px; }
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .upload-section {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #eee;
-        }
-        .upload-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px dashed #667eea;
-            border-radius: 5px;
-            background: #f8f9ff;
-        }
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #5568d3;
-        }
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-danger:hover {
-            background: #c82333;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .gallery-item {
-            position: relative;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-        .gallery-item-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            padding: 15px;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover .gallery-item-overlay {
-            transform: translateY(0);
-        }
-        .gallery-item-id {
-            color: white;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-        .no-data {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-            background: white;
-            border-radius: 10px;
-        }
-        .no-data h3 {
-            margin-bottom: 10px;
-            color: #999;
-        }
-    </style>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/manage_gallery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-        <h1>Manage Gallery</h1>
-        <div>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
-        </div>
-    </div>
+    <?php include 'includes/navbar.php'; ?>
     
-    <div class="container">
-        <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-        
-        <div class="stats">
-            <h3><?php echo $totalImages; ?></h3>
-            <p>Total Images in Gallery</p>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Manage Gallery</h1>
+            <div class="user-info">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+            </div>
         </div>
         
-        <div class="form-container">
-            <div class="upload-section">
-                <h2>Upload Single Image</h2>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="image">Select Image</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
+        <div class="content-wrapper">
+            <!-- Alerts -->
+            <?php if ($success): ?>
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <?php echo htmlspecialchars($success); ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($error): ?>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Statistics -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-images"></i>
                     </div>
-                    <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
-                </form>
+                    <div class="stat-info">
+                        <h3><?php echo $totalImages; ?></h3>
+                        <p>Total Images in Gallery</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="upload-section">
-                <h2>Upload Multiple Images</h2>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="images">Select Multiple Images</label>
-                        <input type="file" id="images" name="images[]" accept="image/*" multiple required>
-                        <small style="color: #666; display: block; margin-top: 5px;">Hold Ctrl (Cmd on Mac) to select multiple images</small>
+            <!-- Upload Forms -->
+            <div class="upload-container">
+                <div class="upload-section">
+                    <h2><i class="fas fa-upload"></i> Upload Single Image</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="image">Select Image</label>
+                            <input type="file" id="image" name="image" accept="image/*" required>
+                        </div>
+                        <button type="submit" name="upload_image" class="btn btn-primary">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Image
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="upload-section">
+                    <h2><i class="fas fa-images"></i> Upload Multiple Images</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="images">Select Multiple Images</label>
+                            <input type="file" id="images" name="images[]" accept="image/*" multiple required>
+                            <p class="helper-text">
+                                <i class="fas fa-info-circle"></i>
+                                Hold Ctrl (Cmd on Mac) to select multiple images
+                            </p>
+                        </div>
+                        <button type="submit" name="upload_multiple" class="btn btn-primary">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Multiple Images
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Gallery Section -->
+            <div class="gallery-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-th"></i> Gallery Images</h2>
+                </div>
+                
+                <?php if (count($images) > 0): ?>
+                    <div class="gallery-grid">
+                        <?php foreach ($images as $img): ?>
+                            <div class="gallery-item">
+                                <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
+                                     alt="Gallery Image">
+                                <div class="gallery-overlay">
+                                    <div class="image-id">
+                                        <i class="fas fa-hashtag"></i>
+                                        <?php echo $img['id']; ?>
+                                    </div>
+                                    <a href="?delete=<?php echo $img['id']; ?>" 
+                                       class="btn-delete" 
+                                       onclick="return confirm('Delete this image?')">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <button type="submit" name="upload_multiple" class="btn btn-primary">Upload Multiple Images</button>
-                </form>
+                <?php else: ?>
+                    <div class="no-data">
+                        <i class="fas fa-images"></i>
+                        <p>No images in gallery yet. Upload your first image above.</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
-        
-        <h2 style="margin-bottom: 20px;">Gallery Images</h2>
-        
-        <?php if (count($images) > 0): ?>
-            <div class="gallery-grid">
-                <?php foreach ($images as $img): ?>
-                    <div class="gallery-item">
-                        <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
-                             alt="Gallery Image">
-                        <div class="gallery-item-overlay">
-                            <div class="gallery-item-id">ID: <?php echo $img['id']; ?></div>
-                            <a href="?delete=<?php echo $img['id']; ?>" 
-                               class="btn btn-danger" 
-                               onclick="return confirm('Delete this image?')"
-                               style="width: 100%; text-align: center; text-decoration: none;">
-                                Delete Image
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else: ?>
-            <div class="no-data">
-                <h3>📸 No Images Yet</h3>
-                <p>Upload your first image using the form above</p>
-            </div>
-        <?php endif; ?>
     </div>
 </body>
 </html>

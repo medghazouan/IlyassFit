@@ -19,8 +19,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Custom CSS -->
+    <!-- Custom CSS - FIXED LOAD ORDER (No Duplicates) -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/hero.css"> 
+    <link rel="stylesheet" href="assets/css/about.css">
+    <link rel="stylesheet" href="assets/css/services.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    <link rel="stylesheet" href="assets/css/transformations.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    
+    <!-- Page-Specific CSS (Conditional Loading) -->
+    <?php if(isset($pageTitle) && $pageTitle == "Contact"): ?>
+    <link rel="stylesheet" href="assets/css/contact.css">
+    <?php endif; ?>
+    
+    <?php if(isset($pageTitle) && $pageTitle == "Pricing Plans"): ?>
+    <link rel="stylesheet" href="assets/css/pricing.css">
+    <?php endif; ?>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - Ilyass Fit' : 'Ilyass Fit - Transform Your Body'; ?></title>
 </head>

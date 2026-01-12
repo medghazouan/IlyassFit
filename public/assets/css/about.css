@@ -1,0 +1,275 @@
+/* About Me Section */
+.about-me-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: var(--dark-bg);
+    /* Fallback */
+}
+
+/* Background Image Animation */
+.about-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/static/DSC07354.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+
+    /* Initial state for animation */
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.about-background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+}
+
+.about-background-image.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-me-container {
+    position: relative;
+    z-index: 2;
+    /* Bring content above overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 60px 25px;
+}
+
+.about-me-content {
+    background: transparent;
+    max-width: 600px;
+    margin-left: auto;
+    /* Push to right */
+
+    /* Initial state for animation */
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 1s ease-out 0.5s, transform 1s ease-out 0.5s;
+    /* Delayed */
+}
+
+.about-me-content.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Animations Classes */
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 1s ease-out;
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 1s ease-out;
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* Elements Styling */
+.about-header {
+    margin-bottom: 30px;
+}
+
+.about-subtitle {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: var(--primary-red);
+    /* Make pop against dark bg */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.about-me-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.about-me-text {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    
+}
+
+.about-me-text:last-of-type {
+    margin-bottom: 40px;
+}
+
+/* Testimonial Section */
+.about-testimonial {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 30px;
+
+    /* Animation initial state override if needed defined by class */
+}
+
+.testimonial-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.testimonial-arrow {
+    font-size: 1.5rem;
+    color: var(--primary-red);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.testimonial-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.testimonial-text-wrapper {
+    text-align: center;
+    flex: 1;
+    min-height: 120px;
+    /* Prevent jump on slide chagne */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    word-wrap: break-word;     
+    overflow-wrap: break-word;  
+    word-break: break-word;
+}
+
+.review-item {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.review-item.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.testimonial-quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.testimonial-author {
+    font-weight: 700;
+    color: var(--primary-red);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: var(--primary-red);
+}
+
+/* ============================================
+   RESPONSIVE - ABOUT ME SECTION
+   ============================================ */
+@media (max-width: 992px) {
+    .about-me-section {
+        min-height: auto;
+        padding: 80px 0;
+    }
+
+    .about-me-content {
+        margin-left: 0;
+        margin: 0 auto;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        /* Add specific backing for mobile readability if image is behind */
+        padding: 30px;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+    }
+
+    .about-me-title {
+        font-size: 3rem;
+    }
+
+    .about-background-image {
+        transform: none !important;
+        /* Disable complicated BG animation on mobile for performance */
+    }
+}
+
+@media (max-width: 768px) {
+    .about-me-title {
+        font-size: 2.5rem;
+    }
+
+    .about-me-text {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,298 @@
+# ============================================
+# HTACCESS CONFIGURATION FOR ILYASSFIT
+# Production-ready security and performance
+# ============================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # RewriteBase /
+    
+    # ============================================
+    # HTTPS REDIRECTION (ACTIVATE IN PRODUCTION)
+    # ============================================
+    # Redirect to HTTPS if not localhost
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # ============================================
+    # ROUTE TO PUBLIC FOLDER
+    # ============================================
+    # Redirect all requests to public/ folder unless they are for admin/
+    RewriteCond %{REQUEST_URI} !/public/
+    RewriteCond %{REQUEST_URI} !/admin/
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+    
+    # Force www (optional - uncomment if you want www)
+    # RewriteCond %{HTTP_HOST} !^www\. [NC]
+    # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
+</IfModule>
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+    # Prevent clickjacking attacks
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Enable XSS protection (legacy browsers)
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Referrer policy (privacy)
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy (adjust as needed)
+    # Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; frame-src 'self';"
+    
+    # Permissions Policy (formerly Feature-Policy)
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # Remove server signature
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# ============================================
+# DIRECTORY BROWSING PROTECTION
+# ============================================
+# Prevent directory listing
+Options -Indexes
+
+# Follow symbolic links (required for some hosting)
+Options +FollowSymLinks
+
+# ============================================
+# PROTECT SENSITIVE FILES
+# ============================================
+# Block access to sensitive files
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|in[ci]|log|orig|psd|sh|sql|sw[op])|~)$">
+    # Apache 2.4
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Protect .htaccess and .htpasswd
+<Files ~ "^\.ht">
+    # Apache 2.4
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+# Protect environment files
+<Files ".env">
+    # Apache 2.4
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</Files>
+
+# Protect git files
+<FilesMatch "^\.git">
+    # Apache 2.4
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Protect composer files
+<FilesMatch "(composer\.json|composer\.lock|package\.json|package-lock\.json)$">
+    # Apache 2.4
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ============================================
+# PHP SECURITY SETTINGS
+# ============================================
+<IfModule mod_php7.c>
+    # Disable dangerous PHP functions
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_flag register_globals Off
+    php_flag magic_quotes_gpc Off
+    php_flag track_errors On
+    
+    # Session security (already set in PHP but reinforced)
+    php_flag session.cookie_httponly On
+    php_value session.cookie_samesite Strict
+    
+    # File upload limits
+    php_value upload_max_filesize 10M
+    php_value post_max_size 12M
+    php_value max_execution_time 30
+    php_value max_input_time 60
+    php_value memory_limit 128M
+</IfModule>
+
+# ============================================
+# COMPRESSION (PERFORMANCE)
+# ============================================
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML, JSON
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/plain
+    
+    # Don't compress images (already compressed)
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|ico)$ no-gzip dont-vary
+</IfModule>
+
+# ============================================
+# BROWSER CACHING (PERFORMANCE)
+# ============================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    
+    # HTML (no cache - dynamic content)
+    ExpiresByType text/html "access plus 0 seconds"
+    
+    # CSS and JavaScript (cache for 1 month)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    
+    # Images (cache for 1 year)
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/ico "access plus 1 year"
+    
+    # Fonts (cache for 1 year)
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    
+    # Videos (cache for 1 month)
+    ExpiresByType video/mp4 "access plus 1 month"
+    ExpiresByType video/webm "access plus 1 month"
+    
+    # PDFs (cache for 1 month)
+    ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+# Cache-Control headers for better control
+<IfModule mod_headers.c>
+    # Cache static assets
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|css|js|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Don't cache HTML
+    <FilesMatch "\.(html|htm|php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+</IfModule>
+
+# ============================================
+# FILE TYPE RESTRICTIONS
+# ============================================
+# Block execution of PHP in upload directories
+# Block execution of PHP in upload directories
+# Note: <Directory> is not allowed in .htaccess, so we use RewriteRule
+<IfModule mod_rewrite.c>
+    RewriteRule ^public/images/uploads/.*\.php$ - [F,L]
+</IfModule>
+
+# ============================================
+# ERROR PAGES (OPTIONAL)
+# ============================================
+# Uncomment and customize error pages
+# ErrorDocument 400 /errors/400.html
+# ErrorDocument 401 /errors/401.html
+# ErrorDocument 403 /errors/403.html
+# ErrorDocument 404 /errors/404.html
+# ErrorDocument 500 /errors/500.html
+
+# ============================================
+# PREVENT ACCESS TO SPECIFIC FOLDERS
+# ============================================
+# Protect includes directory
+<IfModule mod_rewrite.c>
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# ============================================
+# UTF-8 ENCODING
+# ============================================
+# Use UTF-8 encoding for everything
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+</IfModule>
+
+# ============================================
+# ADDITIONAL SECURITY
+# ============================================
+# Disable server signature
+ServerSignature Off
+
+# Limit request size to prevent DoS
+LimitRequestBody 10485760
+
+# ============================================
+# NOTES FOR PRODUCTION DEPLOYMENT
+# ============================================
+# 1. HTTPS: Uncomment HTTPS redirection after installing SSL certificate
+# 2. CSP: Uncomment and adjust Content-Security-Policy based on your needs
+# 3. Test all changes in staging environment first
+# 4. Monitor error logs after deployment
+# 5. Backup this file before making changes
+#
+# To enable HTTPS with Let's Encrypt (free):
+# - Install Certbot: https://certbot.eff.org/
+# - Run: sudo certbot --apache
+# - Then uncomment HTTPS rules above
+#
+# Last updated: 2025-12-20
+# ============================================

@@ -48,6 +48,14 @@
             </div>
         </div>
     </div>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="container mt-5 pt-4 text-center border-top border-secondary">
+        <p class="mb-0 text-white-50" style="font-size: 0.9rem;">
+            &copy; <?php echo date('Y'); ?> Ilyass Fit. All rights reserved. | Made by <a href="https://www.bidayalab.com" target="_blank"  class="text-white fw-bold">BidayaLab</a>
+        </p>
+    </div>
 </footer>
 
 <!-- Bootstrap JS -->
