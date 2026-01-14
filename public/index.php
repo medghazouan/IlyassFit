@@ -132,6 +132,7 @@ try {
             <div class="col-lg-6 mb-3 mb-lg-0 order-2 order-lg-1">
                 <div class="services-content-wrapper">
                     <h2 class="services-main-title slide-in-left">OUR SERVICES.</h2>
+
                     <div class="services-slider slide-in-left" style="transition-delay: 0.6s;">
                         <?php foreach ($services as $index => $service): ?>
                             <div class="service-slide <?php echo $index === 0 ? 'active' : ''; ?>"
@@ -179,6 +180,7 @@ try {
     <div class="container">
         <div class="gallery-header">
             <h2 class="gallery-title">LATEST TRANSFORMATIONS</h2>
+            <p class="section-subtitle transformations-subtitle">Witness the incredible journeys of our clients who have completely transformed their physiques and lifestyles through dedicated training.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
@@ -228,7 +230,7 @@ try {
         <!-- Gallery Header -->
         <div class="gallery-header">
             <h2 class="gallery-title">OUR GALLERY</h2>
-            <p class="gallery-subtitle">Witness the Transformations & Training Sessions</p>
+            <p class="section-subtitle">Explore our gallery to see the dedication, hard work, and results achieved by our community. From intense training sessions to inspiring transformations, get a glimpse of what's possible.</p>
         </div>
 
         <?php

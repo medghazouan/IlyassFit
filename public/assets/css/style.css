@@ -167,6 +167,8 @@ button,
     font-weight: 400;
     color: var(--text-gray);
     margin-bottom: 3rem;
+    margin-top: 0.5rem;
+    display: block;
 }
 
 /* ============================================
@@ -183,20 +185,48 @@ button,
     body {
         padding-top: 75px;
     }
+    
+    .section-padding {
+        padding: 4rem 0;
+    }
 }
 
 @media (max-width: 768px) {
     body {
-        padding-top: 60px;
+        padding-top: 70px;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-padding {
+        padding: 3rem 0;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
     }
 }
 
 @media (max-width: 576px) {
     body {
         padding-top: 60px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content {
+        padding: 0 15px;
+    }
+    
+    /* Ensure footer doesn't kiss the last section */
+    body {
+        padding-bottom: 0;
     }
 }

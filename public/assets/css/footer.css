@@ -18,7 +18,7 @@
     height: 100px;
     background: var(--primary-red);
     position: relative;
-    margin-top: 3rem;
+    margin-top: 0; /* Removed gap globally */
     margin-bottom: -50px;
     overflow: hidden;
 }
@@ -58,6 +58,14 @@
     }
 }
 
+@media (max-width: 768px) {
+    .footer-wave-top {
+        margin-top: 0;
+        height: 60px; /* Reduce height on mobile for compactness */
+        margin-bottom: -30px;
+    }
+}
+
 /* ============================================
    FOOTER STYLES
    ============================================ */
@@ -67,9 +75,7 @@
     position: relative;
 }
 
-.footer .container {
-    max-width: 1400px;
-}
+
 
 .footer .row {
     align-items: flex-start;
@@ -80,7 +86,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 2rem;
+    padding-left: 0;
 }
 
 .footer-logo-img {
@@ -174,14 +180,14 @@
     letter-spacing: 2px;
     position: relative;
     padding-bottom: 1rem;
-    padding-left: 1.5rem;
+    padding-left: 0;
 }
 
 .footer-heading::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 1.5rem;
+    left: 0;
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, var(--primary-red) 0%, transparent 100%);
@@ -191,7 +197,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    padding-left: 1.5rem;
+    padding-left: 0;
 }
 
 .contact-item {
@@ -244,7 +250,7 @@
 .footer-links {
     list-style: none;
     padding: 0;
-    padding-left: 1.5rem;
+    padding-left: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -508,6 +514,35 @@
 
     .footer .text-white-50 {
         font-size: 0.75rem !important;
+        text-align: center;
+        display: block;
+    }
+    
+    .footer-brand {
+        margin-bottom: 2rem;
+    }
+    
+    .social-icons {
+        margin-bottom: 1rem;
+    }
+    
+    .footer .border-top {
+        margin-top: 1rem !important;
+    }
+    
+    .footer .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer .col-lg-4, 
+    .footer .col-md-6 {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .contact-info {
+        align-items: center; 
     }
 }
 

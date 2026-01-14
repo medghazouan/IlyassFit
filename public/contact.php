@@ -101,6 +101,7 @@ startSecureSession();
                         <div class="form-header">
                             <p class="form-subtitle">NEED HELP?</p>
                             <h2 class="form-title">GET IN TOUCH</h2>
+                            <p class="section-subtitle">Ready to take the first step? Reach out today to discuss your goals, ask questions about our plans, or schedule your initial consultation.</p>
                         </div>
 
                         <!-- Alert container -->
