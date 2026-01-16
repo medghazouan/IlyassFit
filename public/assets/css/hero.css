@@ -154,7 +154,7 @@
         font-size: 3rem;
         margin-bottom: 1rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.2rem;
         margin-bottom: 2rem;
@@ -164,9 +164,11 @@
 @media (max-width: 768px) {
     .hero-section {
         margin-top: -70px;
-        padding-top: 70px; /* Match body padding */
+        padding-top: 70px;
+        /* Match body padding */
         min-height: 550px;
-        background-attachment: scroll; /* Fix for mobile browser address bar jumps */
+        background-attachment: scroll;
+        /* Fix for mobile browser address bar jumps */
     }
 
     .hero-title {
@@ -177,7 +179,8 @@
 
     .hero-subtitle {
         font-size: 1rem;
-        padding: 0 15px; /* Prevent text touching edges */
+        padding: 0 15px;
+        /* Prevent text touching edges */
     }
 
     .hero-buttons {
@@ -186,16 +189,18 @@
         align-items: center;
         width: 100%;
     }
-    
+
     .hero-buttons .btn {
-        width: 80%; /* Consistent button width */
+        width: 80%;
+        /* Consistent button width */
         max-width: 280px;
     }
 }
 
 @media (max-width: 576px) {
     .hero-section {
-        min-height: 100vh; /* Full viewport height on mobile */
+        min-height: 100vh;
+        /* Full viewport height on mobile */
         margin-top: -60px;
         padding-top: 60px;
     }
@@ -203,8 +208,24 @@
     .hero-title {
         font-size: 1.8rem;
     }
-    
+
     .hero-content {
         padding: 0 10px;
+    }
+
+    /* Focus on object for pricing hero */
+    .hero-bg-pricing {
+        background-position: 20% center;
+        /* Move focus to the right */
+    }
+
+    /* Focus on object for transformations hero */
+    .hero-bg-transformations {
+        background-position: 75% center;
+    }
+
+    /* Focus on object for contact hero */
+    .hero-bg-contact {
+        background-position: 60% center;
     }
 }

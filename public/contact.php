@@ -1,5 +1,5 @@
 <?php
-// Initialize security functions and session for CSRF protection
+$pageTitle = "Contact";
 require_once '../includes/functions/security.php';
 require_once '../includes/functions/auth.php';
 startSecureSession();

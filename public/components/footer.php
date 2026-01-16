@@ -57,6 +57,12 @@
         </p>
     </div>
 </footer>
+ 
+ <!-- Return to Top Button -->
+ <button id="returnToTop" class="return-to-top" aria-label="Return to top">
+     <i class="fas fa-arrow-up"></i>
+ </button>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
