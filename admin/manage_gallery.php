@@ -9,18 +9,27 @@ requireLogin();
 $success = '';
 $error = '';
 
+const MAX_IMAGES = 12;
+
+// Auto-cleanup orphaned files on page load to ensure storage efficiency
+cleanupUploadsFolder($pdo);
+
 // Handle delete
 if (isset($_GET['delete'])) {
     $id = filter_var($_GET['delete'], FILTER_VALIDATE_INT);
     if ($id) {
         $image = readOne($pdo, 'gallery', $id);
         if ($image) {
+            // First delete the physical file
             deleteImage($image['image_path'], '../public/images/uploads/');
             
+            // Then delete from database
             if (delete($pdo, 'gallery', $id)) {
                 $success = "Image deleted successfully";
+                // Cleanup after delete to be sure
+                cleanupUploadsFolder($pdo);
             } else {
-                $error = "Failed to delete image";
+                $error = "Failed to delete image from database";
             }
         }
     }
@@ -28,62 +37,85 @@ if (isset($_GET['delete'])) {
 
 // Handle single image upload
 if (isset($_POST['upload_image']) && isset($_FILES['image'])) {
-    $uploadResult = uploadImage($_FILES['image'], '../public/images/uploads/');
+    $currentCount = countRecords($pdo, 'gallery');
     
-    if ($uploadResult['success']) {
-        $data = [
-            'image_path' => $uploadResult['filename']
-        ];
-        
-        if (create($pdo, 'gallery', $data)) {
-            $success = "Image uploaded successfully";
-        } else {
-            $error = "Failed to save image to database";
-            deleteImage($uploadResult['filename']);
-        }
+    if ($currentCount >= MAX_IMAGES) {
+        $error = "Gallery limit reached. Maximum " . MAX_IMAGES . " images allowed. Please delete an image before uploading a new one.";
     } else {
-        $error = "Upload failed: " . $uploadResult['error'];
+        $uploadResult = uploadImage($_FILES['image'], '../public/images/uploads/');
+        
+        if ($uploadResult['success']) {
+            $data = [
+                'image_path' => $uploadResult['filename']
+            ];
+            
+            if (create($pdo, 'gallery', $data)) {
+                $success = "Image uploaded successfully";
+                cleanupUploadsFolder($pdo);
+            } else {
+                $error = "Failed to save image to database";
+                deleteImage($uploadResult['filename'], '../public/images/uploads/');
+            }
+        } else {
+            $error = "Upload failed: " . $uploadResult['error'];
+        }
     }
 }
 
 // Handle multiple images upload
 if (isset($_POST['upload_multiple']) && isset($_FILES['images'])) {
-    $uploadedCount = 0;
-    $failedCount = 0;
+    $currentCount = countRecords($pdo, 'gallery');
+    $remainingSpots = MAX_IMAGES - $currentCount;
     
-    $totalFiles = count($_FILES['images']['name']);
-    
-    for ($i = 0; $i < $totalFiles; $i++) {
-        if ($_FILES['images']['error'][$i] === UPLOAD_ERR_OK) {
-            $file = [
-                'name' => $_FILES['images']['name'][$i],
-                'type' => $_FILES['images']['type'][$i],
-                'tmp_name' => $_FILES['images']['tmp_name'][$i],
-                'error' => $_FILES['images']['error'][$i],
-                'size' => $_FILES['images']['size'][$i]
-            ];
+    if ($remainingSpots <= 0) {
+        $error = "Gallery limit reached. Maximum " . MAX_IMAGES . " images allowed.";
+    } else {
+        $uploadedCount = 0;
+        $failedCount = 0;
+        $limitReached = false;
+        
+        $totalFiles = count($_FILES['images']['name']);
+        
+        for ($i = 0; $i < $totalFiles; $i++) {
+            if ($uploadedCount >= $remainingSpots) {
+                $limitReached = true;
+                break;
+            }
             
-            $uploadResult = uploadImage($file, '../public/images/uploads/');
-            
-            if ($uploadResult['success']) {
-                $data = ['image_path' => $uploadResult['filename']];
-                if (create($pdo, 'gallery', $data)) {
-                    $uploadedCount++;
+            if ($_FILES['images']['error'][$i] === UPLOAD_ERR_OK) {
+                $file = [
+                    'name' => $_FILES['images']['name'][$i],
+                    'type' => $_FILES['images']['type'][$i],
+                    'tmp_name' => $_FILES['images']['tmp_name'][$i],
+                    'error' => $_FILES['images']['error'][$i],
+                    'size' => $_FILES['images']['size'][$i]
+                ];
+                
+                $uploadResult = uploadImage($file, '../public/images/uploads/');
+                
+                if ($uploadResult['success']) {
+                    $data = ['image_path' => $uploadResult['filename']];
+                    if (create($pdo, 'gallery', $data)) {
+                        $uploadedCount++;
+                    } else {
+                        deleteImage($uploadResult['filename'], '../public/images/uploads/');
+                        $failedCount++;
+                    }
                 } else {
-                    deleteImage($uploadResult['filename']);
                     $failedCount++;
                 }
-            } else {
-                $failedCount++;
             }
         }
-    }
-    
-    if ($uploadedCount > 0) {
-        $success = "$uploadedCount image(s) uploaded successfully";
-    }
-    if ($failedCount > 0) {
-        $error = "$failedCount image(s) failed to upload";
+        
+        if ($uploadedCount > 0) {
+            $success = "$uploadedCount image(s) uploaded successfully.";
+            cleanupUploadsFolder($pdo);
+        }
+        if ($limitReached) {
+            $error = "Some images were not uploaded because the " . MAX_IMAGES . " image limit was reached.";
+        } elseif ($failedCount > 0) {
+            $error = "$failedCount image(s) failed to upload.";
+        }
     }
 }
 
@@ -136,10 +168,21 @@ $totalImages = countRecords($pdo, 'gallery');
                         <i class="fas fa-images"></i>
                     </div>
                     <div class="stat-info">
-                        <h3><?php echo $totalImages; ?></h3>
+                        <h3><?php echo $totalImages; ?> / <?php echo MAX_IMAGES; ?></h3>
                         <p>Total Images in Gallery</p>
                     </div>
                 </div>
+                <?php if ($totalImages >= MAX_IMAGES): ?>
+                <div class="stat-card warning">
+                    <div class="stat-icon" style="color: #ff9800;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Limit Reached</h3>
+                        <p>You must delete an image to upload a new one.</p>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
             
             <!-- Upload Forms -->
@@ -151,7 +194,7 @@ $totalImages = countRecords($pdo, 'gallery');
                             <label for="image">Select Image</label>
                             <input type="file" id="image" name="image" accept="image/*" required>
                         </div>
-                        <button type="submit" name="upload_image" class="btn btn-primary">
+                        <button type="submit" name="upload_image" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
                             <i class="fas fa-cloud-upload-alt"></i> Upload Image
                         </button>
                     </form>
@@ -168,7 +211,7 @@ $totalImages = countRecords($pdo, 'gallery');
                                 Hold Ctrl (Cmd on Mac) to select multiple images
                             </p>
                         </div>
-                        <button type="submit" name="upload_multiple" class="btn btn-primary">
+                        <button type="submit" name="upload_multiple" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
                             <i class="fas fa-cloud-upload-alt"></i> Upload Multiple Images
                         </button>
                     </form>

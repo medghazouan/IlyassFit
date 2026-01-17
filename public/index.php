@@ -158,7 +158,7 @@ try {
             <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
             <div class="col-lg-6 order-1 order-lg-2">
                 <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;">
-                    <img src="assets/images/static/DSC07331.jpg" alt="Fitness Services"
+                    <img src="assets/images/static/service.jpg" alt="Fitness Services"
                         class="img-fluid service-static-img">
                      <!-- Decor elements if needed -->
                     <div class="service-decor top-left">

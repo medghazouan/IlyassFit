@@ -336,6 +336,9 @@
         font-size: 2rem;
         margin-bottom: 2rem;
     }
+    #services h2{
+        padding-top: 20px;
+    }
 }
 
 /* Small Mobile (max-width: 576px) */
