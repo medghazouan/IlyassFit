@@ -93,7 +93,7 @@ startSecureSession();
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="contact-image-wrapper">
-                        <img src="assets/images/static/DSC07340.jpg" alt="Fitness Training" class="contact-image">
+                        <img src="assets/images/static/contactForm.jpg" alt="Fitness Training" class="contact-image">
                     </div>
                 </div>
                 <div class="col-lg-6">
