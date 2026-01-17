@@ -167,6 +167,8 @@ button,
     font-weight: 400;
     color: var(--text-gray);
     margin-bottom: 3rem;
+    margin-top: 0.5rem;
+    display: block;
 }
 
 /* ============================================
@@ -183,20 +185,101 @@ button,
     body {
         padding-top: 75px;
     }
+
+    .section-padding {
+        padding: 4rem 0;
+    }
 }
 
 @media (max-width: 768px) {
     body {
-        padding-top: 60px;
+        padding-top: 70px;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-padding {
+        padding: 3rem 0;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
     }
 }
 
 @media (max-width: 576px) {
     body {
         padding-top: 60px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-content {
+        padding: 0 15px;
+    }
+
+    /* Ensure footer doesn't kiss the last section */
+    body {
+        padding-bottom: 0;
+    }
+}
+
+/* ============================================
+   RETURN TO TOP BUTTON
+   ============================================ */
+.return-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-red);
+    color: var(--text-white);
+    border: 2px solid var(--primary-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(252, 4, 4, 0.3);
+}
+
+.return-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.return-to-top:not(.show) {
+    transform: translateY(20px);
+}
+
+.return-to-top:hover {
+    background-color: var(--text-white);
+    color: var(--primary-red);
+    border-color: var(--text-white);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(252, 4, 4, 0.5);
+}
+
+@media (max-width: 768px) {
+    .return-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
     }
 }

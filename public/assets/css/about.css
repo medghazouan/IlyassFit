@@ -50,7 +50,7 @@
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    padding: 60px 25px;
+    padding: 60px 0;
 }
 
 .about-me-content {
@@ -127,7 +127,7 @@
     line-height: 1.6;
     margin-bottom: 20px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-    
+
 }
 
 .about-me-text:last-of-type {
@@ -171,8 +171,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    word-wrap: break-word;     
-    overflow-wrap: break-word;  
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     word-break: break-word;
 }
 
@@ -243,33 +243,58 @@
         padding: 80px 0;
     }
 
+    .about-me-section {
+        min-height: auto;
+        padding: 60px 0;
+    }
+
     .about-me-content {
         margin-left: 0;
         margin: 0 auto;
         text-align: center;
-        background: rgba(0, 0, 0, 0.6);
-        /* Add specific backing for mobile readability if image is behind */
-        padding: 30px;
-        border-radius: 10px;
-        backdrop-filter: blur(5px);
+        background: transparent;
+        padding: 40px 25px;
+        border-radius: 20px;
+        backdrop-filter: none;
+        box-shadow: none;
     }
 
     .about-me-title {
-        font-size: 3rem;
+        font-size: 2.8rem;
+        margin-bottom: 2rem;
     }
 
     .about-background-image {
         transform: none !important;
-        /* Disable complicated BG animation on mobile for performance */
+        opacity: 0.6 !important;
+        /* Dim background image on mobile */
+        background-position: 30% center !important;
+        /* Move it to the right */
     }
 }
 
 @media (max-width: 768px) {
     .about-me-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .about-me-text {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+
+    .testimonial-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .testimonial-text-wrapper {
+        min-height: auto;
     }
 }

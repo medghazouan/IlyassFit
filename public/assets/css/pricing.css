@@ -18,27 +18,43 @@
 .coaching-type-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 2.5rem;
+    font-size: 3rem; /* Match Home Page Desktop Size */
     color: var(--text-white);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    display: inline-block; /* Changed from flex for underline effect */
+    position: relative;
+    padding-bottom: 15px;
 }
 
 .coaching-type-title i {
     color: var(--primary-red);
-    font-size: 2.2rem;
+    font-size: inherit; /* Scale with text */
+    margin-right: 15px;
+}
+
+/* Gradient Underline Effect (Same as Home) */
+.coaching-type-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, transparent, var(--primary-red), transparent);
+    border-radius: 2px;
 }
 
 .coaching-type-subtitle {
     font-family: 'Inter', sans-serif;
-    font-size: 1.15rem;
-    color: var(--text-gray);
+    font-size: 1.1rem; /* Match Home Page Subtitle */
+    color: #b0b0b0; /* Standard subtitle color */
     margin-top: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ============================================
@@ -318,11 +334,12 @@
    ============================================ */
 .pricing-cta {
     position: relative;
-    padding: 6rem 0;
+    padding: 6rem 0 0 0; /* Remove bottom padding globally */
     background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(0, 0, 0, 0.95)),
         url('../images/static/pic2.jpeg') center/cover no-repeat fixed;
     border-top: 3px solid var(--primary-red);
     overflow: hidden;
+    padding-bottom: 50px;
 }
 
 .pricing-cta::before {
@@ -502,9 +519,9 @@
     }
 
     .coaching-type-title {
-        font-size: 1.8rem;
-        flex-direction: column;
-        gap: 10px;
+        font-size: 2.2rem; /* Tablet Size matching Home */
+        flex-direction: row;
+        display: block;
     }
 
     .cta-title {
@@ -557,8 +574,26 @@
         font-size: 1rem;
     }
 
+    .section-header {
+        text-align: left; /* Align Left on Mobile */
+        padding-left: 15px; /* Add slight padding */
+    }
+
     .coaching-type-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem; /* Mobile Size matching Home */
+        display: block; /* Stack icon and text */
+        text-align: left;
+    }
+    
+    .coaching-type-title::after {
+        width: 80px; /* Smaller underline */
+        left: 0; /* Star form left */
+        transform: none; /* Remove center transform */
+    }
+
+    .coaching-type-subtitle {
+        text-align: left;
+        margin-left: 0;
     }
 
     .plan-price .amount {
@@ -572,6 +607,19 @@
     .btn-cta {
         padding: 1rem 2rem;
         font-size: 0.95rem;
+    }
+    
+    .pricing-cta {
+        padding: 3rem 0 0 0; /* Cut bottom padding completely */
+        padding-bottom: 15px;
+    }
+    
+    .cta-features {
+        margin-bottom: 2rem;
+    }
+    
+    .cta-subtitle {
+        margin-bottom: 1.5rem;
     }
 }
 

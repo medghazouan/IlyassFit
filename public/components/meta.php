@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ilyass Fit - Professional Fitness Coaching in Marrakech">
+    <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Achieve your dream physique with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching in Marrakech.'; ?>">
+    <meta name="keywords" content="fitness, marrakech, personal trainer, nutrition plan, online coaching, gym, bodybuilding, weight loss, ilyass fit">
+    <meta name="author" content="Ilyass Fit">
+    <link rel="canonical" href="<?php echo isset($canonicalUrl) ? $canonicalUrl : 'https://ilyass.fit' . $_SERVER['REQUEST_URI']; ?>">
+    <meta name="google-site-verification" content="lqYK4UTatpVz1VBQ5WlvOC5PxiLDgpAYLDNC5TIeo9o" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo isset($canonicalUrl) ? $canonicalUrl : 'https://ilyass.fit' . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle . ' - Ilyass Fit' : 'Ilyass Fit - Transform Your Body'; ?>">
+    <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Achieve your dream physique with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching in Marrakech.'; ?>">
+    <meta property="og:image" content="https://ilyass.fit/assets/images/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?php echo isset($canonicalUrl) ? $canonicalUrl : 'https://ilyass.fit' . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle . ' - Ilyass Fit' : 'Ilyass Fit - Transform Your Body'; ?>">
+    <meta property="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Achieve your dream physique with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching in Marrakech.'; ?>">
+    <meta property="twitter:image" content="https://ilyass.fit/assets/images/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/static/logo.png">
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

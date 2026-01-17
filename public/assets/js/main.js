@@ -446,8 +446,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.pricing-card');
 
-    // Quick debug
-    console.log('Pricing cards found:', cards.length);
+
 
     if (!cards.length) return;
 
@@ -482,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.pricing-card, .transformation-card');
 
-    console.log('Scroll cards found:', cards.length); // debug
+
 
     if (!cards.length) return;
 
@@ -533,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactCols = document.querySelectorAll('.contact-form-section .col-lg-6');
 
     const items = [...contactCards, ...contactCols];
-    console.log('Contact scroll items:', items.length);
+
 
     if (!items.length) return;
 
@@ -570,4 +569,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     items.forEach(el => observer.observe(el));
 });
+
+// ============================================
+// RETURN TO TOP BUTTON LOGIC
+// ============================================
+document.addEventListener('DOMContentLoaded', function () {
+    const returnToTop = document.getElementById('returnToTop');
+
+    if (returnToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                returnToTop.classList.add('show');
+            } else {
+                returnToTop.classList.remove('show');
+            }
+        });
+
+        returnToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+});
+
 

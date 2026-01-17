@@ -8,7 +8,7 @@
             <!-- Logo & Tagline Column -->
             <div class="col-lg-4 col-md-6">
                 <div class="footer-brand">
-                    <img src="assets/images/static/logo.png" alt="Ilyass Fit Logo" class="footer-logo-img">
+                    <img src="assets/images/static/logo.png" alt="Ilyass Fit Logo" class="footer-logo-img" loading="lazy">
                     <h2 class="footer-title">Ilyass <br>Fit</h2>
                     <p class="footer-tagline">ready to take the next step? ready to change your life?</p>
                     
@@ -57,6 +57,12 @@
         </p>
     </div>
 </footer>
+ 
+ <!-- Return to Top Button -->
+ <button id="returnToTop" class="return-to-top" aria-label="Return to top">
+     <i class="fas fa-arrow-up"></i>
+ </button>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
