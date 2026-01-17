@@ -362,8 +362,8 @@ try {
         </button>
         <div class="video-wrapper">
             <video id="modalVideo" controls>
-                <source src="assets/video/hero.webm" type="video/webm">
-                <source src="assets/video/hero.mp4" type="video/mp4">
+                <source src="assets/video/video.webp" type="video/webm">
+                <source src="assets/video/video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>

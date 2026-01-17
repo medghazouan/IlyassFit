@@ -339,6 +339,7 @@
         url('../images/static/pic2.jpeg') center/cover no-repeat fixed;
     border-top: 3px solid var(--primary-red);
     overflow: hidden;
+    padding-bottom: 50px;
 }
 
 .pricing-cta::before {
@@ -610,6 +611,7 @@
     
     .pricing-cta {
         padding: 3rem 0 0 0; /* Cut bottom padding completely */
+        padding-bottom: 15px;
     }
     
     .cta-features {

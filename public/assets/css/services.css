@@ -352,4 +352,7 @@
     .service-icon i {
         font-size: 2rem;
     }
+    #services h2{
+        padding-top: 20px;
+    }
 }
