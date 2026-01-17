@@ -10,6 +10,9 @@ $success = '';
 $error = '';
 $editReview = null;
 
+// Auto-cleanup orphaned files to ensure storage efficiency
+cleanupUploadsFolder($pdo);
+
 // Check for success message from redirect
 if (isset($_GET['success']) && $_GET['success'] == 'updated') {
     $success = "Review updated successfully";
@@ -63,6 +66,7 @@ if (isset($_POST['update_review'])) {
             }
             
             if (empty($error) && update($pdo, 'reviews', $data, $id)) {
+                cleanupUploadsFolder($pdo);
                 header("Location: manage_reviews.php?success=updated");
                 exit();
             } else if (empty($error)) {
@@ -85,6 +89,7 @@ if (isset($_GET['delete'])) {
             
             if (delete($pdo, 'reviews', $id)) {
                 $success = "Review deleted successfully";
+                cleanupUploadsFolder($pdo);
             } else {
                 $error = "Failed to delete review";
             }

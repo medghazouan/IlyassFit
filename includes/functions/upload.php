@@ -56,4 +56,51 @@ function deleteImage($filename, $targetDir = '../public/images/uploads/') {
     }
     return false;
 }
+
+// Function to cleanup orphaned images in the uploads folder
+function cleanupUploadsFolder($pdo, $targetDir = '../public/images/uploads/') {
+    try {
+        // Collect all used image filenames from all relevant tables
+        $usedImages = [];
+        
+        // From gallery table
+        $stmt = $pdo->query("SELECT image_path FROM gallery");
+        $galleryImages = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        if ($galleryImages) {
+            $usedImages = array_merge($usedImages, $galleryImages);
+        }
+        
+        // From reviews table (before and after photos)
+        $stmt = $pdo->query("SELECT client_photo_before, client_photo_after FROM reviews");
+        $reviewRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($reviewRows as $row) {
+            if ($row['client_photo_before']) $usedImages[] = $row['client_photo_before'];
+            if ($row['client_photo_after']) $usedImages[] = $row['client_photo_after'];
+        }
+        
+        // Remove duplicates and empty values
+        $usedImages = array_unique(array_filter($usedImages));
+        
+        // Get all files in the target directory
+        $files = glob($targetDir . '*');
+        
+        $deletedCount = 0;
+        if ($files) {
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    $filename = basename($file);
+                    // If file is not in used images list, delete it
+                    if (!in_array($filename, $usedImages)) {
+                        unlink($file);
+                        $deletedCount++;
+                    }
+                }
+            }
+        }
+        return $deletedCount;
+    } catch (Exception $e) {
+        error_log("Cleanup error: " . $e->getMessage());
+        return false;
+    }
+}
 ?>
