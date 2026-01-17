@@ -158,7 +158,7 @@ try {
             <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
             <div class="col-lg-6 order-1 order-lg-2">
                 <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;">
-                    <img src="assets/images/static/service.jpg" alt="Fitness Services"
+                    <img src="assets/images/static/service.webp" alt="Fitness Services"
                         class="img-fluid service-static-img">
                      <!-- Decor elements if needed -->
                     <div class="service-decor top-left">
@@ -197,8 +197,17 @@ try {
                                     $beforePath = 'images/uploads/' . $beforePath;
                                 }
                                 ?>
-                                <img src="<?php echo htmlspecialchars($beforePath); ?>" alt="Before"
-                                    class="transformation-img">
+                                <?php 
+                                $extBefore = strtolower(pathinfo($beforePath, PATHINFO_EXTENSION));
+                                if ($extBefore === 'webm'): 
+                                ?>
+                                    <video src="<?php echo htmlspecialchars($beforePath); ?>" 
+                                           class="transformation-img"
+                                           autoplay loop muted playsinline></video>
+                                <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars($beforePath); ?>" alt="Before"
+                                        class="transformation-img">
+                                <?php endif; ?>
                             </div>
                             <div class="divider-line"></div>
                             <div class="image-wrapper">
@@ -209,8 +218,17 @@ try {
                                     $afterPath = 'images/uploads/' . $afterPath;
                                 }
                                 ?>
-                                <img src="<?php echo htmlspecialchars($afterPath); ?>" alt="After"
-                                    class="transformation-img">
+                                <?php 
+                                $extAfter = strtolower(pathinfo($afterPath, PATHINFO_EXTENSION));
+                                if ($extAfter === 'webm'): 
+                                ?>
+                                    <video src="<?php echo htmlspecialchars($afterPath); ?>" 
+                                           class="transformation-img"
+                                           autoplay loop muted playsinline></video>
+                                <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars($afterPath); ?>" alt="After"
+                                        class="transformation-img">
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -257,10 +275,21 @@ try {
                     <div class="expandable-gallery" data-group="1">
                         <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 1; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 1; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -272,10 +301,21 @@ try {
                     <div class="expandable-gallery" data-group="2">
                         <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 5; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 5; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -287,10 +327,21 @@ try {
                     <div class="expandable-gallery" data-group="3">
                         <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 9; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 9; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>

@@ -108,12 +108,12 @@
 
 /* Contact Background */
 .hero-bg-contact {
-    background-image: url('../images/static/contactHero.jpg');
+    background-image: url('../images/static/contactHero.webp');
 }
 
 /* Pricing Background */
 .hero-bg-pricing {
-    background-image: url('../images/static/pricingHero.jpg');
+    background-image: url('../images/static/pricingHero.webp');
     background-position: center center;
 }
 
@@ -137,7 +137,7 @@
 
 /* Transformations Background */
 .hero-bg-transformations {
-    background-image: url('../images/static/transformationHero.jpg');
+    background-image: url('../images/static/transformationHero.webp');
     background-position: center center;
 }
 

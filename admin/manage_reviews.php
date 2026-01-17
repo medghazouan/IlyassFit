@@ -209,9 +209,17 @@ $totalReviews = countRecords($pdo, 'reviews');
                             <label for="photo_before">Before Photo</label>
                             <div class="current-image">
                                 <p>Current:</p>
-                                <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" alt="Before">
+                                <?php 
+                                $extBefore = strtolower(pathinfo($editReview['client_photo_before'], PATHINFO_EXTENSION));
+                                if ($extBefore === 'webm'): 
+                                ?>
+                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" 
+                                           style="max-width: 150px;" autoplay loop muted playsinline></video>
+                                <?php else: ?>
+                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" alt="Before">
+                                <?php endif; ?>
                             </div>
-                            <input type="file" id="photo_before" name="photo_before" accept="image/*">
+                            <input type="file" id="photo_before" name="photo_before" accept="image/*,video/webm">
                             <p class="image-note">Leave empty to keep current photo</p>
                         </div>
                         
@@ -219,9 +227,17 @@ $totalReviews = countRecords($pdo, 'reviews');
                             <label for="photo_after">After Photo</label>
                             <div class="current-image">
                                 <p>Current:</p>
-                                <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" alt="After">
+                                <?php 
+                                $extAfter = strtolower(pathinfo($editReview['client_photo_after'], PATHINFO_EXTENSION));
+                                if ($extAfter === 'webm'): 
+                                ?>
+                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" 
+                                           style="max-width: 150px;" autoplay loop muted playsinline></video>
+                                <?php else: ?>
+                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" alt="After">
+                                <?php endif; ?>
                             </div>
-                            <input type="file" id="photo_after" name="photo_after" accept="image/*">
+                            <input type="file" id="photo_after" name="photo_after" accept="image/*,video/webm">
                             <p class="image-note">Leave empty to keep current photo</p>
                         </div>
                     </div>
@@ -254,12 +270,12 @@ $totalReviews = countRecords($pdo, 'reviews');
                     <div class="form-row">
                         <div class="form-group">
                             <label for="photo_before">Before Photo *</label>
-                            <input type="file" id="photo_before" name="photo_before" accept="image/*" required>
+                            <input type="file" id="photo_before" name="photo_before" accept="image/*,video/webm" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="photo_after">After Photo *</label>
-                            <input type="file" id="photo_after" name="photo_after" accept="image/*" required>
+                            <input type="file" id="photo_after" name="photo_after" accept="image/*,video/webm" required>
                         </div>
                     </div>
                     
@@ -300,12 +316,28 @@ $totalReviews = countRecords($pdo, 'reviews');
                                         <td><?php echo htmlspecialchars($review['id']); ?></td>
                                         <td><?php echo htmlspecialchars($review['client_name']); ?></td>
                                         <td>
-                                            <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
-                                                 alt="Before" class="review-img">
+                                            <?php 
+                                            $extBefore = strtolower(pathinfo($review['client_photo_before'], PATHINFO_EXTENSION));
+                                            if ($extBefore === 'webm'): 
+                                            ?>
+                                                <video src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
+                                                       class="review-img" autoplay loop muted playsinline></video>
+                                            <?php else: ?>
+                                                <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
+                                                     alt="Before" class="review-img">
+                                            <?php endif; ?>
                                         </td>
                                         <td>
-                                            <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
-                                                 alt="After" class="review-img">
+                                            <?php 
+                                            $extAfter = strtolower(pathinfo($review['client_photo_after'], PATHINFO_EXTENSION));
+                                            if ($extAfter === 'webm'): 
+                                            ?>
+                                                <video src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
+                                                       class="review-img" autoplay loop muted playsinline></video>
+                                            <?php else: ?>
+                                                <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
+                                                     alt="After" class="review-img">
+                                            <?php endif; ?>
                                         </td>
                                         <td class="review-text"><?php echo htmlspecialchars(substr($review['review_text'], 0, 50)) . '...'; ?></td>
                                         <td>
