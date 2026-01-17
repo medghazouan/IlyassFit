@@ -21,25 +21,44 @@ if (isset($_POST['add_plan'])) {
     $displayOrder = filter_var($_POST['display_order'], FILTER_VALIDATE_INT);
     
     if (!empty($planName) && $price !== false) {
-        $data = [
-            'plan_name' => $planName,
-            'coaching_type' => $coachingType,
-            'price' => $price,
-            'duration' => $duration,
-            'booking_url' => $bookingUrl,
-            'button_text' => $buttonText,
-            'description' => $description,
-            'features' => $features,
-            'display_order' => $displayOrder,
-            'is_active' => 1
+        // Count existing plans by coaching type
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM pricing_plans WHERE coaching_type = ?");
+        $stmt->execute([$coachingType]);
+        $existingCount = $stmt->fetchColumn();
+        
+        // Validate plan limits
+        $maxLimits = [
+            'online' => 3,
+            'face_to_face' => 2
         ];
         
-        if (create($pdo, 'pricing_plans', $data)) {
-            // Redirect to clear form and show success message
-            header('Location: manage_pricing.php?success=added');
-            exit;
+        if (isset($maxLimits[$coachingType]) && $existingCount >= $maxLimits[$coachingType]) {
+            if ($coachingType === 'online') {
+                $error = "Maximum limit reached! You can only have 3 online plans. Please delete an existing online plan first.";
+            } else {
+                $error = "Maximum limit reached! You can only have 2 face-to-face plans. Please delete an existing face-to-face plan first.";
+            }
         } else {
-            $error = "Failed to add pricing plan";
+            $data = [
+                'plan_name' => $planName,
+                'coaching_type' => $coachingType,
+                'price' => $price,
+                'duration' => $duration,
+                'booking_url' => $bookingUrl,
+                'button_text' => $buttonText,
+                'description' => $description,
+                'features' => $features,
+                'display_order' => $displayOrder,
+                'is_active' => 1
+            ];
+            
+            if (create($pdo, 'pricing_plans', $data)) {
+                // Redirect to clear form and show success message
+                header('Location: manage_pricing.php?success=added');
+                exit;
+            } else {
+                $error = "Failed to add pricing plan";
+            }
         }
     } else {
         $error = "Please fill all required fields";
