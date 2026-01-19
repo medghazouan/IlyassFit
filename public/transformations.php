@@ -6,7 +6,8 @@ $stmt = $pdo->prepare("SELECT * FROM reviews ORDER BY id DESC");
 $stmt->execute();
 $reviews = $stmt->fetchAll();
 
-$pageTitle = "Transformations";
+$pageTitle = "Client Transformations";
+$pageDescription = "See real before and after results from Ilyass Fit clients. Inspiring body transformations through dedicated training and nutrition coaching.";
 include 'components/meta.php';
 include 'components/header.php';
 ?>

@@ -9,7 +9,7 @@
     background-position: center top;
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: scroll; /* Changed from fixed for better scroll performance */
     display: flex;
     align-items: center;
     justify-content: center;

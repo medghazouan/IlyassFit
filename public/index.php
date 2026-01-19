@@ -1,6 +1,7 @@
 <?php
-// Set page title
-$pageTitle = "Home";
+// Set page title and description for SEO
+$pageTitle = "Personal Training & Online Coaching";
+$pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
 
 // Define Services for Slider
 $services = [
@@ -287,8 +288,7 @@ try {
                                 <?php else: ?>
                                     <img src="<?php echo $image['full_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 1; ?>" 
-                                         class="gallery-img-expandable"
-                                         loading="lazy">
+                                         class="gallery-img-expandable">
                                 <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
@@ -313,8 +313,7 @@ try {
                                 <?php else: ?>
                                     <img src="<?php echo $image['full_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 5; ?>" 
-                                         class="gallery-img-expandable"
-                                         loading="lazy">
+                                         class="gallery-img-expandable">
                                 <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
@@ -339,8 +338,7 @@ try {
                                 <?php else: ?>
                                     <img src="<?php echo $image['full_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 9; ?>" 
-                                         class="gallery-img-expandable"
-                                         loading="lazy">
+                                         class="gallery-img-expandable">
                                 <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>

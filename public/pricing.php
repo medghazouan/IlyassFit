@@ -1,6 +1,7 @@
 <?php 
-// Set page title
+// Set page title and description for SEO
 $pageTitle = "Pricing Plans";
+$pageDescription = "Affordable personal training and online coaching plans. Choose face-to-face or online coaching packages tailored to your fitness goals.";
 
 // Include database config
 require_once '../includes/config/db_config.php';

@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "Contact";
+$pageDescription = "Get in touch with Ilyass Fit for personal training inquiries, coaching questions, or to book your free consultation.";
 require_once '../includes/functions/security.php';
 require_once '../includes/functions/auth.php';
 startSecureSession();
@@ -142,7 +143,7 @@ startSecureSession();
 
     <?php include 'components/footer.php'; ?>
 
-    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/contact.js?v=2"></script>
 </body>
 
 </html>
