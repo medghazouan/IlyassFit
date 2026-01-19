@@ -1,6 +1,7 @@
 <?php
-// Set page title
-$pageTitle = "Home";
+// Set page title and description for SEO
+$pageTitle = "Personal Training & Online Coaching";
+$pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
 
 // Define Services for Slider
 $services = [
@@ -262,8 +263,25 @@ try {
                     <div class="expandable-gallery" data-group="1">
                         <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+<<<<<<< HEAD
                                 <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 1; ?>"
                                     class="gallery-img-expandable" loading="lazy">
+=======
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 1; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
+>>>>>>> c81d5f431f1d80d8040d16c60b0b2919510b5bc7
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -275,8 +293,25 @@ try {
                     <div class="expandable-gallery" data-group="2">
                         <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+<<<<<<< HEAD
                                 <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 5; ?>"
                                     class="gallery-img-expandable" loading="lazy">
+=======
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 5; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
+>>>>>>> c81d5f431f1d80d8040d16c60b0b2919510b5bc7
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -288,8 +323,25 @@ try {
                     <div class="expandable-gallery" data-group="3">
                         <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
+<<<<<<< HEAD
                                 <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 9; ?>"
                                     class="gallery-img-expandable" loading="lazy">
+=======
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 9; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
+>>>>>>> c81d5f431f1d80d8040d16c60b0b2919510b5bc7
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>

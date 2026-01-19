@@ -138,7 +138,13 @@ $onlinePlans = array_filter($allPlans, function($plan) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fc0404">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Manage Pricing</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/manage_pricing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -234,7 +240,7 @@ $onlinePlans = array_filter($allPlans, function($plan) {
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="price">Price (DH) *</label>
+                            <label for="price">Price ($) *</label>
                             <input type="number" id="price" name="price" step="0.01" 
                                    value="<?php echo $editPlan ? $editPlan['price'] : ''; ?>" required>
                         </div>
@@ -323,7 +329,7 @@ $onlinePlans = array_filter($allPlans, function($plan) {
                                 <h3><?php echo htmlspecialchars($plan['plan_name']); ?></h3>
                                 <div class="price">
                                     <span class="amount"><?php echo number_format($plan['price'], 2); ?></span>
-                                    <span class="currency">DH</span>
+                                    <span class="currency">$</span>
                                 </div>
                                 <div class="duration"><?php echo htmlspecialchars($plan['duration']); ?></div>
                                 <div class="description"><?php echo htmlspecialchars($plan['description']); ?></div>
@@ -381,7 +387,7 @@ $onlinePlans = array_filter($allPlans, function($plan) {
                                 <h3><?php echo htmlspecialchars($plan['plan_name']); ?></h3>
                                 <div class="price">
                                     <span class="amount"><?php echo number_format($plan['price'], 2); ?></span>
-                                    <span class="currency">DH</span>
+                                    <span class="currency">$</span>
                                 </div>
                                 <div class="duration"><?php echo htmlspecialchars($plan['duration']); ?></div>
                                 <div class="description"><?php echo htmlspecialchars($plan['description']); ?></div>
