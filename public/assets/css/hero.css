@@ -108,13 +108,18 @@
 
 /* Contact Background */
 .hero-bg-contact {
-    background-image: url('../images/static/contactHero.webp');
+    background-image: url('../images/static/contactHero-1600.webp');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /* Pricing Background */
 .hero-bg-pricing {
-    background-image: url('../images/static/pricingHero.webp');
-    background-position: center center;
+  background-image: url('../images/static/hero-1600.webp');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* Pricing specific overlay adjustment to match original design */
@@ -137,8 +142,10 @@
 
 /* Transformations Background */
 .hero-bg-transformations {
-    background-image: url('../images/static/transformationHero.webp');
-    background-position: center center;
+  background-image: url('../images/static/transformationHero-1600.webp');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .hero-bg-transformations .hero-overlay {
@@ -195,6 +202,15 @@
         /* Consistent button width */
         max-width: 280px;
     }
+    .hero-bg-pricing {
+    background-image: url('../images/static/hero-1600.webp');
+  }
+    .hero-bg-contact {
+    background-image: url('../images/static/contactHero-1600.webp');
+  }
+  .hero-bg-transformations {
+    background-image: url('../images/static/transformationHero-1600.webp');
+  }
 }
 
 @media (max-width: 576px) {
@@ -228,4 +244,16 @@
     .hero-bg-contact {
         background-position: 60% center;
     }
+    .hero-bg-pricing {
+    background-image: url('../images/static/hero-768.webp');
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-bg-transformations {
+    background-image: url('../images/static/transformationHero-2200.webp');
+  }
+  .hero-bg-contact {
+    background-image: url('../images/static/contactHero-2200.webp');
+  }
 }

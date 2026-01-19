@@ -237,7 +237,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
     padding: 20px;
     transform: translateY(100%);
     transition: transform 0.3s ease;
@@ -310,15 +310,15 @@
     .upload-container {
         grid-template-columns: 1fr;
     }
-    
+
     .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
-    
+
     .gallery-item img {
         height: 220px;
     }
-    
+
     .stat-card {
         max-width: 100%;
     }
