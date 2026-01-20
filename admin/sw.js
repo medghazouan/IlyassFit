@@ -1,5 +1,5 @@
 // Service Worker for Ilyass Fit Admin PWA
-const CACHE_NAME = 'ilyassfit-admin-v1';
+const CACHE_NAME = 'ilyassfit-admin-v2';
 const urlsToCache = [
     '/IlyassFit/admin/css/navbar.css',
     '/IlyassFit/admin/css/dashboard.css',
@@ -45,18 +45,18 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     // Skip non-GET requests
     if (event.request.method !== 'GET') return;
-    
+
     // Skip PHP requests (always need fresh data)
     if (event.request.url.includes('.php')) {
         return;
     }
-    
+
     event.respondWith(
         fetch(event.request)
             .then(response => {
                 // Clone the response
                 const responseClone = response.clone();
-                
+
                 // Cache static assets
                 if (response.status === 200) {
                     caches.open(CACHE_NAME)
@@ -64,12 +64,38 @@ self.addEventListener('fetch', event => {
                             cache.put(event.request, responseClone);
                         });
                 }
-                
+
                 return response;
             })
             .catch(() => {
                 // Fallback to cache
                 return caches.match(event.request);
+            })
+    );
+});
+
+// Notification click event - navigate to messages page
+self.addEventListener('notificationclick', event => {
+    console.log('Notification clicked');
+    event.notification.close();
+
+    // Get the URL from notification data or default to messages page
+    const urlToOpen = event.notification.data?.url || 'manage_messages.php';
+
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then(windowClients => {
+                // Check if there's already an open window
+                for (let client of windowClients) {
+                    if (client.url.includes('/admin/') && 'focus' in client) {
+                        client.focus();
+                        return client.navigate(urlToOpen);
+                    }
+                }
+                // If no window is open, open a new one
+                if (clients.openWindow) {
+                    return clients.openWindow(urlToOpen);
+                }
             })
     );
 });

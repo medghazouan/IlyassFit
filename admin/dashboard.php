@@ -140,13 +140,129 @@ $unseenMessagesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 <script>
+// ============================================
+// NOTIFICATION SYSTEM FOR NEW MESSAGES
+// ============================================
+
+let lastUnseenCount = <?php echo $unseenMessages; ?>;
+let notificationPermission = Notification.permission;
+
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker registered'))
+            .then(reg => {
+                console.log('Service Worker registered');
+            })
             .catch(err => console.log('Service Worker registration failed:', err));
     });
 }
+
+// Request notification permission
+async function requestNotificationPermission() {
+    if (!('Notification' in window)) {
+        console.log('This browser does not support notifications');
+        return false;
+    }
+    
+    if (Notification.permission === 'granted') {
+        return true;
+    }
+    
+    if (Notification.permission !== 'denied') {
+        const permission = await Notification.requestPermission();
+        notificationPermission = permission;
+        return permission === 'granted';
+    }
+    
+    return false;
+}
+
+// Show notification
+function showNotification(title, body, tag) {
+    if (notificationPermission !== 'granted') return;
+    
+    const options = {
+        body: body,
+        icon: 'logo.png',
+        badge: 'logo.png',
+        tag: tag || 'ilyassfit-message',
+        requireInteraction: true,
+        vibrate: [200, 100, 200],
+        data: {
+            url: 'manage_messages.php'
+        }
+    };
+    
+    // Try to use service worker notification first (works even when minimized)
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification(title, options);
+        });
+    } else {
+        // Fallback to regular notification
+        const notification = new Notification(title, options);
+        notification.onclick = function() {
+            window.focus();
+            window.location.href = 'manage_messages.php';
+            notification.close();
+        };
+    }
+}
+
+// Check for new messages
+async function checkForNewMessages() {
+    try {
+        const response = await fetch('check_messages.php');
+        const data = await response.json();
+        
+        if (data.success && data.unseenCount > lastUnseenCount) {
+            // New message received!
+            const newCount = data.unseenCount - lastUnseenCount;
+            const message = data.latestMessage;
+            
+            if (message) {
+                const title = `${newCount} New Message${newCount > 1 ? 's' : ''}`;
+                const body = `From: ${message.full_name}\n${message.message.substring(0, 100)}...`;
+                showNotification(title, body, `msg-${message.id}`);
+            }
+            
+            // Update the badge count on page
+            updateBadgeCount(data.unseenCount);
+        }
+        
+        lastUnseenCount = data.unseenCount;
+        
+    } catch (error) {
+        console.log('Error checking messages:', error);
+    }
+}
+
+// Update badge count in UI
+function updateBadgeCount(count) {
+    const badge = document.querySelector('.badge');
+    if (badge) {
+        badge.textContent = count + ' New';
+    }
+    
+    // Update page title with count
+    if (count > 0) {
+        document.title = `(${count}) Admin Dashboard`;
+    } else {
+        document.title = 'Admin Dashboard';
+    }
+}
+
+// Initialize notification system
+document.addEventListener('DOMContentLoaded', async () => {
+    // Request permission on first visit
+    await requestNotificationPermission();
+    
+    // Check for new messages every 10 seconds (faster response)
+    setInterval(checkForNewMessages, 10000);
+    
+    // Check immediately on page load
+    checkForNewMessages();
+});
 </script>
 </html>

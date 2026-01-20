@@ -2,11 +2,16 @@
     "name": "Ilyass Fit Admin",
     "short_name": "IF Admin",
     "description": "Admin Dashboard for Ilyass Fit - Manage pricing, gallery, reviews and messages",
-    "start_url": "/IlyassFit/admin/dashboard.php",
+    "id": "/IlyassFit/admin/",
+    "start_url": "./dashboard.php",
+    "scope": "./",
     "display": "standalone",
     "background_color": "#1a1a2e",
     "theme_color": "#fc0404",
     "orientation": "any",
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    },
     "icons": [
         {
             "src": "logo.png",
@@ -21,6 +26,9 @@
             "purpose": "any maskable"
         }
     ],
-    "categories": ["business", "productivity"],
+    "categories": [
+        "business",
+        "productivity"
+    ],
     "lang": "en"
 }
