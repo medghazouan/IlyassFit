@@ -3,6 +3,7 @@ require_once '../includes/config/db_config.php';
 require_once '../includes/functions/auth.php';
 require_once '../includes/functions/crud.php';
 require_once '../includes/functions/upload.php';
+require_once 'image_processor.php'; // NEW: Add image processor
 
 requireLogin();
 
@@ -10,6 +11,9 @@ $success = '';
 $error = '';
 
 const MAX_IMAGES = 12;
+
+// Initialize image processor
+$imageProcessor = new ImageProcessor('../public/images/uploads/', '../public/images/uploads/thumbnails/');
 
 // Auto-cleanup orphaned files on page load to ensure storage efficiency
 cleanupUploadsFolder($pdo);
@@ -20,13 +24,12 @@ if (isset($_GET['delete'])) {
     if ($id) {
         $image = readOne($pdo, 'gallery', $id);
         if ($image) {
-            // First delete the physical file
-            deleteImage($image['image_path'], '../public/images/uploads/');
+            // Delete both original and thumbnail using image processor
+            $imageProcessor->deleteImage($image['image_path']);
             
             // Then delete from database
             if (delete($pdo, 'gallery', $id)) {
                 $success = "Image deleted successfully";
-                // Cleanup after delete to be sure
                 cleanupUploadsFolder($pdo);
             } else {
                 $error = "Failed to delete image from database";
@@ -35,34 +38,33 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle single image upload
+// Handle single image upload with AUTOMATIC OPTIMIZATION
 if (isset($_POST['upload_image']) && isset($_FILES['image'])) {
     $currentCount = countRecords($pdo, 'gallery');
     
     if ($currentCount >= MAX_IMAGES) {
         $error = "Gallery limit reached. Maximum " . MAX_IMAGES . " images allowed. Please delete an image before uploading a new one.";
     } else {
-        $uploadResult = uploadImage($_FILES['image'], '../public/images/uploads/');
+        // NEW: Use image processor for automatic optimization
+        $filename = $imageProcessor->processUpload($_FILES['image']);
         
-        if ($uploadResult['success']) {
-            $data = [
-                'image_path' => $uploadResult['filename']
-            ];
+        if ($filename !== false) {
+            $data = ['image_path' => $filename];
             
             if (create($pdo, 'gallery', $data)) {
-                $success = "Image uploaded successfully";
+                $success = "Image uploaded and optimized successfully! (Original resized + thumbnail created)";
                 cleanupUploadsFolder($pdo);
             } else {
                 $error = "Failed to save image to database";
-                deleteImage($uploadResult['filename'], '../public/images/uploads/');
+                $imageProcessor->deleteImage($filename);
             }
         } else {
-            $error = "Upload failed: " . $uploadResult['error'];
+            $error = "Upload failed: Please upload a valid JPG, PNG, or GIF image.";
         }
     }
 }
 
-// Handle multiple images upload
+// Handle multiple images upload with AUTOMATIC OPTIMIZATION
 if (isset($_POST['upload_multiple']) && isset($_FILES['images'])) {
     $currentCount = countRecords($pdo, 'gallery');
     $remainingSpots = MAX_IMAGES - $currentCount;
@@ -91,14 +93,15 @@ if (isset($_POST['upload_multiple']) && isset($_FILES['images'])) {
                     'size' => $_FILES['images']['size'][$i]
                 ];
                 
-                $uploadResult = uploadImage($file, '../public/images/uploads/');
+                // NEW: Use image processor for automatic optimization
+                $filename = $imageProcessor->processUpload($file);
                 
-                if ($uploadResult['success']) {
-                    $data = ['image_path' => $uploadResult['filename']];
+                if ($filename !== false) {
+                    $data = ['image_path' => $filename];
                     if (create($pdo, 'gallery', $data)) {
                         $uploadedCount++;
                     } else {
-                        deleteImage($uploadResult['filename'], '../public/images/uploads/');
+                        $imageProcessor->deleteImage($filename);
                         $failedCount++;
                     }
                 } else {
@@ -108,13 +111,13 @@ if (isset($_POST['upload_multiple']) && isset($_FILES['images'])) {
         }
         
         if ($uploadedCount > 0) {
-            $success = "$uploadedCount image(s) uploaded successfully.";
+            $success = "$uploadedCount image(s) uploaded and optimized successfully! (Resized + thumbnails created)";
             cleanupUploadsFolder($pdo);
         }
         if ($limitReached) {
             $error = "Some images were not uploaded because the " . MAX_IMAGES . " image limit was reached.";
         } elseif ($failedCount > 0) {
-            $error = "$failedCount image(s) failed to upload.";
+            $error .= " $failedCount image(s) failed to upload.";
         }
     }
 }
@@ -178,6 +181,15 @@ $totalImages = countRecords($pdo, 'gallery');
                         <p>Total Images in Gallery</p>
                     </div>
                 </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="stat-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Auto-Optimized</h3>
+                        <p>Images automatically resized & compressed</p>
+                    </div>
+                </div>
                 <?php if ($totalImages >= MAX_IMAGES): ?>
                 <div class="stat-card warning">
                     <div class="stat-icon" style="color: #ff9800;">
@@ -195,30 +207,38 @@ $totalImages = countRecords($pdo, 'gallery');
             <div class="upload-container">
                 <div class="upload-section">
                     <h2><i class="fas fa-upload"></i> Upload Single Image</h2>
+                    <p class="optimization-notice">
+                        <i class="fas fa-magic"></i> 
+                        Images are automatically optimized for web (resized to 1920px max, compressed, thumbnail created)
+                    </p>
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="image">Select Image</label>
-                            <input type="file" id="image" name="image" accept="image/*,video/webm" required>
+                            <input type="file" id="image" name="image" accept="image/jpeg,image/jpg,image/png,image/gif" required>
                         </div>
                         <button type="submit" name="upload_image" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
-                            <i class="fas fa-cloud-upload-alt"></i> Upload Image
+                            <i class="fas fa-cloud-upload-alt"></i> Upload & Optimize Image
                         </button>
                     </form>
                 </div>
                 
                 <div class="upload-section">
                     <h2><i class="fas fa-images"></i> Upload Multiple Images</h2>
+                    <p class="optimization-notice">
+                        <i class="fas fa-magic"></i> 
+                        All images automatically optimized for fast loading
+                    </p>
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="images">Select Multiple Images</label>
-                            <input type="file" id="images" name="images[]" accept="image/*,video/webm" multiple required>
+                            <input type="file" id="images" name="images[]" accept="image/jpeg,image/jpg,image/png,image/gif" multiple required>
                             <p class="helper-text">
                                 <i class="fas fa-info-circle"></i>
                                 Hold Ctrl (Cmd on Mac) to select multiple images
                             </p>
                         </div>
                         <button type="submit" name="upload_multiple" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
-                            <i class="fas fa-cloud-upload-alt"></i> Upload Multiple Images
+                            <i class="fas fa-cloud-upload-alt"></i> Upload & Optimize Multiple Images
                         </button>
                     </form>
                 </div>
@@ -228,6 +248,10 @@ $totalImages = countRecords($pdo, 'gallery');
             <div class="gallery-section">
                 <div class="section-header">
                     <h2><i class="fas fa-th"></i> Gallery Images</h2>
+                    <p class="text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        Showing optimized thumbnails (full images load on website when clicked)
+                    </p>
                 </div>
                 
                 <?php if (count($images) > 0): ?>
@@ -236,21 +260,31 @@ $totalImages = countRecords($pdo, 'gallery');
                             <div class="gallery-item">
                                 <?php 
                                 $ext = strtolower(pathinfo($img['image_path'], PATHINFO_EXTENSION));
+                                // Check if thumbnail exists, otherwise use original
+                                $thumbPath = '../public/images/uploads/thumbnails/' . $img['image_path'];
+                                $imagePath = file_exists($thumbPath) ? $thumbPath : '../public/images/uploads/' . $img['image_path'];
+                                
                                 if ($ext === 'webm'): 
                                 ?>
-                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
+                                    <video src="<?php echo htmlspecialchars($imagePath); ?>" 
                                            class="gallery-preview-video" autoplay loop muted playsinline
                                            style="width: 100%; height: 100%; object-fit: cover;">
                                     </video>
                                 <?php else: ?>
-                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
-                                         alt="Gallery Image">
+                                    <img src="<?php echo htmlspecialchars($imagePath); ?>" 
+                                         alt="Gallery Image"
+                                         loading="lazy">
                                 <?php endif; ?>
                                 <div class="gallery-overlay">
                                     <div class="image-id">
                                         <i class="fas fa-hashtag"></i>
                                         <?php echo $img['id']; ?>
                                     </div>
+                                    <?php if (file_exists($thumbPath)): ?>
+                                        <div class="optimized-badge">
+                                            <i class="fas fa-check-circle"></i> Optimized
+                                        </div>
+                                    <?php endif; ?>
                                     <a href="?delete=<?php echo $img['id']; ?>" 
                                        class="btn-delete" 
                                        onclick="return confirm('Delete this image?')">
@@ -270,5 +304,43 @@ $totalImages = countRecords($pdo, 'gallery');
             </div>
         </div>
     </div>
+    
+    <style>
+        .optimization-notice {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 3px solid #667eea;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #667eea;
+        }
+        
+        .optimization-notice i {
+            margin-right: 8px;
+        }
+        
+        .optimized-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .optimized-badge i {
+            margin-right: 5px;
+        }
+        
+        .text-muted {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
 </body>
 </html>

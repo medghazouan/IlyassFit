@@ -228,7 +228,7 @@ try {
     </div>
 </section>
 
-<!-- Expandable Gallery Section -->
+<!-- Expandable Gallery Section - OPTIMIZED VERSION -->
 <section class="gallery-section" id="gallery">
     <div class="container">
         <!-- Gallery Header -->
@@ -245,9 +245,17 @@ try {
             $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY RAND() LIMIT 12");
             $allImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Create paths for images
+            // Create paths for images - WITH THUMBNAILS FOR FAST LOADING
             foreach ($allImages as &$img) {
+                // Thumbnail path (small, fast loading)
+                $img['thumb_path'] = 'images/uploads/thumbnails/' . htmlspecialchars($img['image_path']);
+                // Full image path (for modal/lightbox)
                 $img['full_path'] = 'images/uploads/' . htmlspecialchars($img['image_path']);
+                
+                // Check if thumbnail exists, fallback to full image
+                if (!file_exists($img['thumb_path'])) {
+                    $img['thumb_path'] = $img['full_path'];
+                }
             }
         } catch (PDOException $e) {
             error_log("Gallery fetch error: " . $e->getMessage());
@@ -262,24 +270,26 @@ try {
                 <div class="gallery-group">
                     <div class="expandable-gallery" data-group="1">
                         <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
-                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-
-                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 1; ?>"
-                                    class="gallery-img-expandable" loading="lazy">
-
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
                                 <?php 
                                 $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
                                 if ($ext === 'webm'): 
                                 ?>
-                                    <video src="<?php echo $image['full_path']; ?>" 
+                                    <!-- Video: use thumbnail path -->
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
                                            class="gallery-img-expandable"
                                            autoplay loop muted playsinline
                                            style="object-fit: cover; width: 100%; height: 100%;">
                                     </video>
                                 <?php else: ?>
-                                    <img src="<?php echo $image['full_path']; ?>" 
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 1; ?>" 
-                                         class="gallery-img-expandable">
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
                                 <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
@@ -291,23 +301,25 @@ try {
                 <div class="gallery-group">
                     <div class="expandable-gallery" data-group="2">
                         <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
-                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-
-                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 5; ?>"
-                                    class="gallery-img-expandable" loading="lazy">
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index + 4; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
                                 <?php 
                                 $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
                                 if ($ext === 'webm'): 
                                 ?>
-                                    <video src="<?php echo $image['full_path']; ?>" 
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
                                            class="gallery-img-expandable"
                                            autoplay loop muted playsinline
                                            style="object-fit: cover; width: 100%; height: 100%;">
                                     </video>
                                 <?php else: ?>
-                                    <img src="<?php echo $image['full_path']; ?>" 
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 5; ?>" 
-                                         class="gallery-img-expandable">
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
                                 <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
@@ -319,26 +331,26 @@ try {
                 <div class="gallery-group">
                     <div class="expandable-gallery" data-group="3">
                         <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
-                            <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-
-                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 9; ?>"
-                                    class="gallery-img-expandable" loading="lazy">
-
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index + 8; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
                                 <?php 
                                 $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
                                 if ($ext === 'webm'): 
                                 ?>
-                                    <video src="<?php echo $image['full_path']; ?>" 
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
                                            class="gallery-img-expandable"
                                            autoplay loop muted playsinline
                                            style="object-fit: cover; width: 100%; height: 100%;">
                                     </video>
                                 <?php else: ?>
-                                    <img src="<?php echo $image['full_path']; ?>" 
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
                                          alt="Gallery Image <?php echo $index + 9; ?>" 
-                                         class="gallery-img-expandable">
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
                                 <?php endif; ?>
-
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -362,6 +374,93 @@ try {
         </div>
     </div>
 </section>
+
+<!-- Gallery Modal - Updated to load FULL images when clicked -->
+<div class="gallery-modal" id="galleryModal">
+    <div class="gallery-modal-overlay"></div>
+    <div class="gallery-modal-content">
+        <button class="gallery-modal-close" id="closeGalleryModal">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        
+        <button class="gallery-nav-btn gallery-nav-prev" id="prevImage">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        
+        <div class="gallery-modal-image-container">
+            <img src="" alt="Gallery Image" class="gallery-modal-img" id="modalImage">
+        </div>
+        
+        <button class="gallery-nav-btn gallery-nav-next" id="nextImage">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+        
+        <div class="gallery-modal-counter" id="imageCounter">1 / 12</div>
+    </div>
+</div>
+
+<script>
+// Gallery Modal Functionality - UPDATED to load FULL images on click
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryItems = document.querySelectorAll('.gallery-item-expandable');
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.getElementById('closeGalleryModal');
+    const prevBtn = document.getElementById('prevImage');
+    const nextBtn = document.getElementById('nextImage');
+    const counter = document.getElementById('imageCounter');
+    
+    let currentIndex = 0;
+    let allFullImages = [];
+    
+    // Collect all FULL image paths from data attributes
+    galleryItems.forEach((item, index) => {
+        const fullImagePath = item.getAttribute('data-full-image');
+        allFullImages.push(fullImagePath);
+        
+        // Click event to open modal with FULL resolution image
+        item.addEventListener('click', function() {
+            currentIndex = index;
+            showImage(currentIndex);
+            modal.classList.add('active');
+        });
+    });
+    
+    function showImage(index) {
+        // Load FULL resolution image in modal
+        modalImg.src = allFullImages[index];
+        counter.textContent = `${index + 1} / ${allFullImages.length}`;
+    }
+    
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.querySelector('.gallery-modal-overlay').addEventListener('click', () => modal.classList.remove('active'));
+    
+    prevBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + allFullImages.length) % allFullImages.length;
+        showImage(currentIndex);
+    });
+    
+    nextBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % allFullImages.length;
+        showImage(currentIndex);
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!modal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') modal.classList.remove('active');
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+    });
+});
+</script>
 
 <!-- Image Expand Modal -->
 <div class="gallery-modal" id="galleryModal">
