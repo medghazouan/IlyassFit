@@ -343,19 +343,25 @@
 
 /* Small Mobile (max-width: 576px) */
 @media (max-width: 576px) {
-    .service-title {
-        font-size: 1.25rem;
-    }
+  .service-title {
+    font-size: 1.25rem;
+  }
 
-    .service-icon {
-        width: 60px;
-        height: 60px;
-    }
+  .service-icon {
+    width: 60px;
+    height: 60px;
+  }
 
-    .service-icon i {
-        font-size: 2rem;
-    }
-    #services h2{
-        padding-top: 20px;
-    }
+  .service-icon i {
+    font-size: 2rem;
+  }
+
+  #services h2 {
+    padding-top: 20px;
+  }
+
+  /* ✅ Cadrage image en mobile */
+  .service-static-img {
+    object-position: 60% center; /* équivalent de background-position: 40% center */
+  }
 }

@@ -128,7 +128,13 @@ $totalImages = countRecords($pdo, 'gallery');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fc0404">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Manage Gallery</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/manage_gallery.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -192,7 +198,7 @@ $totalImages = countRecords($pdo, 'gallery');
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="image">Select Image</label>
-                            <input type="file" id="image" name="image" accept="image/*" required>
+                            <input type="file" id="image" name="image" accept="image/*,video/webm" required>
                         </div>
                         <button type="submit" name="upload_image" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
                             <i class="fas fa-cloud-upload-alt"></i> Upload Image
@@ -205,7 +211,7 @@ $totalImages = countRecords($pdo, 'gallery');
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="images">Select Multiple Images</label>
-                            <input type="file" id="images" name="images[]" accept="image/*" multiple required>
+                            <input type="file" id="images" name="images[]" accept="image/*,video/webm" multiple required>
                             <p class="helper-text">
                                 <i class="fas fa-info-circle"></i>
                                 Hold Ctrl (Cmd on Mac) to select multiple images
@@ -228,8 +234,18 @@ $totalImages = countRecords($pdo, 'gallery');
                     <div class="gallery-grid">
                         <?php foreach ($images as $img): ?>
                             <div class="gallery-item">
-                                <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
-                                     alt="Gallery Image">
+                                <?php 
+                                $ext = strtolower(pathinfo($img['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
+                                           class="gallery-preview-video" autoplay loop muted playsinline
+                                           style="width: 100%; height: 100%; object-fit: cover;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
+                                         alt="Gallery Image">
+                                <?php endif; ?>
                                 <div class="gallery-overlay">
                                     <div class="image-id">
                                         <i class="fas fa-hashtag"></i>

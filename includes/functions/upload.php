@@ -1,9 +1,9 @@
 <?php
 function uploadImage($file, $targetDir = '../public/images/uploads/') {
     // Allowed MIME types
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
-    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-    $maxSize = 5 * 1024 * 1024; // 5MB
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp', 'video/webm'];
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'webm'];
+    $maxSize = 10 * 1024 * 1024; // Increased to 10MB to accommodate webm videos
     
     // Check if file was uploaded without errors
     if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -12,7 +12,7 @@ function uploadImage($file, $targetDir = '../public/images/uploads/') {
     
     // Validate file size
     if ($file['size'] > $maxSize) {
-        return ['success' => false, 'error' => 'File size exceeds 5MB limit'];
+        return ['success' => false, 'error' => 'File size exceeds 10MB limit'];
     }
     
     // Validate MIME type using finfo (more secure than $_FILES['type'])
@@ -21,7 +21,7 @@ function uploadImage($file, $targetDir = '../public/images/uploads/') {
     finfo_close($finfo);
     
     if (!in_array($mimeType, $allowedTypes)) {
-        return ['success' => false, 'error' => 'Invalid file type. Only JPG, PNG, and GIF allowed'];
+        return ['success' => false, 'error' => 'Invalid file type. Only JPG, PNG, GIF, WEBP and WEBM allowed'];
     }
     
     // Get file extension

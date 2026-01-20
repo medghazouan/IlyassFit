@@ -6,7 +6,8 @@ $stmt = $pdo->prepare("SELECT * FROM reviews ORDER BY id DESC");
 $stmt->execute();
 $reviews = $stmt->fetchAll();
 
-$pageTitle = "Transformations";
+$pageTitle = "Client Transformations";
+$pageDescription = "See real before and after results from Ilyass Fit clients. Inspiring body transformations through dedicated training and nutrition coaching.";
 include 'components/meta.php';
 include 'components/header.php';
 ?>
@@ -50,9 +51,18 @@ include 'components/hero.php';
                                         $beforePath = 'images/uploads/' . $beforePath;
                                     }
                                     ?>
-                                    <img src="<?php echo htmlspecialchars($beforePath); ?>" 
-                                         alt="Before" 
-                                         class="transformation-img">
+                                    <?php 
+                                    $extBefore = strtolower(pathinfo($beforePath, PATHINFO_EXTENSION));
+                                    if ($extBefore === 'webm'): 
+                                    ?>
+                                        <video src="<?php echo htmlspecialchars($beforePath); ?>" 
+                                               class="transformation-img"
+                                               autoplay loop muted playsinline></video>
+                                    <?php else: ?>
+                                        <img src="<?php echo htmlspecialchars($beforePath); ?>" 
+                                             alt="Before" 
+                                             class="transformation-img">
+                                    <?php endif; ?>
                                 </div>
                                 <div class="divider-line"></div>
                                 <div class="image-wrapper">
@@ -63,9 +73,18 @@ include 'components/hero.php';
                                         $afterPath = 'images/uploads/' . $afterPath;
                                     }
                                     ?>
-                                    <img src="<?php echo htmlspecialchars($afterPath); ?>" 
-                                         alt="After" 
-                                         class="transformation-img">
+                                    <?php 
+                                    $extAfter = strtolower(pathinfo($afterPath, PATHINFO_EXTENSION));
+                                    if ($extAfter === 'webm'): 
+                                    ?>
+                                        <video src="<?php echo htmlspecialchars($afterPath); ?>" 
+                                               class="transformation-img"
+                                               autoplay loop muted playsinline></video>
+                                    <?php else: ?>
+                                        <img src="<?php echo htmlspecialchars($afterPath); ?>" 
+                                             alt="After" 
+                                             class="transformation-img">
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             

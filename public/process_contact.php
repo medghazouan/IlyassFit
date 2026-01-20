@@ -57,8 +57,12 @@ try {
             ];
             
             if (create($pdo, 'messages', $data)) {
+                // Get first name only for personalized message
+                $firstName = explode(' ', $fullName)[0];
+                
                 $response['success'] = true;
-                $response['message'] = "Message sent successfully! We'll get back to you soon.";
+                $response['firstName'] = $firstName;
+                $response['message'] = "Thank you, {$firstName}! Your message has been received. I'm excited to help you on your fitness journey. I'll personally review your message and get back to you within 24 hours. Let's make it happen!";
                 incrementRateLimit('contact'); // Count successful submission
             } else {
                 $response['message'] = "Failed to send message. Please try again.";

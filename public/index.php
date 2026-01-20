@@ -1,6 +1,7 @@
 <?php
-// Set page title
-$pageTitle = "Home";
+// Set page title and description for SEO
+$pageTitle = "Personal Training & Online Coaching";
+$pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
 
 // Define Services for Slider
 $services = [
@@ -25,17 +26,17 @@ include 'components/header.php';
 
 <!-- Hero Section -->
 <!-- Hero Section -->
-<?php 
+<?php
 $heroTitle = "TRANSFORM YOUR BODY";
 $heroSubtitle = "Professional Training | Nutrition Coaching | Results Guaranteed";
 $heroBackground = "hero-bg-video";
-ob_start(); 
+ob_start();
 ?>
 <a href="pricing.php" class="btn btn-primary">Get Started</a>
 <a href="#about" class="btn btn-outline-light">Learn More</a>
-<?php 
+<?php
 $heroButtons = ob_get_clean();
-include 'components/hero.php'; 
+include 'components/hero.php';
 ?>
 
 <?php
@@ -143,12 +144,12 @@ try {
                                 </p>
                             </div>
                         <?php endforeach; ?>
-                        
+
                         <!-- Dots Navigation (Moved here to stay with content) -->
-                         <div class="service-dots-nav">
+                        <div class="service-dots-nav">
                             <?php foreach ($services as $index => $service): ?>
-                                <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>" 
-                                      onclick="goToService(<?php echo $index; ?>)"></span>
+                                <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>"
+                                    onclick="goToService(<?php echo $index; ?>)"></span>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -157,10 +158,12 @@ try {
 
             <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
             <div class="col-lg-6 order-1 order-lg-2">
-                <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;">
-                    <img src="assets/images/static/service.jpg" alt="Fitness Services"
-                        class="img-fluid service-static-img">
-                     <!-- Decor elements if needed -->
+                <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;" id="service_img">
+                    <img src="assets/images/static/service-900.webp" srcset="
+                        assets/images/static/service-900.webp 900w,
+                        assets/images/static/service-1200.webp 1200w" 
+                      sizes="(max-width: 768px) 90vw, 636px" alt="Coach fitness" loading="lazy" class="img-fluid service-static-img"> 
+                    <!-- Decor elements if needed -->
                     <div class="service-decor top-left">
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-plus"></i>
@@ -180,7 +183,8 @@ try {
     <div class="container">
         <div class="gallery-header">
             <h2 class="gallery-title">LATEST TRANSFORMATIONS</h2>
-            <p class="section-subtitle transformations-subtitle">Witness the incredible journeys of our clients who have completely transformed their physiques and lifestyles through dedicated training.</p>
+            <p class="section-subtitle transformations-subtitle">Witness the incredible journeys of our clients who have
+                completely transformed their physiques and lifestyles through dedicated training.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
@@ -230,7 +234,9 @@ try {
         <!-- Gallery Header -->
         <div class="gallery-header">
             <h2 class="gallery-title">OUR GALLERY</h2>
-            <p class="section-subtitle">Explore our gallery to see the dedication, hard work, and results achieved by our community. From intense training sessions to inspiring transformations, get a glimpse of what's possible.</p>
+            <p class="section-subtitle">Explore our gallery to see the dedication, hard work, and results achieved by
+                our community. From intense training sessions to inspiring transformations, get a glimpse of what's
+                possible.</p>
         </div>
 
         <?php
@@ -238,7 +244,7 @@ try {
         try {
             $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY RAND() LIMIT 12");
             $allImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             // Create paths for images
             foreach ($allImages as &$img) {
                 $img['full_path'] = 'images/uploads/' . htmlspecialchars($img['image_path']);
@@ -257,10 +263,24 @@ try {
                     <div class="expandable-gallery" data-group="1">
                         <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 1; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+
+                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 1; ?>"
+                                    class="gallery-img-expandable" loading="lazy">
+
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 1; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -272,10 +292,23 @@ try {
                     <div class="expandable-gallery" data-group="2">
                         <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 5; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+
+                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 5; ?>"
+                                    class="gallery-img-expandable" loading="lazy">
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 5; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -287,10 +320,25 @@ try {
                     <div class="expandable-gallery" data-group="3">
                         <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
                             <div class="gallery-item-expandable" data-index="<?php echo $index; ?>">
-                                <img src="<?php echo $image['full_path']; ?>" 
-                                     alt="Gallery Image <?php echo $index + 9; ?>" 
-                                     class="gallery-img-expandable"
-                                     loading="lazy">
+
+                                <img src="<?php echo $image['full_path']; ?>" alt="Gallery Image <?php echo $index + 9; ?>"
+                                    class="gallery-img-expandable" loading="lazy">
+
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['full_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo $image['full_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 9; ?>" 
+                                         class="gallery-img-expandable">
+                                <?php endif; ?>
+
                                 <div class="gallery-overlay"></div>
                             </div>
                         <?php endforeach; ?>
@@ -304,8 +352,7 @@ try {
         <!-- Gallery Navigation Buttons -->
         <div class="text-center mt-5">
             <div class="d-flex flex-wrap justify-content-center gap-3 gallery-buttons">
-                <a href="https://instagram.com" target="_blank"
-                    class="btn btn-outline-light btn-instagram-custom">
+                <a href="https://instagram.com" target="_blank" class="btn btn-outline-light btn-instagram-custom">
                     <i class="fab fa-instagram me-2"></i> See More
                 </a>
                 <button class="btn btn-watch-now" id="openVideoModal">

@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "Contact";
+$pageDescription = "Get in touch with Ilyass Fit for personal training inquiries, coaching questions, or to book your free consultation.";
 require_once '../includes/functions/security.php';
 require_once '../includes/functions/auth.php';
 startSecureSession();
@@ -18,15 +19,15 @@ startSecureSession();
 
     <!-- Hero Section -->
     <!-- Hero Section -->
-    <?php 
+    <?php
     $heroTitle = "Start Your Journey Now";
     $heroBackground = "hero-bg-contact";
-    ob_start(); 
+    ob_start();
     ?>
     <a href="#form" class="btn btn-primary btn-lg">Contact Me Now</a>
-    <?php 
+    <?php
     $heroButtons = ob_get_clean();
-    include 'components/hero.php'; 
+    include 'components/hero.php';
     ?>
 
     <!-- Contact Info Section -->
@@ -93,7 +94,10 @@ startSecureSession();
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="contact-image-wrapper">
-                        <img src="assets/images/static/contactForm.jpg" alt="Fitness Training" class="contact-image">
+                        <img src="assets/images/static/contactForm-900.webp" srcset="
+                            assets/images/static/contactForm-900.webp 900w,
+                            assets/images/static/contactForm-1200.webp 1200w " sizes="(max-width: 768px) 90vw, 636px"
+                            alt="Coach fitness en entraînement" loading="lazy" class="contact-image">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -101,7 +105,8 @@ startSecureSession();
                         <div class="form-header">
                             <p class="form-subtitle">NEED HELP?</p>
                             <h2 class="form-title">GET IN TOUCH</h2>
-                            <p class="section-subtitle">Ready to take the first step? Reach out today to discuss your goals, ask questions about our plans, or schedule your initial consultation.</p>
+                            <p class="section-subtitle">Ready to take the first step? Reach out today to discuss your
+                                goals, ask questions about our plans, or schedule your initial consultation.</p>
                         </div>
 
                         <!-- Alert container -->
@@ -142,7 +147,7 @@ startSecureSession();
 
     <?php include 'components/footer.php'; ?>
 
-    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/contact.js?v=2"></script>
 </body>
 
 </html>
