@@ -1,48 +1,121 @@
-# Enable Gzip Compression
+# ============================================
+# PUBLIC HTACCESS - PRODUCTION READY
+# For Hostinger / Shared Hosting
+# ============================================
+
+RewriteEngine On
+
+# ============================================
+# HTTPS REDIRECTION (PRODUCTION)
+# ============================================
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^localhost
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.1
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# ============================================
+# DIRECTORY PROTECTION
+# ============================================
+Options -Indexes
+Options +FollowSymLinks
+
+# ============================================
+# BLOCK SENSITIVE FILES
+# ============================================
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|log|orig|psd|sh|sql|sw[op])|~)$">
+    Require all denied
+</FilesMatch>
+
+<Files ~ "^\.ht">
+    Require all denied
+</Files>
+
+<Files ".env">
+    Require all denied
+</Files>
+
+<FilesMatch "^\.git">
+    Require all denied
+</FilesMatch>
+
+# ============================================
+# PHP SETTINGS (HOSTINGER COMPATIBLE)
+# ============================================
+php_flag display_errors Off
+php_flag log_errors On
+
+php_value upload_max_filesize 10M
+php_value post_max_size 12M
+php_value max_execution_time 30
+php_value max_input_time 60
+php_value memory_limit 128M
+
+# ============================================
+# COMPRESSION
+# ============================================
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE text/css
-  AddOutputFilterByType DEFLATE text/javascript
-  AddOutputFilterByType DEFLATE text/xml
-  AddOutputFilterByType DEFLATE text/plain
-  AddOutputFilterByType DEFLATE image/x-icon
-  AddOutputFilterByType DEFLATE image/svg+xml
-  AddOutputFilterByType DEFLATE application/rss+xml
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE application/x-javascript
-  AddOutputFilterByType DEFLATE application/xml
-  AddOutputFilterByType DEFLATE application/xhtml+xml
-  AddOutputFilterByType DEFLATE application/x-font
-  AddOutputFilterByType DEFLATE application/x-font-truetype
-  AddOutputFilterByType DEFLATE application/x-font-ttf
-  AddOutputFilterByType DEFLATE application/x-font-otf
-  AddOutputFilterByType DEFLATE application/x-font-opentype
-  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
-  AddOutputFilterByType DEFLATE font/ttf
-  AddOutputFilterByType DEFLATE font/otf
-  AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/plain
 </IfModule>
 
-# Enable Browser Caching
+# ============================================
+# BROWSER CACHING
+# ============================================
 <IfModule mod_expires.c>
-  ExpiresActive On
-  
-  # Images
-  ExpiresByType image/jpg "access 1 year"
-  ExpiresByType image/jpeg "access 1 year"
-  ExpiresByType image/gif "access 1 year"
-  ExpiresByType image/png "access 1 year"
-  ExpiresByType image/webp "access 1 year"
-  ExpiresByType image/svg+xml "access 1 year"
-  ExpiresByType image/x-icon "access 1 year"
+    ExpiresActive On
 
-  # CSS, JavaScript
-  ExpiresByType text/css "access 1 month"
-  ExpiresByType text/javascript "access 1 month"
-  ExpiresByType application/javascript "access 1 month"
-  ExpiresByType application/x-javascript "access 1 month"
+    # HTML (no cache)
+    ExpiresByType text/html "access plus 0 seconds"
 
-  # Others
-  ExpiresByType application/pdf "access 1 month"
-  ExpiresByType application/x-shockwave-flash "access 1 month"
+    # CSS / JS
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
+
+# Cache-Control
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|css|js|woff|woff2|ttf|otf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires 0
+    </FilesMatch>
+</IfModule>
+
+# ============================================
+# BLOCK PHP EXECUTION IN UPLOADS
+# ============================================
+RewriteRule ^images/uploads/.*\.php$ - [F,L]
+
+# ============================================
+# UTF-8
+# ============================================
+AddDefaultCharset UTF-8
