@@ -1,11 +1,11 @@
 // Service Worker for Ilyass Fit Admin PWA
-const CACHE_NAME = 'ilyassfit-admin-v2';
+const CACHE_NAME = 'ilyassfit-admin-v3';
 const urlsToCache = [
-    '/IlyassFit/admin/css/navbar.css',
-    '/IlyassFit/admin/css/dashboard.css',
-    '/IlyassFit/admin/css/login.css',
-    '/IlyassFit/admin/css/manage_pricing.css',
-    '/IlyassFit/admin/logo.png',
+    './css/navbar.css',
+    './css/dashboard.css',
+    './css/login.css',
+    './css/manage_pricing.css',
+    './logo.png',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 

@@ -10,11 +10,13 @@ if ($isLocal) {
     $user = 'root';
     $pass = '';
 } else {
-    // Production (Hostinger) Credentials - UPDATE THESE BEFORE DEPLOYING
+    // ============================================
+    // HOSTINGER PRODUCTION CREDENTIALS
+    // ============================================
     $host = 'localhost';
-    $db = 'u123456789_ilyassfit'; // Example: u123456789_dbname
-    $user = 'u123456789_admin';   // Example: u123456789_username
-    $pass = 'YourStrongPassword123!'; 
+    $db = 'u974444073_ilyassfit';
+    $user = 'u974444073_admin';
+    $pass = '5f7Lma|BAV]';
 }
 
 $charset = 'utf8mb4';

@@ -2,7 +2,7 @@
     "name": "Ilyass Fit Admin",
     "short_name": "IF Admin",
     "description": "Admin Dashboard for Ilyass Fit - Manage pricing, gallery, reviews and messages",
-    "id": "/IlyassFit/admin/",
+    "id": "./",
     "start_url": "./dashboard.php",
     "scope": "./",
     "display": "standalone",
