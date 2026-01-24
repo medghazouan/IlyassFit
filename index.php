@@ -77,23 +77,28 @@ try {
                 </div>
 
                 <p class="about-me-text">
-                    Since my early years, physical excellence has always been my passion.
+                    Ilyass Qchiine
+                    25-year-old Certified Personal Trainer & Competitive Bodybuilder
                 </p>
 
                 <p class="about-me-text">
-                    Over the years, I have studied and tried many strategies to achieve it,
-                    realizing that the journey itself is as valuable as the destination and that
-                    having a structurally sound plan in place is of paramount importance.
+                    I am a certified personal trainer with competitive experience at both national and international levels,
+                     having trained alongside and learned from multiple champions in the fitness industry.
                 </p>
 
                 <p class="about-me-text">
-                    Therefore, I am confident in stating that with my knowledge and first-hand experience,
-                    I will guide you to reach your goals faster and injury-free by creating bespoke programs
-                    tailored to your personal needs and current limitations.
+                    In 2022, I competed in my first regional championship in my hometown, earning 2nd place
+                    , which qualified me for the Moroccan National Championship, where I placed 10th in my first national appearance.
                 </p>
 
                 <p class="about-me-text">
-                    Let me help you unlock the fittest version of yourself.
+                    In 2024, I participated in an international competition (PCA Culture). Although I did not achieve the desired result,
+                     the experience was a valuable learning step in my athletic journey due to not being fully prepared.
+                </p>
+
+                <p class="about-me-text">
+                        In 2025, I returned stronger and competed in the Night of Glory Championship, achieving 2nd place in my category 
+                        and 5th place overall, marking a significant milestone in my competitive career.
                 </p>
 
                 <!-- Testimonial -->
