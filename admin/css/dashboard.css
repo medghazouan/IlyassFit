@@ -65,6 +65,7 @@
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .section-header {
@@ -102,11 +103,14 @@
     padding: 20px;
     border-left: 4px solid var(--primary-red);
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .message-item:hover {
     box-shadow: 0 4px 15px rgba(252, 4, 4, 0.2);
-    transform: translateX(5px);
+    transform: scale(1.01);
+    z-index: 2;
 }
 
 .message-header {
@@ -151,13 +155,72 @@
 .detail-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    /* Increased gap */
     color: var(--gray);
     font-size: 14px;
+    position: relative;
+    padding: 8px 10px;
+    /* clickable area padding */
+    border-radius: 6px;
+    transition: background-color 0.2s, transform 0.1s;
+    cursor: pointer;
+    /* Ensure pointer is always shown if clickable */
 }
 
-.detail-item i {
+.detail-item:active {
+    transform: scale(0.98);
+}
+
+.detail-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Copy Icon Styles */
+.copy-icon {
+    font-size: 14px !important;
+    color: var(--gray) !important;
+    opacity: 0.5;
+    /* Always slightly visible */
+    transition: opacity 0.2s, color 0.2s;
+    margin-left: 10px;
+}
+
+.detail-item:hover .copy-icon {
+    opacity: 1;
+    color: var(--white) !important;
+}
+
+/* New Styles for Phone and Email */
+.contact-phone .phone-number {
+    color: var(--white);
+    user-select: all;
+    background: rgba(255, 255, 255, 0.05);
+    /* keep background consistent */
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: monospace;
+    transition: border-color 0.2s;
+}
+
+/* Adjust hover state for phone container */
+.contact-phone:hover .phone-number {
+    border-color: var(--primary-red);
+}
+
+.contact-email span {
+    transition: color 0.2s;
+}
+
+.contact-email:hover span {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+.detail-item i:first-child {
     color: var(--primary-red);
+    font-size: 16px;
 }
 
 .message-content {
@@ -219,9 +282,44 @@
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    /* Improved mobile layout for message details */
     .message-details {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .contact-phone,
+    .contact-email {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        /* Increase tap target size for mobile */
+        padding: 12px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+    .contact-phone .phone-number {
+        flex-grow: 1;
+        /* fill space */
+        margin-right: 5px;
+    }
+
+    .contact-email span {
+        flex-grow: 1;
+        word-break: break-all;
+        /* handle long emails */
+        margin-right: 5px;
+    }
+
+    .copy-icon {
+        opacity: 0.8;
+        /* Make it clearly visible on mobile */
+        font-size: 16px !important;
+        padding: 5px;
     }
 }

@@ -149,6 +149,13 @@
     box-shadow: 0 0 0 3px rgba(252, 4, 4, 0.1);
 }
 
+/* Fix dropdown options visibility in all browsers */
+.form-group select option {
+    background-color: var(--dark-bg);
+    color: var(--white);
+    padding: 10px;
+}
+
 .form-group textarea {
     resize: vertical;
     min-height: 100px;
@@ -441,54 +448,54 @@
     .main-content {
         padding: 15px 12px;
     }
-    
+
     .top-bar {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
         padding: 15px 20px;
     }
-    
+
     .top-bar h1 {
         font-size: 1.6rem;
     }
-    
+
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
-    
+
     .stat-card {
         padding: 15px;
     }
-    
+
     .stat-icon {
         width: 50px;
         height: 50px;
         font-size: 1.3rem;
     }
-    
+
     .stat-info h3 {
         font-size: 1.8rem;
     }
-    
+
     .stat-info p {
         font-size: 0.9rem;
     }
-    
+
     .form-container {
         padding: 20px;
     }
-    
+
     .form-container h2 {
         font-size: 1.4rem;
     }
-    
+
     .pricing-grid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .section-header h2 {
         font-size: 1.5rem;
     }
@@ -499,225 +506,225 @@
     .main-content {
         padding: 10px 8px;
     }
-    
+
     .top-bar {
         padding: 12px 15px;
     }
-    
+
     .top-bar h1 {
         font-size: 1.4rem;
     }
-    
+
     .user-info {
         font-size: 0.85rem;
     }
-    
+
     /* Statistics Grid */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-    
+
     .stat-card {
         padding: 12px 15px;
         flex-direction: row;
         align-items: center;
         gap: 15px;
     }
-    
+
     .stat-icon {
         width: 45px;
         height: 45px;
         font-size: 1.2rem;
     }
-    
+
     .stat-info {
         text-align: left;
     }
-    
+
     .stat-info h3 {
         font-size: 1.6rem;
         margin-bottom: 2px;
     }
-    
+
     .stat-info p {
         font-size: 0.85rem;
     }
-    
+
     /* Alert Messages */
     .alert {
         padding: 12px 15px;
         font-size: 0.9rem;
         margin-bottom: 15px;
     }
-    
+
     .alert i {
         font-size: 1rem;
     }
-    
+
     /* Form Container */
     .form-container {
         padding: 15px;
         margin-bottom: 20px;
     }
-    
+
     .form-container h2 {
         font-size: 1.3rem;
         margin-bottom: 15px;
     }
-    
+
     .form-container h2 i {
         font-size: 1.1rem;
     }
-    
+
     /* Form Elements */
     .form-row {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-    
+
     .form-group {
         margin-bottom: 12px;
     }
-    
+
     .form-group label {
         font-size: 0.9rem;
         margin-bottom: 6px;
     }
-    
+
     .form-group input,
     .form-group select,
     .form-group textarea {
         padding: 10px 12px;
         font-size: 0.95rem;
     }
-    
+
     .form-group textarea {
         min-height: 100px;
     }
-    
+
     /* Form Actions */
     .form-actions {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .btn {
         width: 100%;
         justify-content: center;
         padding: 12px 20px;
         font-size: 0.95rem;
     }
-    
+
     .btn i {
         font-size: 1rem;
     }
-    
+
     /* Pricing Section */
     .pricing-section {
         margin-bottom: 25px;
     }
-    
+
     .section-header {
         padding: 12px 15px;
         margin-bottom: 15px;
     }
-    
+
     .section-header h2 {
         font-size: 1.3rem;
     }
-    
+
     .section-header h2 i {
         font-size: 1.1rem;
     }
-    
+
     /* Pricing Grid */
     .pricing-grid {
         grid-template-columns: 1fr;
         gap: 15px;
         padding: 0 5px;
     }
-    
+
     /* Pricing Cards */
     .pricing-card {
         padding: 15px;
     }
-    
+
     .pricing-card h3 {
         font-size: 1.2rem;
         margin-bottom: 10px;
     }
-    
+
     .status-badge {
         font-size: 0.75rem;
         padding: 4px 10px;
     }
-    
+
     .price {
         margin: 12px 0;
     }
-    
+
     .price .amount {
         font-size: 2rem;
     }
-    
+
     .price .currency {
         font-size: 1.1rem;
     }
-    
+
     .duration {
         font-size: 0.85rem;
         margin-bottom: 12px;
     }
-    
+
     .description {
         font-size: 0.9rem;
         margin-bottom: 15px;
     }
-    
+
     .features {
         margin-bottom: 15px;
     }
-    
+
     .feature-item {
         font-size: 0.85rem;
         padding: 6px 0;
     }
-    
+
     .feature-item i {
         font-size: 0.75rem;
     }
-    
+
     /* Card Actions */
     .card-actions {
         gap: 8px;
     }
-    
+
     .btn-action {
         width: 38px;
         height: 38px;
         font-size: 1rem;
     }
-    
+
     /* No Data Message */
     .no-data {
         padding: 30px 15px;
     }
-    
+
     .no-data i {
         font-size: 2.5rem;
         margin-bottom: 12px;
     }
-    
+
     .no-data p {
         font-size: 0.9rem;
     }
-    
+
     /* Checkbox Label */
     .checkbox-label {
         font-size: 0.9rem;
     }
-    
+
     .checkbox-label input[type="checkbox"] {
         width: 18px;
         height: 18px;
@@ -729,151 +736,182 @@
     .main-content {
         padding: 8px 5px;
     }
-    
+
     .top-bar {
         padding: 10px 12px;
     }
-    
+
     .top-bar h1 {
         font-size: 1.2rem;
     }
-    
+
     .user-info {
         font-size: 0.8rem;
     }
-    
+
     /* Statistics */
     .stats-grid {
         gap: 10px;
     }
-    
+
     .stat-card {
         padding: 10px 12px;
         gap: 12px;
     }
-    
+
     .stat-icon {
         width: 40px;
         height: 40px;
         font-size: 1.1rem;
     }
-    
+
     .stat-info h3 {
         font-size: 1.4rem;
     }
-    
+
     .stat-info p {
         font-size: 0.8rem;
     }
-    
+
     /* Form Container */
     .form-container {
         padding: 12px;
         margin-bottom: 15px;
     }
-    
+
     .form-container h2 {
         font-size: 1.15rem;
         margin-bottom: 12px;
     }
-    
+
     .form-row {
         gap: 10px;
     }
-    
+
     .form-group {
         margin-bottom: 10px;
     }
-    
+
     .form-group label {
         font-size: 0.85rem;
         margin-bottom: 5px;
     }
-    
+
     .form-group input,
     .form-group select,
     .form-group textarea {
         padding: 8px 10px;
         font-size: 0.9rem;
     }
-    
+
     .btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-    
-    /* Pricing Section */
-    .pricing-section {
-        margin-bottom: 20px;
-    }
-    
-    .section-header {
-        padding: 10px 12px;
-        margin-bottom: 12px;
-    }
-    
-    .section-header h2 {
-        font-size: 1.15rem;
-    }
-    
-    .pricing-grid {
-        gap: 12px;
-    }
-    
-    .pricing-card {
-        padding: 12px;
-    }
-    
-    .pricing-card h3 {
-        font-size: 1.1rem;
-    }
-    
-    .status-badge {
-        font-size: 0.7rem;
-        padding: 3px 8px;
-    }
-    
-    .price .amount {
-        font-size: 1.8rem;
-    }
-    
-    .price .currency {
-        font-size: 1rem;
-    }
-    
-    .duration {
-        font-size: 0.8rem;
-    }
-    
-    .description {
-        font-size: 0.85rem;
-    }
-    
-    .feature-item {
-        font-size: 0.8rem;
-        padding: 5px 0;
-    }
-    
-    .card-actions {
-        gap: 6px;
-    }
-    
-    .btn-action {
-        width: 35px;
-        height: 35px;
-        font-size: 0.95rem;
-    }
-    
-    .no-data {
-        padding: 25px 12px;
-    }
-    
-    .no-data i {
-        font-size: 2rem;
-    }
-    
-    .no-data p {
+        padding: 9px 12px;
         font-size: 0.85rem;
     }
 }
 
+/* ============================================
+   CUSTOM SELECT DROPDOWN (PREMIUM)
+   ============================================ */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-select-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--white);
+    background: var(--dark-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-select-trigger:after {
+    content: '\f078';
+    /* FontAwesome chevron-down */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    color: var(--primary-red);
+    transition: transform 0.3s ease;
+}
+
+.custom-select.open .custom-select-trigger {
+    border-color: var(--primary-red);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.custom-select.open .custom-select-trigger:after {
+    transform: rotate(180deg);
+}
+
+.custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid var(--primary-red);
+    border-top: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background: var(--dark-bg);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.custom-select.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.custom-option {
+    position: relative;
+    display: block;
+    padding: 12px;
+    font-size: 14px;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.custom-option:hover {
+    color: var(--white);
+    background-color: rgba(252, 4, 4, 0.1);
+    padding-left: 18px;
+    /* subtle slide effect */
+}
+
+.custom-option.selected {
+    color: var(--white);
+    background-color: var(--primary-red);
+}
+
+/* Hide original select */
+.form-group select {
+    display: none;
+    /* We will hide the original select */
+}

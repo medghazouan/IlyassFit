@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config/db_config.php';
+require_once './includes/config/db_config.php';
 
 // Fetch approved reviews from database
 $stmt = $pdo->prepare("SELECT * FROM reviews ORDER BY id DESC");

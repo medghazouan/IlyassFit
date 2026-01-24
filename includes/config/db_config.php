@@ -4,7 +4,7 @@
 $isLocal = ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1');
 
 if ($isLocal) {
-    // Localhost (XAMPP) Credentials
+    // Localhost (XAMPP) Credentials - for local testing
     $host = 'localhost';
     $db = 'ilyassfitdb'; 
     $user = 'root';

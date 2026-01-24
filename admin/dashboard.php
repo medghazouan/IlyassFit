@@ -107,14 +107,15 @@ $unseenMessagesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <span class="message-id">#<?php echo $msg['id']; ?></span>
                                 </div>
-                                <div class="message-details">
-                                    <div class="detail-item">
+                                    <div class="detail-item contact-email" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['email']); ?>', 'Email')" style="cursor: pointer;" title="Click to copy email">
                                         <i class="fas fa-envelope"></i>
                                         <span><?php echo htmlspecialchars($msg['email']); ?></span>
+                                        <i class="fas fa-copy copy-icon"></i>
                                     </div>
-                                    <div class="detail-item">
+                                    <div class="detail-item contact-phone" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['telephone']); ?>', 'Phone')" style="cursor: pointer;" title="Click to copy phone">
                                         <i class="fas fa-phone"></i>
-                                        <span><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                        <span class="phone-number"><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                        <i class="fas fa-copy copy-icon"></i>
                                     </div>
                                 </div>
                                 <div class="message-content">
@@ -264,5 +265,66 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Check immediately on page load
     checkForNewMessages();
 });
+
+function copyToClipboard(text, type) {
+    if (!text) return;
+    
+    // Modern API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Show toast or alert
+            const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+            // Use existing showNotification or simple alert if preferred, but existing notification is for external msgs.
+            // Let's use a simple temporary alert/toast styling or reuse existing alert logic if feasible.
+            // For now simplest is a quick alert or no-op if user wants silent. 
+            // Better: create a temporary toast.
+            showToast(msg);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    } else {
+        // Fallback
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+            showToast(msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+function showToast(message) {
+    // Check if toast container exists
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; pointer-events: none;';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = 'background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 5px; margin-top: 10px; transition: opacity 0.5s ease; opacity: 0;';
+    container.appendChild(toast);
+    
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+    });
+    
+    // Remove after 3s
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
 </script>
 </html>

@@ -1,8 +1,8 @@
 <?php
 $pageTitle = "Contact";
 $pageDescription = "Get in touch with Ilyass Fit for personal training inquiries, coaching questions, or to book your free consultation.";
-require_once '../includes/functions/security.php';
-require_once '../includes/functions/auth.php';
+require_once './includes/functions/security.php';
+require_once './includes/functions/auth.php';
 startSecureSession();
 ?>
 <!DOCTYPE html>

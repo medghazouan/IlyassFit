@@ -183,8 +183,8 @@
 /* Right Side Image */
 .service-image-container {
     position: relative;
-    height: 100%;
-    min-height: 500px;
+    height: 550px;
+    /* Fixed height to cut image */
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -195,8 +195,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    min-height: 500px;
-    /* Ensure tall image */
 }
 
 /* Ensure decor is above images */
@@ -245,7 +243,7 @@
     .gallery-section {
         padding: 60px 0;
     }
-    
+
     /* Better separation for about me */
     .about-me-section {
         padding: 80px 0;
@@ -263,7 +261,7 @@
     .services-content-wrapper {
         text-align: center;
         padding: 0;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 
     .service-item-desc {
@@ -272,43 +270,29 @@
         padding: 0 10px;
     }
 
-    /* Mobile Overlay Dots Position */
+    /* Hide dots on mobile/tablet */
     .service-dots-nav {
-        right: 50%;
-        transform: translateX(50%);
-        top: auto;
-        bottom: 20px;
-        flex-direction: row;
-        width: auto;
-        padding: 8px 15px;
-        gap: 12px;
-    }
-    
-    .service-dot {
-        width: 12px;
-        height: 12px; /* Larger touch target */
+        display: none !important;
     }
 
     .service-decor {
         display: none;
-        /* Simplify on mobile */
     }
 
     .service-image-container {
         position: relative;
-        min-height: 400px; /* Taller for mobile impact */
+        height: 350px;
+        /* Reduced height for tablet */
+        min-height: auto;
         border-radius: 15px;
         margin-top: 20px;
+        margin-bottom: 40px;
     }
-    
-    .service-img {
+
+    .service-static-img {
         height: 100%;
         object-fit: cover;
     }
-    
-    /* Ensure content is readable over image if overlapping strategy used, 
-       but here we stacking: text top, image bottom. 
-       The dots are OVER the image at the bottom. */
 }
 
 /* Mobile (max-width: 768px) */
@@ -320,48 +304,57 @@
     }
 
     .services-custom-section {
-        padding: 50px 0;
+        padding: 50px 0 20px 0;
+        /* Reduced bottom padding */
     }
-    
+
     .service-image-container {
-        min-height: 350px;
+        height: 300px;
+        /* Reduced height for mobile */
+        min-height: auto;
     }
-    
+
     .service-item-title {
         font-size: 1.8rem;
         margin-bottom: 1rem;
     }
-    
+
     .services-main-title {
         font-size: 2rem;
         margin-bottom: 2rem;
     }
-    #services h2{
+
+    #services h2 {
         padding-top: 20px;
     }
 }
 
 /* Small Mobile (max-width: 576px) */
 @media (max-width: 576px) {
-  .service-title {
-    font-size: 1.25rem;
-  }
+    .service-title {
+        font-size: 1.25rem;
+    }
 
-  .service-icon {
-    width: 60px;
-    height: 60px;
-  }
+    .service-icon {
+        width: 60px;
+        height: 60px;
+    }
 
-  .service-icon i {
-    font-size: 2rem;
-  }
+    .service-icon i {
+        font-size: 2rem;
+    }
 
-  #services h2 {
-    padding-top: 20px;
-  }
+    #services h2 {
+        padding-top: 20px;
+    }
 
-  /* ✅ Cadrage image en mobile */
-  .service-static-img {
-    object-position: 60% center; /* équivalent de background-position: 40% center */
-  }
+    .service-image-container {
+        height: 250px;
+        /* Even smaller for small mobile */
+    }
+
+    .service-static-img {
+        object-position: center 20%;
+        /* Adjusted crop focus */
+    }
 }

@@ -1,0 +1,18 @@
+RewriteEngine On
+
+Options -Indexes
+AddDefaultCharset UTF-8
+Require all granted
+
+# If someone opens /admin/ → redirect to login.php
+DirectoryIndex login.php
+
+# Protect sensitive files
+<Files ".env">
+    Require all denied
+</Files>
+
+# Clean URLs (optional, safe)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ login.php?url=$1 [QSA,L]
