@@ -43,10 +43,10 @@ if (isset($_POST['update_review'])) {
             
             // Before photo
             if (isset($_FILES['photo_before']) && $_FILES['photo_before']['error'] !== UPLOAD_ERR_NO_FILE) {
-                $beforeUpload = uploadImage($_FILES['photo_before'], '../public/images/uploads/');
+                $beforeUpload = uploadImage($_FILES['photo_before'], '../images/uploads/');
                 
                 if ($beforeUpload['success']) {
-                    deleteImage($review['client_photo_before'], '../public/images/uploads/');
+                    deleteImage($review['client_photo_before'], '../images/uploads/');
                     $data['client_photo_before'] = $beforeUpload['filename'];
                 } else {
                     $error = "Failed to upload before photo: " . $beforeUpload['error'];
@@ -55,10 +55,10 @@ if (isset($_POST['update_review'])) {
             
             // After photo
             if (isset($_FILES['photo_after']) && $_FILES['photo_after']['error'] !== UPLOAD_ERR_NO_FILE) {
-                $afterUpload = uploadImage($_FILES['photo_after'], '../public/images/uploads/');
+                $afterUpload = uploadImage($_FILES['photo_after'], '../public/uploads/');
                 
                 if ($afterUpload['success']) {
-                    deleteImage($review['client_photo_after'], '../public/images/uploads/');
+                    deleteImage($review['client_photo_after'], '../images/uploads/');
                     $data['client_photo_after'] = $afterUpload['filename'];
                 } else {
                     $error = "Failed to upload after photo: " . $afterUpload['error'];
@@ -84,8 +84,8 @@ if (isset($_GET['delete'])) {
     if ($id) {
         $review = readOne($pdo, 'reviews', $id);
         if ($review) {
-            deleteImage($review['client_photo_before'], '../public/images/uploads/');
-            deleteImage($review['client_photo_after'], '../public/images/uploads/');
+            deleteImage($review['client_photo_before'], '../images/uploads/');
+            deleteImage($review['client_photo_after'], '../images/uploads/');
             
             if (delete($pdo, 'reviews', $id)) {
                 $success = "Review deleted successfully";
@@ -103,10 +103,10 @@ if (isset($_POST['add_review'])) {
     $reviewText = trim($_POST['review_text']);
     
     if (!empty($clientName) && !empty($reviewText) && isset($_FILES['photo_before']) && isset($_FILES['photo_after'])) {
-        $beforeUpload = uploadImage($_FILES['photo_before'], '../public/images/uploads/');
+        $beforeUpload = uploadImage($_FILES['photo_before'], '../images/uploads/');
         
         if ($beforeUpload['success']) {
-            $afterUpload = uploadImage($_FILES['photo_after'], '../public/images/uploads/');
+            $afterUpload = uploadImage($_FILES['photo_after'], '../images/uploads/');
             
             if ($afterUpload['success']) {
                 $data = [
@@ -219,10 +219,10 @@ $totalReviews = countRecords($pdo, 'reviews');
                                 $extBefore = strtolower(pathinfo($editReview['client_photo_before'], PATHINFO_EXTENSION));
                                 if ($extBefore === 'webm'): 
                                 ?>
-                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" 
+                                    <video src="../images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" 
                                            style="max-width: 150px;" autoplay loop muted playsinline></video>
                                 <?php else: ?>
-                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" alt="Before">
+                                    <img src="../images/uploads/<?php echo htmlspecialchars($editReview['client_photo_before']); ?>" alt="Before">
                                 <?php endif; ?>
                             </div>
                             <input type="file" id="photo_before" name="photo_before" accept="image/*,video/webm">
@@ -237,10 +237,10 @@ $totalReviews = countRecords($pdo, 'reviews');
                                 $extAfter = strtolower(pathinfo($editReview['client_photo_after'], PATHINFO_EXTENSION));
                                 if ($extAfter === 'webm'): 
                                 ?>
-                                    <video src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" 
+                                    <video src="../images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" 
                                            style="max-width: 150px;" autoplay loop muted playsinline></video>
                                 <?php else: ?>
-                                    <img src="../public/images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" alt="After">
+                                    <img src="../images/uploads/<?php echo htmlspecialchars($editReview['client_photo_after']); ?>" alt="After">
                                 <?php endif; ?>
                             </div>
                             <input type="file" id="photo_after" name="photo_after" accept="image/*,video/webm">
@@ -326,10 +326,10 @@ $totalReviews = countRecords($pdo, 'reviews');
                                             $extBefore = strtolower(pathinfo($review['client_photo_before'], PATHINFO_EXTENSION));
                                             if ($extBefore === 'webm'): 
                                             ?>
-                                                <video src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
+                                                <video src="../images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
                                                        class="review-img" autoplay loop muted playsinline></video>
                                             <?php else: ?>
-                                                <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
+                                                <img src="../images/uploads/<?php echo htmlspecialchars($review['client_photo_before']); ?>" 
                                                      alt="Before" class="review-img">
                                             <?php endif; ?>
                                         </td>
@@ -338,10 +338,10 @@ $totalReviews = countRecords($pdo, 'reviews');
                                             $extAfter = strtolower(pathinfo($review['client_photo_after'], PATHINFO_EXTENSION));
                                             if ($extAfter === 'webm'): 
                                             ?>
-                                                <video src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
+                                                <video src="../images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
                                                        class="review-img" autoplay loop muted playsinline></video>
                                             <?php else: ?>
-                                                <img src="../public/images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
+                                                <img src="../images/uploads/<?php echo htmlspecialchars($review['client_photo_after']); ?>" 
                                                      alt="After" class="review-img">
                                             <?php endif; ?>
                                         </td>

@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Set page title and description for SEO
 $pageTitle = "Personal Training & Online Coaching";
 $pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
@@ -41,7 +45,7 @@ include 'components/hero.php';
 
 <?php
 // Fetch reviews for About section
-require_once __DIR__ . '/../includes/config/db_config.php';
+require_once __DIR__ . '/includes/config/db_config.php';
 $aboutReviews = [];
 try {
     $stmt = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 5");

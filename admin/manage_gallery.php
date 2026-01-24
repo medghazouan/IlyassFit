@@ -13,7 +13,7 @@ $error = '';
 const MAX_IMAGES = 12;
 
 // Initialize image processor
-$imageProcessor = new ImageProcessor('../public/images/uploads/', '../public/images/uploads/thumbnails/');
+$imageProcessor = new ImageProcessor('../images/uploads/', '../images/uploads/thumbnails/');
 
 // Auto-cleanup orphaned files on page load to ensure storage efficiency
 cleanupUploadsFolder($pdo);
@@ -261,8 +261,8 @@ $totalImages = countRecords($pdo, 'gallery');
                                 <?php 
                                 $ext = strtolower(pathinfo($img['image_path'], PATHINFO_EXTENSION));
                                 // Check if thumbnail exists, otherwise use original
-                                $thumbPath = '../public/images/uploads/thumbnails/' . $img['image_path'];
-                                $imagePath = file_exists($thumbPath) ? $thumbPath : '../public/images/uploads/' . $img['image_path'];
+                                $thumbPath = '../images/uploads/thumbnails/' . $img['image_path'];
+                                $imagePath = file_exists($thumbPath) ? $thumbPath : '../images/uploads/' . $img['image_path'];
                                 
                                 if ($ext === 'webm'): 
                                 ?>
