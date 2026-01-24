@@ -10,10 +10,10 @@ header('Content-Type: application/json');
 ob_start();
 
 try {
-    require_once '../includes/config/db_config.php';
-    require_once '../includes/functions/crud.php';
-    require_once '../includes/functions/security.php';
-    require_once '../includes/functions/auth.php';
+    require_once 'includes/config/db_config.php';
+    require_once 'includes/functions/crud.php';
+    require_once 'includes/functions/security.php';
+    require_once 'includes/functions/auth.php';
     
     // Start session for CSRF validation
     startSecureSession();

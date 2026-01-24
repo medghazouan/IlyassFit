@@ -429,5 +429,85 @@ $onlinePlans = array_filter($allPlans, function($plan) {
             </div>
         </div>
     </div>
+    <script>
+    // Premium Custom Select Implementation
+    document.addEventListener('DOMContentLoaded', function() {
+        const selects = document.querySelectorAll('select');
+        
+        selects.forEach(select => {
+            // Create custom select wrapper
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select-wrapper';
+            select.parentNode.insertBefore(wrapper, select);
+            wrapper.appendChild(select);
+            
+            // Create custom select container
+            const customSelect = document.createElement('div');
+            customSelect.className = 'custom-select';
+            wrapper.appendChild(customSelect);
+            
+            // Create trigger
+            const trigger = document.createElement('div');
+            trigger.className = 'custom-select-trigger';
+            // Set initial text
+            const selectedOption = select.options[select.selectedIndex];
+            trigger.textContent = selectedOption ? selectedOption.textContent : 'Select option';
+            customSelect.appendChild(trigger);
+            
+            // Create options container
+            const customOptions = document.createElement('div');
+            customOptions.className = 'custom-options';
+            customSelect.appendChild(customOptions);
+            
+            // Generate options
+            Array.from(select.options).forEach(option => {
+                const customOption = document.createElement('div');
+                customOption.className = 'custom-option';
+                if (option.selected) customOption.classList.add('selected');
+                customOption.textContent = option.textContent;
+                customOption.setAttribute('data-value', option.value);
+                
+                customOption.addEventListener('click', function() {
+                    // Update original select
+                    select.value = this.getAttribute('data-value');
+                    
+                    // Update trigger text
+                    trigger.textContent = this.textContent;
+                    
+                    // Update classes
+                    customOptions.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // Close dropdown
+                    customSelect.classList.remove('open');
+                });
+                
+                customOptions.appendChild(customOption);
+            });
+            
+            // Toggle dropdown
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation(); // Stop bubbling
+                
+                // Close other selects
+                document.querySelectorAll('.custom-select').forEach(el => {
+                    if (el !== customSelect) el.classList.remove('open');
+                });
+                
+                customSelect.classList.toggle('open');
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-select-wrapper')) {
+                document.querySelectorAll('.custom-select').forEach(el => {
+                    el.classList.remove('open');
+                });
+            }
+        });
+    });
+    </script>
 </body>
 </html>

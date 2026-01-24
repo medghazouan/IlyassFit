@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Set page title and description for SEO
 $pageTitle = "Personal Training & Online Coaching";
 $pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
@@ -41,7 +45,7 @@ include 'components/hero.php';
 
 <?php
 // Fetch reviews for About section
-require_once __DIR__ . '/../includes/config/db_config.php';
+require_once __DIR__ . '/includes/config/db_config.php';
 $aboutReviews = [];
 try {
     $stmt = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 5");
@@ -159,9 +163,7 @@ try {
             <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
             <div class="col-lg-6 order-1 order-lg-2">
                 <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;" id="service_img">
-                    <img src="assets/images/static/service-900.webp" srcset="
-                        assets/images/static/service-900.webp 900w,
-                        assets/images/static/service-1200.webp 1200w" 
+                    <img src="assets/images/static/DSC07730.jpg"  
                       sizes="(max-width: 768px) 90vw, 636px" alt="Coach fitness" loading="lazy" class="img-fluid service-static-img"> 
                     <!-- Decor elements if needed -->
                     <div class="service-decor top-left">
