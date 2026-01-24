@@ -193,21 +193,124 @@ body.menu-open .navbar-toggler {
     display: none !important;
 }
 
+/* Side Drawer Mobile Menu */
+/* Side Drawer Mobile Menu */
 #navbarMobile {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    /* Drawer width 50% as requested */
+    height: 100vh;
+    background-color: var(--dark-bg);
+    z-index: 12000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    transform: translateX(-100%);
+    /* Hidden by default */
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    /* Very smooth ease */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
 }
 
+#navbarMobile.show {
+    display: flex;
+    transform: translateX(0);
+    /* Slide in */
+}
+
+/* Backdrop Overlay Removed */
+
+/* Nav Links inside Drawer */
 .mobile-nav {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    background-color: var(--dark-bg);
-    padding: 1rem 0;
+    align-items: flex-start;
+    /* Left aligned as per request "like standard navbar links" */
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    /* Spacing before logo */
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    padding: 0;
+    background-color: transparent;
+}
+
+.mobile-nav .nav-item {
+    list-style: none;
+    width: 100%;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s ease;
+}
+
+/* Animate links when menu is open */
+#navbarMobile.show .mobile-nav .nav-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger delays for links */
+#navbarMobile.show .mobile-nav .nav-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+#navbarMobile.show .mobile-nav .nav-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+#navbarMobile.show .mobile-nav .nav-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+#navbarMobile.show .mobile-nav .nav-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+#navbarMobile.show .mobile-nav .nav-item:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+#navbarMobile.show .mobile-nav .nav-item:nth-child(6) {
+    transition-delay: 0.6s;
+}
+
+.mobile-nav .nav-link {
+    font-size: 1.2rem;
+    color: var(--text-white) !important;
+    font-weight: 700;
+    padding: 0 !important;
+    display: inline-block;
+}
+
+/* Active State Red Line on Left */
+.mobile-nav .nav-link.active {
+    color: var(--primary-red) !important;
+}
+
+.mobile-nav .nav-link::after {
+    display: none;
+    /* Remove bottom line from desktop style */
+}
+
+/* Mobile Menu Footer (Logo) */
+.mobile-menu-footer {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+    display: flex;
+    justify-content: center;
+    /* Center the logo */
+    width: 100%;
+}
+
+.logo-mobile-footer {
+    width: 80px;
+    height: auto;
+    opacity: 0.8;
 }
 
 /* ============================================
