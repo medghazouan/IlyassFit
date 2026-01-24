@@ -28,8 +28,30 @@
             <i class="fas fa-dollar-sign"></i>
             <span>Manage Pricing</span>
         </a>
+        <a href="settings.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'settings.php' ? 'active' : ''; ?>">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
     </nav>
     
+    <!-- Mobile Menu (3 dots) - visible on small screens -->
+    <div class="mobile-menu-container">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="mobile-dropdown" id="mobileDropdown">
+            <a href="settings.php" class="dropdown-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="logout.php" class="dropdown-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Desktop Footer - hidden on small screens -->
     <div class="sidebar-footer">
         <a href="logout.php" class="logout-btn">
             <i class="fas fa-sign-out-alt"></i>
@@ -65,6 +87,24 @@
                     console.warn('Tab binding error', e);
                 }
             })();
+
+            // Mobile menu dropdown toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileDropdown = document.getElementById('mobileDropdown');
+            
+            if (mobileMenuBtn && mobileDropdown) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileDropdown.classList.toggle('show');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileDropdown.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                        mobileDropdown.classList.remove('show');
+                    }
+                });
+            }
         </script>
 </div>
 
