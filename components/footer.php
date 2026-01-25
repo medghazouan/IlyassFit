@@ -14,9 +14,9 @@
                     
                     <!-- Social Media Icons -->
                     <div class="social-icons mt-4">
-                        <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/share/186BtHtY2H/?mibextid=wwXIfr" class="social-icon" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ilyass_fitness_?igsh=MTZha3BlMjBrczVvNQ==" class="social-icon" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/0639975464" class="social-icon" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -27,11 +27,11 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:Contact@mysite.com">Contact@mysite.com</a>
+                        <a href="mailto:Contact@mysite.com">ilyassqchiine4@gmail.com</a>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <a href="tel:123-456-7890">Phone: 123-456-7890</a>
+                        <a href="tel:123-456-7890">Phone: +212-639975464</a>
                     </div>
                 </div>
             </div>

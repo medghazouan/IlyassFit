@@ -243,9 +243,10 @@
     /* Focus on object for contact hero */
     .hero-bg-contact {
         background-position: 60% center;
+        background-image: url('../images/static/contact-mobile.jpg');
     }
     .hero-bg-pricing {
-    background-image: url('../images/static/hero-768.webp');
+    background-image: url('../images/static/hero-1600.webp');
   }
 }
 

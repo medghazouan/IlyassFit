@@ -617,7 +617,8 @@
     .btn-instagram-custom,
     .btn-watch-now {
         font-size: 0.9rem;
-        padding: 12px 30px;
+        padding: 10px 20px;
+        /* Reduced padding as requested */
     }
 
     .btn-instagram-custom i,
@@ -710,7 +711,10 @@
 
     .btn-instagram-custom,
     .btn-watch-now {
-        width: 100%;
+        width: auto;
+        /* Allow button to size to content */
+        min-width: 180px;
+        /* Optional: minimum width for tappability */
         justify-content: center;
         margin: 0;
     }

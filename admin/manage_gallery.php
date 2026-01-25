@@ -181,15 +181,7 @@ $totalImages = countRecords($pdo, 'gallery');
                         <p>Total Images in Gallery</p>
                     </div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="stat-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Auto-Optimized</h3>
-                        <p>Images automatically resized & compressed</p>
-                    </div>
-                </div>
+
                 <?php if ($totalImages >= MAX_IMAGES): ?>
                 <div class="stat-card warning">
                     <div class="stat-icon" style="color: #ff9800;">
@@ -207,10 +199,7 @@ $totalImages = countRecords($pdo, 'gallery');
             <div class="upload-container">
                 <div class="upload-section">
                     <h2><i class="fas fa-upload"></i> Upload Single Image</h2>
-                    <p class="optimization-notice">
-                        <i class="fas fa-magic"></i> 
-                        Images are automatically optimized for web (resized to 1920px max, compressed, thumbnail created)
-                    </p>
+
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="image">Select Image</label>
@@ -224,10 +213,7 @@ $totalImages = countRecords($pdo, 'gallery');
                 
                 <div class="upload-section">
                     <h2><i class="fas fa-images"></i> Upload Multiple Images</h2>
-                    <p class="optimization-notice">
-                        <i class="fas fa-magic"></i> 
-                        All images automatically optimized for fast loading
-                    </p>
+
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="images">Select Multiple Images</label>
@@ -306,20 +292,7 @@ $totalImages = countRecords($pdo, 'gallery');
     </div>
     
     <style>
-        .optimization-notice {
-            background: rgba(102, 126, 234, 0.1);
-            border-left: 3px solid #667eea;
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            color: #667eea;
-        }
-        
-        .optimization-notice i {
-            margin-right: 8px;
-        }
-        
+
         .optimized-badge {
             position: absolute;
             top: 10px;

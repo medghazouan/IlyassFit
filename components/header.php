@@ -60,6 +60,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <div class="mobile-menu-footer">
+                <img src="assets/images/static/logo.png" alt="Ilyass Fit Logo" class="logo-mobile-footer">
+            </div>
         </div>
     </div>
 </nav>
@@ -136,9 +139,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Close menu when clicking on backdrop
-        body.addEventListener('click', function(e) {
+        // Since we removed the backdrop overlay CSS, this might not work as intended for "clicking outside".
+        // However, if we want "click outside" to close, we need to detect clicks on document that are NOT inside the menu.
+        document.addEventListener('click', function(e) {
             if (body.classList.contains('menu-open')) {
-                // Check if click is outside menu and not on toggler
+                // Check if click is outside menu AND not on the toggler button
                 if (!navbarCollapse.contains(e.target) && !navbarToggler.contains(e.target)) {
                     navbarCollapse.classList.remove('show');
                     body.classList.remove('menu-open');
@@ -151,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const mobileNavLinks = navbarCollapse.querySelectorAll('.nav-link');
         mobileNavLinks.forEach(function(link) {
             link.addEventListener('click', function() {
+                // Do NOT prevent default here, let the link navigate!
+                // Just close the menu visually
                 navbarCollapse.classList.remove('show');
                 body.classList.remove('menu-open');
                 navbarToggler.setAttribute('aria-expanded', 'false');
