@@ -107,28 +107,32 @@ $unseenMessagesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <span class="message-id">#<?php echo $msg['id']; ?></span>
                                 </div>
-                                    <div class="detail-item contact-email" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['email']); ?>', 'Email')" style="cursor: pointer;" title="Click to copy email">
-                                        <i class="fas fa-envelope"></i>
-                                        <span><?php echo htmlspecialchars($msg['email']); ?></span>
-                                        <i class="fas fa-copy copy-icon"></i>
-                                    </div>
-                                    <div class="detail-item contact-phone" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['telephone']); ?>', 'Phone')" style="cursor: pointer;" title="Click to copy phone">
-                                        <i class="fas fa-phone"></i>
-                                        <span class="phone-number"><?php echo htmlspecialchars($msg['telephone']); ?></span>
-                                        <i class="fas fa-copy copy-icon"></i>
-                                    </div>
+                                
+                                <div class="detail-item contact-email" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['email']); ?>', 'Email')" style="cursor: pointer;" title="Click to copy email">
+                                    <i class="fas fa-envelope"></i>
+                                    <span><?php echo htmlspecialchars($msg['email']); ?></span>
+                                    <i class="fas fa-copy copy-icon"></i>
                                 </div>
+                                
+                                <div class="detail-item contact-phone" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['telephone']); ?>', 'Phone')" style="cursor: pointer;" title="Click to copy phone">
+                                    <i class="fas fa-phone"></i>
+                                    <span class="phone-number"><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                    <i class="fas fa-copy copy-icon"></i>
+                                </div>
+                                
                                 <div class="message-content">
                                     <p><?php echo htmlspecialchars($msg['message']); ?></p>
                                 </div>
+                                
                                 <div class="message-actions">
                                     <a href="dashboard.php?mark_seen=<?php echo $msg['id']; ?>" class="btn-view">
                                         <i class="fas fa-eye"></i> View Details
                                     </a>
                                 </div>
-                            </div>
+                            </div> <!-- ✅ ONLY closing div for message-item -->
                         <?php endforeach; ?>
                     </div>
+
                 <?php else: ?>
                     <div class="no-messages">
                         <i class="fas fa-check-circle"></i>
