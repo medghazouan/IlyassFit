@@ -1,0 +1,585 @@
+/* ============================================
+   TRANSFORMATIONS HERO SECTION
+   ============================================ */
+/* Hero Section styles moved to hero.css */
+
+/* ============================================
+   TRANSFORMATIONS SECTION
+   ============================================ */
+.transformations-section {
+    background: var(--dark-bg);
+    padding: 80px 0;
+    min-height: 100vh;
+}
+
+/* ============================================
+   TRANSFORMATION CARD - EXACT DESIGN
+   ============================================ */
+.transformation-card {
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Creative Hover Effect - NO SHADOW */
+.transformation-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--primary-red);
+}
+
+/* Images Container */
+.images-container {
+    display: flex;
+    gap: 0;
+    position: relative;
+    background: #000;
+    padding: 8px;
+}
+
+.image-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Before/After Labels at Top */
+.image-label-top {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+/* Red Divider Line */
+.divider-line {
+    width: 3px;
+    background: var(--primary-red);
+    margin: 0 2px;
+    box-shadow: 0 0 10px var(--primary-red);
+    flex-shrink: 0;
+}
+
+.transformation-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.transformation-card:hover .transformation-img {
+    transform: scale(1.05);
+}
+
+.image-wrapper:hover {
+    flex: 2;
+}
+
+.image-wrapper:hover .transformation-img {
+    transform: scale(1.15);
+}
+
+/* Client Name Button - NO SHADOW */
+.client-name-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+}
+
+.client-name-btn {
+    background: transparent;
+    color: var(--primary-red);
+    padding: 10px 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    width: 100%;
+}
+
+.transformation-card:hover .client-name-btn {
+    /* No hover effect on name */
+    transform: none;
+    background: transparent;
+}
+
+/* Card Body - Review Text */
+.transformation-card .card-body {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* CENTER THE TEXT */
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+}
+
+.review-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #e0e0e0;
+    margin: 0;
+    margin-top: 0;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    /* FULL WIDTH FOR CENTERING */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.review-text .bi-quote {
+    color: var(--primary-red);
+    font-size: 1.3rem;
+    opacity: 0.7;
+    vertical-align: middle;
+}
+
+/* Center first row only */
+.transformations-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Center first 3 items (first row) when total count is less than or equal to 3 */
+.transformations-section .row:has(.first-row:nth-child(3):last-child) {
+    justify-content: center;
+}
+
+/* Center first 2 items when only 2 cards */
+.transformations-section .row:has(.col-md-6:nth-child(2):last-child) {
+    justify-content: center;
+}
+
+/* Center single card */
+.transformations-section .row:has(.col-md-6:only-child) {
+    justify-content: center;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.pricing-cta {
+    position: relative;
+    padding: 6rem 0;
+    background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(0, 0, 0, 0.95)),
+        url('../images/static/transformation.webp') center/cover no-repeat fixed;
+    border-top: 3px solid var(--primary-red);
+    overflow: hidden;
+}
+
+.pricing-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(252, 4, 4, 0.1),
+            transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.pricing-cta .container {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+}
+
+.cta-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-gray);
+    margin-bottom: 2.5rem;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.cta-features {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+}
+
+.cta-feature {
+    text-align: center;
+}
+
+.cta-feature i {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.cta-feature h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+}
+
+.cta-feature p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-gray);
+}
+
+.btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-red), #ff2020);
+    border: 3px solid var(--primary-red);
+    color: var(--text-white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 1.5rem 4rem;
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(252, 4, 4, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-cta:hover::before {
+    left: 100%;
+}
+
+.btn-cta:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(252, 4, 4, 0.6);
+    background: linear-gradient(135deg, #ff2020, var(--primary-red));
+}
+
+/* ============================================
+   RESPONSIVE - TRANSFORMATIONS
+   ============================================ */
+@media (max-width: 992px) {
+    .transformations-hero {
+        background-attachment: scroll;
+    }
+
+    .transformations-hero .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .transformations-hero .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .transformation-img {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .transformations-hero {
+        height: 50vh;
+        min-height: 350px;
+        margin-top: -60px;
+        padding-top: 60px;
+    }
+
+    .transformations-hero .hero-title {
+        font-size: 2rem;
+    }
+
+    .transformations-hero .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .transformations-section {
+        padding: 0 0 50px 0;
+    }
+
+    .transformation-img {
+        height: 300px;
+    }
+
+    .client-name-btn {
+        font-size: 1.3rem;
+        padding: 5px 0;
+    }
+
+    .review-text {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .transformations-hero .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .images-container {
+        flex-direction: column;
+        padding: 0;
+        gap: 0;
+        background: transparent;
+        align-items: stretch;
+
+        .divider-line {
+            width: 100%;
+            height: 3px;
+            margin: 0;
+            align-self: stretch;
+        }
+
+        .transformation-img {
+            height: 250px;
+        }
+
+        .transformation-card .card-body {
+            padding: 20px;
+        }
+
+        /* Disable hover/expand effects on mobile to prevent gaps when tapping images */
+        .image-wrapper {
+            flex: none;
+            margin: 0;
+            background: transparent;
+        }
+
+        .image-wrapper:hover,
+        .transformation-card:hover .image-wrapper {
+            flex: none;
+        }
+
+        .transformation-card:hover .transformation-img,
+        .image-wrapper:hover .transformation-img,
+        .image-wrapper:active .transformation-img,
+        .image-wrapper:focus .transformation-img {
+            transform: none !important;
+        }
+    }
+
+
+    /* Section Title */
+    .transformations-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 20px;
+
+        .transformations-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-red), transparent);
+            /* GRADIENT */
+            border-radius: 0;
+        }
+
+    /* Responsive adjustments for the title to avoid overlapping header on small screens */
+    @media (max-width: 992px) {
+        .transformations-title {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            padding-bottom: 12px;
+            display: block;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .transformations-subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-top: 10px;
+            text-align: left;
+            display: block;
+        }
+
+            .transformations-title::after {
+                width: 120px;
+            }
+
+            .transformations-hero {
+                /* Don't use fixed background on tablets/phones (can interfere with header stacking) */
+                background-attachment: scroll;
+                min-height: 300px;
+                margin-top: -60px;
+                padding-top: 60px;
+            }
+        }
+
+        /* ============================================
+   MOBILE CARD FORM (SCREENSHOT STYLE)
+   ============================================ */
+        @media (max-width: 576px) {
+
+            .transformations-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+                padding-bottom: 12px;
+                display: block;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+
+    /* Card width & spacing */
+            .transformation-card {
+                max-width: 100%;
+                margin: 0 auto 20px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            }
+
+            /* Compact image container */
+            .images-container {
+                padding: 0;
+                gap: 0;
+                aspect-ratio: auto;
+                flex-direction: row; /* Keep side-by-side on mobile for before/after comparison? Or stack? */
+                /* Let's try side-by-side for better comparison on mobile landscape, or stack on portrait if too narrow.
+                   Actually current design suppresses hover expand, which is good. */
+            }
+
+            .image-wrapper {
+                aspect-ratio: auto;
+                height: 200px; /* Fixed height for consistency */
+                margin: 0;
+                background: transparent;
+                flex: 1 !important; /* Force equal width */
+            }
+
+            /* Keep images inside wrapper without stretching */
+            .transformation-img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            /* Smaller divider */
+            .divider-line {
+                width: 2px;
+                background: var(--primary-red);
+                margin: 0;
+            }
+            
+            /* Labels */
+            .image-label-top {
+                font-size: 0.6rem;
+                padding: 3px 6px;
+                top: 5px;
+                left: 5px;
+            }
+
+            /* Compact client name */
+            .client-name-wrapper {
+                padding: 12px;
+                background: #252525;
+            }
+
+            .client-name-btn {
+                font-size: 1.1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Compact review */
+            .transformation-card .card-body {
+                padding: 15px;
+            }
+
+            .review-text {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+
+
+
+        /* === Scroll reveal for transformation cards === */
+        .transformation-card {
+            opacity: 0;
+            transform: translateX(0);
+            transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+        }
+
+        /* Start off-screen */
+        .transformation-card.from-left {
+            transform: translateX(-80px);
+        }
+
+        .transformation-card.from-right {
+            transform: translateX(80px);
+        }
+
+        /* When visible */
+        .transformation-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}

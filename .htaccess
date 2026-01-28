@@ -1,0 +1,30 @@
+RewriteEngine On
+
+Options -Indexes
+Options +FollowSymLinks
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Protect sensitive files
+<Files ".env">
+    Require all denied
+</Files>
+
+<FilesMatch "^\.git">
+    Require all denied
+</FilesMatch>
+
+AddDefaultCharset UTF-8
+
+# Routing
+RewriteCond %{REQUEST_URI} ^/admin
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

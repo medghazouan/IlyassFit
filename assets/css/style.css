@@ -1,0 +1,285 @@
+/* ============================================
+   GLOBAL STYLES - CLEANED VERSION
+   All duplicates removed, only core global styles remain
+   ============================================ */
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+    --primary-red: #fc0404;
+    --dark-bg: #1b1f22;
+    --light-gray: #212529;
+    --text-white: #ffffff;
+    --text-gray: #b0b0b0;
+    --black: #000000;
+}
+
+/* ============================================
+   BODY & HTML
+   ============================================ */
+html {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    overflow-x: hidden;
+    padding-top: 80px;
+    width: 100%;
+    max-width: 100vw;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+button,
+.cta,
+.btn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+/* ============================================
+   BUTTONS & CTA
+   ============================================ */
+.btn-primary {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: var(--text-white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--text-white);
+    border-color: var(--text-white);
+    color: var(--primary-red);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(252, 4, 4, 0.3);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    padding: 12px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+    color: var(--text-white);
+    transform: translateY(-2px);
+}
+
+.btn-outline-light {
+    border: 2px solid var(--text-white);
+    color: var(--text-white);
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    padding: 12px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--text-white);
+    border-color: var(--text-white);
+    color: var(--dark-bg);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#seemorebtn {
+    border-radius: 50px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.text-red {
+    color: var(--primary-red);
+}
+
+.bg-dark-custom {
+    background-color: var(--dark-bg);
+}
+
+.bg-light-gray {
+    background-color: var(--light-gray);
+}
+
+.section-padding {
+    padding: 5rem 0;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.section-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-gray);
+    margin-bottom: 3rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* ============================================
+   BOOTSTRAP OVERRIDES
+   ============================================ */
+.gap-4 {
+    gap: 1.5rem !important;
+}
+
+/* ============================================
+   RESPONSIVE - BODY PADDING
+   ============================================ */
+@media (max-width: 992px) {
+    body {
+        padding-top: 75px;
+    }
+
+    .section-padding {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-padding {
+        padding: 3rem 0;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-content {
+        padding: 0 15px;
+    }
+
+    /* Ensure footer doesn't kiss the last section */
+    body {
+        padding-bottom: 0;
+    }
+}
+
+/* ============================================
+   RETURN TO TOP BUTTON
+   ============================================ */
+.return-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-red);
+    color: var(--text-white);
+    border: 2px solid var(--primary-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(252, 4, 4, 0.3);
+}
+
+.return-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.return-to-top:not(.show) {
+    transform: translateY(20px);
+}
+
+.return-to-top:hover {
+    background-color: var(--text-white);
+    color: var(--primary-red);
+    border-color: var(--text-white);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(252, 4, 4, 0.5);
+}
+
+@media (max-width: 768px) {
+    .return-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,13 @@
+ 
+# Ignore PHP config / secrets
+db_config.php 
+.env
+
+# Ignore uploaded files
+uploads/
+
+# Ignore system files
+*.log
+*.cache
+
+functions/

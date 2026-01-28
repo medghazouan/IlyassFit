@@ -1,0 +1,533 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Set page title and description for SEO
+$pageTitle = "Personal Training & Online Coaching";
+$pageDescription = "Transform your body with Ilyass Fit. Professional personal training, custom nutrition plans, and online coaching worldwide. Get started today!";
+
+// Define Services for Slider
+$services = [
+    [
+        'title' => 'CUSTOM NUTRITION PLAN',
+        'desc' => 'Healthy, Nutritious, Non-Restrictive Meal Plans Tailored Around You - Your Job, Lifestyle, Goals & Dietary Requirements And Your Budget Also Designed To Enable You To Enjoy A Tasty Varied Diet Making It Sustainable In The Long Term'
+    ],
+    [
+        'title' => '1-ON-1 TRAINING',
+        'desc' => 'Personalized workout sessions designed to push your limits safely. Focus on form, technique, and progressive overload to build strength and muscle effectively while minimizing injury risk.'
+    ],
+    [
+        'title' => 'ONLINE COACHING',
+        'desc' => 'Expert guidance from anywhere in the world. Includes customized workout programs, weekly check-ins, form analysis, and 24/7 support to ensure you stay on track towards your fitness goals.'
+    ]
+];
+
+// Include meta and header
+include 'components/meta.php';
+include 'components/header.php';
+?>
+
+<!-- Hero Section -->
+<!-- Hero Section -->
+<?php
+$heroTitle = "TRANSFORM YOUR BODY";
+$heroSubtitle = "Professional Training | Nutrition Coaching | Results Guaranteed";
+$heroBackground = "hero-bg-video";
+ob_start();
+?>
+<a href="pricing.php" class="btn btn-primary">Get Started</a>
+<a href="#about" class="btn btn-outline-light">Learn More</a>
+<?php
+$heroButtons = ob_get_clean();
+include 'components/hero.php';
+?>
+
+<?php
+// Fetch reviews for About section
+require_once __DIR__ . '/includes/config/db_config.php';
+$aboutReviews = [];
+try {
+    $stmt = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 5");
+    $aboutReviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Reviews fetch error: " . $e->getMessage());
+}
+
+// Fetch 3 latest transformations for snippet
+$transformations = [];
+try {
+    $stmt = $pdo->query("SELECT * FROM reviews ORDER BY id DESC LIMIT 3");
+    $transformations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Transformations fetch error: " . $e->getMessage());
+}
+?>
+
+<!-- About Me Section -->
+<section class="about-me-section" id="about">
+    <div class="about-background-image"></div>
+    <div class="container h-100">
+        <div class="about-me-container h-100 ">
+            <!-- Content Side -->
+            <div class="about-me-content slide-in-right">
+                <div class="about-header">
+                    <span class="about-subtitle">ILYASS FIT</span>
+                    <h1 class="about-me-title">Get to<br>know me.</h1>
+                </div>
+
+                <p class="about-me-text">
+                    Ilyass Qchiine
+                    25-year-old Certified Personal Trainer & Competitive Bodybuilder
+                </p>
+
+                <p class="about-me-text">
+                    I am a certified personal trainer with competitive experience at both national and international levels,
+                     having trained alongside and learned from multiple champions in the fitness industry.
+                </p>
+
+                <p class="about-me-text">
+                    In 2022, I competed in my first regional championship in my hometown, earning 2nd place
+                    , which qualified me for the Moroccan National Championship, where I placed 10th in my first national appearance.
+                </p>
+
+                <p class="about-me-text">
+                    In 2024, I participated in an international competition (PCA Culture). Although I did not achieve the desired result,
+                     the experience was a valuable learning step in my athletic journey due to not being fully prepared.
+                </p>
+
+                <p class="about-me-text">
+                        In 2025, I returned stronger and competed in the Night of Glory Championship, achieving 2nd place in my category 
+                        and 5th place overall, marking a significant milestone in my competitive career.
+                </p>
+
+                <!-- Testimonial -->
+                <?php if (!empty($aboutReviews)): ?>
+                    <div class="about-testimonial mt-4 slide-in-left">
+                        <div class="testimonial-content">
+                            <i class="fas fa-chevron-left testimonial-arrow" id="prevReview"></i>
+                            <div class="testimonial-text-wrapper">
+                                <?php foreach ($aboutReviews as $index => $review): ?>
+                                    <div class="review-item <?php echo $index === 0 ? 'active' : ''; ?>"
+                                        data-index="<?php echo $index; ?>">
+                                        <p class="testimonial-quote">"<?php echo htmlspecialchars($review['review_text']); ?>"
+                                        </p>
+                                        <p class="testimonial-author"><?php echo htmlspecialchars($review['client_name']); ?>
+                                        </p>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="testimonial-dots">
+                                    <?php foreach ($aboutReviews as $index => $review): ?>
+                                        <span class="dot <?php echo $index === 0 ? 'active' : ''; ?>"
+                                            data-index="<?php echo $index; ?>"></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right testimonial-arrow" id="nextReview"></i>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Services Section Custom -->
+<section class="services-custom-section" id="services">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center ">
+            <!-- Left Side: Text Slider (Order 2 on mobile, Order 1 on Desktop) -->
+            <div class="col-lg-6 mb-3 mb-lg-0 order-2 order-lg-1">
+                <div class="services-content-wrapper">
+                    <h2 class="services-main-title slide-in-left">OUR SERVICES.</h2>
+
+                    <div class="services-slider slide-in-left" style="transition-delay: 0.6s;">
+                        <?php foreach ($services as $index => $service): ?>
+                            <div class="service-slide <?php echo $index === 0 ? 'active' : ''; ?>"
+                                data-index="<?php echo $index; ?>">
+                                <h3 class="service-item-title"><?php echo $service['title']; ?></h3>
+                                <p class="service-item-desc">
+                                    <?php echo $service['desc']; ?>
+                                </p>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <!-- Dots Navigation (Moved here to stay with content) -->
+                        <div class="service-dots-nav">
+                            <?php foreach ($services as $index => $service): ?>
+                                <span class="service-dot <?php echo $index === 0 ? 'active' : ''; ?>"
+                                    onclick="goToService(<?php echo $index; ?>)"></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Static Image (Order 1 on mobile, Order 2 on Desktop) -->
+            <div class="col-lg-6 order-1 order-lg-2">
+                <div class="service-image-container slide-in-right" style="transition-delay: 0.3s;" id="service_img">
+                    <img src="assets/images/static/DSC07730.jpg"  
+                      sizes="(max-width: 768px) 90vw, 636px" alt="Coach fitness" loading="lazy" class="img-fluid service-static-img"> 
+                    <!-- Decor elements if needed -->
+                    <div class="service-decor top-left">
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Transformations Snippet Section -->
+<section class="transformations-section">
+    <div class="container">
+        <div class="gallery-header">
+            <h2 class="gallery-title">LATEST TRANSFORMATIONS</h2>
+            <p class="section-subtitle transformations-subtitle">Witness the incredible journeys of our clients who have
+                completely transformed their physiques and lifestyles through dedicated training.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <?php foreach ($transformations as $review): ?>
+                <div class="col-md-6 col-lg-4">
+                    <div class="transformation-card h-100">
+                        <!-- Images Container Only -->
+                        <div class="images-container" style="border-bottom: none;">
+                            <div class="image-wrapper">
+                                <div class="image-label-top">Before</div>
+                                <?php
+                                $beforePath = $review['client_photo_before'];
+                                if (!str_contains($beforePath, '/')) {
+                                    $beforePath = 'images/uploads/' . $beforePath;
+                                }
+                                ?>
+                                <img src="<?php echo htmlspecialchars($beforePath); ?>" alt="Before"
+                                    class="transformation-img">
+                            </div>
+                            <div class="divider-line"></div>
+                            <div class="image-wrapper">
+                                <div class="image-label-top">After</div>
+                                <?php
+                                $afterPath = $review['client_photo_after'];
+                                if (!str_contains($afterPath, '/')) {
+                                    $afterPath = 'images/uploads/' . $afterPath;
+                                }
+                                ?>
+                                <img src="<?php echo htmlspecialchars($afterPath); ?>" alt="After"
+                                    class="transformation-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="transformations.php" id="seemorebtn" class="btn btn-outline-light">See More</a>
+        </div>
+    </div>
+</section>
+
+<!-- Expandable Gallery Section - OPTIMIZED VERSION -->
+<section class="gallery-section" id="gallery">
+    <div class="container">
+        <!-- Gallery Header -->
+        <div class="gallery-header">
+            <h2 class="gallery-title">OUR GALLERY</h2>
+            <p class="section-subtitle">Explore our gallery to see the dedication, hard work, and results achieved by
+                our community. From intense training sessions to inspiring transformations, get a glimpse of what's
+                possible.</p>
+        </div>
+
+        <?php
+        // Fetch 12 images from gallery table (3 groups of 4)
+        try {
+            $stmt = $pdo->query("SELECT id, image_path FROM gallery ORDER BY RAND() LIMIT 12");
+            $allImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Create paths for images - WITH THUMBNAILS FOR FAST LOADING
+            foreach ($allImages as &$img) {
+                // Thumbnail path (small, fast loading)
+                $img['thumb_path'] = 'images/uploads/thumbnails/' . htmlspecialchars($img['image_path']);
+                // Full image path (for modal/lightbox)
+                $img['full_path'] = 'images/uploads/' . htmlspecialchars($img['image_path']);
+                
+                // Check if thumbnail exists, fallback to full image
+                if (!file_exists($img['thumb_path'])) {
+                    $img['thumb_path'] = $img['full_path'];
+                }
+            }
+        } catch (PDOException $e) {
+            error_log("Gallery fetch error: " . $e->getMessage());
+            $allImages = [];
+        }
+        ?>
+
+        <!-- Expandable Gallery Container -->
+        <div class="expandable-gallery-wrapper">
+            <?php if (!empty($allImages)): ?>
+                <!-- Group 1 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="1">
+                        <?php foreach (array_slice($allImages, 0, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <!-- Video: use thumbnail path -->
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 1; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Group 2 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="2">
+                        <?php foreach (array_slice($allImages, 4, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index + 4; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 5; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Group 3 -->
+                <div class="gallery-group">
+                    <div class="expandable-gallery" data-group="3">
+                        <?php foreach (array_slice($allImages, 8, 4) as $index => $image): ?>
+                            <div class="gallery-item-expandable" 
+                                 data-index="<?php echo $index + 8; ?>"
+                                 data-full-image="<?php echo $image['full_path']; ?>">
+                                
+                                <?php 
+                                $ext = strtolower(pathinfo($image['image_path'], PATHINFO_EXTENSION));
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo $image['thumb_path']; ?>" 
+                                           class="gallery-img-expandable"
+                                           autoplay loop muted playsinline
+                                           style="object-fit: cover; width: 100%; height: 100%;">
+                                    </video>
+                                <?php else: ?>
+                                    <!-- Image: use THUMBNAIL for display -->
+                                    <img src="<?php echo $image['thumb_path']; ?>" 
+                                         alt="Gallery Image <?php echo $index + 9; ?>" 
+                                         class="gallery-img-expandable"
+                                         loading="lazy">
+                                <?php endif; ?>
+                                <div class="gallery-overlay"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-info">Gallery images will be displayed here.</div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Gallery Navigation Buttons -->
+        <div class="text-center mt-5">
+            <div class="d-flex flex-wrap justify-content-center gap-3 gallery-buttons">
+                <a href="https://instagram.com" target="_blank" class="btn btn-outline-light btn-instagram-custom">
+                    <i class="fab fa-instagram me-2"></i> See More
+                </a>
+                <button class="btn btn-watch-now" id="openVideoModal">
+                    <i class="fas fa-play-circle me-2"></i> Watch Now
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Modal - Updated to load FULL images when clicked -->
+<div class="gallery-modal" id="galleryModal">
+    <div class="gallery-modal-overlay"></div>
+    <div class="gallery-modal-content">
+        <button class="gallery-modal-close" id="closeGalleryModal">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        
+        <button class="gallery-nav-btn gallery-nav-prev" id="prevImage">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        
+        <div class="gallery-modal-image-container">
+            <img src="" alt="Gallery Image" class="gallery-modal-img" id="modalImage">
+        </div>
+        
+        <button class="gallery-nav-btn gallery-nav-next" id="nextImage">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+        
+        <div class="gallery-modal-counter" id="imageCounter">1 / 12</div>
+    </div>
+</div>
+
+<script>
+// Gallery Modal Functionality - UPDATED to load FULL images on click
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryItems = document.querySelectorAll('.gallery-item-expandable');
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.getElementById('closeGalleryModal');
+    const prevBtn = document.getElementById('prevImage');
+    const nextBtn = document.getElementById('nextImage');
+    const counter = document.getElementById('imageCounter');
+    
+    let currentIndex = 0;
+    let allFullImages = [];
+    
+    // Collect all FULL image paths from data attributes
+    galleryItems.forEach((item, index) => {
+        const fullImagePath = item.getAttribute('data-full-image');
+        allFullImages.push(fullImagePath);
+        
+        // Click event to open modal with FULL resolution image
+        item.addEventListener('click', function() {
+            currentIndex = index;
+            showImage(currentIndex);
+            modal.classList.add('active');
+        });
+    });
+    
+    function showImage(index) {
+        // Load FULL resolution image in modal
+        modalImg.src = allFullImages[index];
+        counter.textContent = `${index + 1} / ${allFullImages.length}`;
+    }
+    
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.querySelector('.gallery-modal-overlay').addEventListener('click', () => modal.classList.remove('active'));
+    
+    prevBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex - 1 + allFullImages.length) % allFullImages.length;
+        showImage(currentIndex);
+    });
+    
+    nextBtn.addEventListener('click', function() {
+        currentIndex = (currentIndex + 1) % allFullImages.length;
+        showImage(currentIndex);
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!modal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') modal.classList.remove('active');
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+    });
+});
+</script>
+
+<!-- Image Expand Modal -->
+<div class="gallery-modal" id="galleryModal">
+    <div class="gallery-modal-overlay" id="galleryModalOverlay"></div>
+    <div class="gallery-modal-content">
+        <!-- Close Button -->
+        <button class="gallery-modal-close" id="closeGalleryModal">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Previous Button -->
+        <button class="gallery-nav-btn gallery-nav-prev" id="galleryPrevBtn">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+
+        <!-- Image Container -->
+        <div class="gallery-modal-image-container">
+            <img id="galleryModalImg" src="" alt="Expanded Image" class="gallery-modal-img">
+        </div>
+
+        <!-- Next Button -->
+        <button class="gallery-nav-btn gallery-nav-next" id="galleryNextBtn">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+
+        <!-- Image Counter -->
+        <div class="gallery-modal-counter">
+            <span id="galleryCurrentIndex">1</span> / <span id="galleryTotalImages">12</span>
+        </div>
+    </div>
+</div>
+
+<!-- Video Modal -->
+<div class="video-modal" id="videoModal">
+    <div class="video-modal-overlay" id="videoModalOverlay"></div>
+    <div class="video-modal-content">
+        <button class="video-modal-close" id="closeVideoModal">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="video-wrapper">
+            <video id="modalVideo" controls>
+                <source src="assets/video/video.webp" type="video/webm">
+                <source src="assets/video/video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript externalized to main.js for better performance and caching -->
+<script src="assets/js/main.js"></script>
+
+
+<?php
+// Include footer
+include 'components/footer.php';
+?>

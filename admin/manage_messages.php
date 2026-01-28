@@ -5,6 +5,9 @@ require_once '../includes/functions/crud.php';
 
 requireLogin();
 
+$success = '';
+$error = '';
+
 // Handle delete action
 if (isset($_GET['delete'])) {
     $id = filter_var($_GET['delete'], FILTER_VALIDATE_INT);
@@ -18,167 +21,206 @@ if (isset($_GET['delete'])) {
 // Get all messages
 $messages = readAll($pdo, 'messages', 'id', 'DESC');
 $totalMessages = countRecords($pdo, 'messages');
+$seenCount = countRecords($pdo, 'messages', 'status', 'seen');
+$notSeenCount = countRecords($pdo, 'messages', 'status', 'not seen');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fc0404">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Manage Messages</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .navbar {
-            background: #333;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar h1 { font-size: 24px; }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            background: #667eea;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .stats {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .table-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background: #667eea;
-            color: white;
-            font-weight: bold;
-        }
-        tr:hover {
-            background: #f9f9f9;
-        }
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-        }
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-danger:hover {
-            background: #c82333;
-        }
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/manage_messages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-        <h1>Manage Messages</h1>
-        <div>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
+    <?php include 'includes/navbar.php'; ?>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Manage Messages</h1>
+            <div class="user-info">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+            </div>
+        </div>
+        
+        <div class="content-wrapper">
+            <!-- Alerts -->
+            <?php if ($success): ?>
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <?php echo htmlspecialchars($success); ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($error): ?>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?php echo $totalMessages; ?></h3>
+                        <p>Total Messages</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon seen">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?php echo $seenCount; ?></h3>
+                        <p>Seen</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon unseen">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?php echo $notSeenCount; ?></h3>
+                        <p>Not Seen</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Messages Section -->
+            <div class="messages-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-inbox"></i> Client Messages</h2>
+                </div>
+                
+                <?php if (count($messages) > 0): ?>
+                    <div class="messages-grid">
+                        <?php foreach ($messages as $msg): ?>
+                            <div class="message-card">
+                                <div class="message-header">
+                                    <div class="sender-info">
+                                        <div class="avatar">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div class="sender-details">
+                                            <h4><?php echo htmlspecialchars($msg['full_name']); ?></h4>
+                                            <span class="message-id">#<?php echo $msg['id']; ?></span>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge status-<?php echo str_replace(' ', '-', $msg['status']); ?>">
+                                        <i class="fas fa-circle"></i>
+                                        <?php echo ucfirst($msg['status']); ?>
+                                    </span>
+                                </div>
+                                
+                                <div class="contact-info">
+                                    <div class="contact-item contact-email" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['email']); ?>', 'Email')" style="cursor: pointer;" title="Click to copy email">
+                                        <i class="fas fa-envelope"></i>
+                                        <span><?php echo htmlspecialchars($msg['email']); ?></span>
+                                        <i class="fas fa-copy copy-icon"></i>
+                                    </div>
+                                    <div class="contact-item contact-phone" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['telephone']); ?>', 'Phone')" style="cursor: pointer;" title="Click to copy phone">
+                                        <i class="fas fa-phone"></i>
+                                        <span><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                        <i class="fas fa-copy copy-icon"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="message-content">
+                                    <p><?php echo htmlspecialchars($msg['message']); ?></p>
+                                </div>
+                                
+                                <div class="message-actions">
+                                    <a href="?delete=<?php echo $msg['id']; ?>" 
+                                       class="btn btn-delete" 
+                                       onclick="return confirm('Are you sure you want to delete this message?')">
+                                        <i class="fas fa-trash"></i> Delete Message
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-data">
+                        <i class="fas fa-inbox"></i>
+                        <p>No messages found.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
     
-    <div class="container">
-        <?php if (isset($success)): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
-        <?php endif; ?>
+    <script>
+    function copyToClipboard(text, type) {
+        if (!text) return;
         
-        <?php if (isset($error)): ?>
-            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
+        // Modern API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show toast or alert
+                const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+                showToast(msg);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        } else {
+            // Fallback
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+                showToast(msg);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    }
+
+    function showToast(message) {
+        // Check if toast container exists
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; pointer-events: none;';
+            document.body.appendChild(container);
+        }
         
-        <div class="stats">
-            <h3>Total Messages: <?php echo $totalMessages; ?></h3>
-        </div>
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = 'background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 5px; margin-top: 10px; transition: opacity 0.5s ease; opacity: 0;';
+        container.appendChild(toast);
         
-        <div class="table-container">
-            <h2 style="margin-bottom: 20px;">Client Messages</h2>
-            
-            <?php if (count($messages) > 0): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Telephone</th>
-                            <th>Message</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($messages as $msg): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($msg['id']); ?></td>
-                                <td><?php echo htmlspecialchars($msg['full_name']); ?></td>
-                                <td><?php echo htmlspecialchars($msg['email']); ?></td>
-                                <td><?php echo htmlspecialchars($msg['telephone']); ?></td>
-                                <td><?php echo htmlspecialchars(substr($msg['message'], 0, 100)) . (strlen($msg['message']) > 100 ? '...' : ''); ?></td>
-                                <td>
-                                    <a href="?delete=<?php echo $msg['id']; ?>" 
-                                       class="btn btn-danger" 
-                                       onclick="return confirm('Are you sure you want to delete this message?')">
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="no-data">No messages found.</div>
-            <?php endif; ?>
-        </div>
-    </div>
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.style.opacity = '1';
+        });
+        
+        // Remove after 3s
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
+    </script>
 </body>
 </html>

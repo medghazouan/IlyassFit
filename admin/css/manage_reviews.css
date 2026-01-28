@@ -1,0 +1,797 @@
+/* Additional styles for Manage Reviews page */
+
+/* Statistics Card */
+.stats {
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--dark-secondary);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+}
+
+.stat-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.stat-info h3 {
+    font-size: 36px;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.stat-info p {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.alert i {
+    font-size: 20px;
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border-left: 4px solid #28a745;
+}
+
+.alert-error {
+    background: rgba(252, 4, 4, 0.2);
+    color: var(--primary-red);
+    border-left: 4px solid var(--primary-red);
+}
+
+/* Form Container */
+.form-container {
+    background: var(--dark-secondary);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h2 {
+    color: var(--white);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.form-container h2 i {
+    color: var(--primary-red);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--white);
+    font-size: 14px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--dark-bg);
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(252, 4, 4, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* Enhanced Styled File Input */
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--dark-bg);
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    padding: 12px 20px;
+    border: none;
+    background: var(--primary-red);
+    color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background: #d00303;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 4, 4, 0.3);
+}
+
+.form-group input[type="file"]:hover {
+    border-color: var(--primary-red);
+    background: rgba(252, 4, 4, 0.05);
+}
+
+.form-group input[type="file"]:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(252, 4, 4, 0.1);
+}
+
+
+.current-image {
+    margin: 10px 0;
+    padding: 15px;
+    background: var(--dark-bg);
+    border-radius: 8px;
+}
+
+.current-image p {
+    color: var(--gray);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.current-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(252, 4, 4, 0.3);
+}
+
+.image-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary-red);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: #d00303;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 4, 4, 0.3);
+}
+
+.btn-success {
+    background: #28a745;
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Table Container */
+.table-container {
+    background: var(--dark-secondary);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.table-container h2 {
+    color: var(--white);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.table-container h2 i {
+    color: var(--primary-red);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: rgba(252, 4, 4, 0.1);
+}
+
+th {
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid var(--primary-red);
+    font-size: 14px;
+}
+
+td {
+    padding: 15px 12px;
+    color: var(--gray);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: rgba(252, 4, 4, 0.05);
+}
+
+.review-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(252, 4, 4, 0.3);
+}
+
+.review-text {
+    color: var(--white);
+    max-width: 300px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.btn-edit:hover {
+    background: #ffc107;
+    color: var(--black);
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background: rgba(252, 4, 4, 0.2);
+    color: var(--primary-red);
+}
+
+.btn-delete:hover {
+    background: var(--primary-red);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-data i {
+    font-size: 64px;
+    color: var(--gray);
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.no-data p {
+    color: var(--gray);
+    font-size: 16px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Mobile Landscape & Small Tablets (max-width: 767px) */
+@media (max-width: 767px) {
+    /* Statistics Card */
+    .stats {
+        margin-bottom: 20px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+        gap: 15px;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+    
+    .stat-info h3 {
+        font-size: 28px;
+        margin-bottom: 3px;
+    }
+    
+    .stat-info p {
+        font-size: 13px;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .alert i {
+        font-size: 18px;
+    }
+    
+    /* Form Container */
+    .form-container {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-container h2 {
+        margin-bottom: 20px;
+        font-size: 18px;
+        word-break: break-word;
+    }
+    
+    .form-container h2 i {
+        font-size: 16px;
+    }
+    
+    /* Form Row */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    
+    .form-group label {
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 13px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .form-group textarea {
+        min-height: 100px;
+    }
+    
+    /* File Input */
+    .form-group input[type="file"] {
+        padding: 10px;
+    }
+    
+    .form-group input[type="file"]::file-selector-button {
+        padding: 10px 15px;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+    
+    /* Current Image */
+    .current-image {
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
+    .current-image p {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .current-image img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .image-note {
+        font-size: 11px;
+        margin-top: 4px;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+    
+    .btn i {
+        font-size: 13px;
+    }
+    
+    /* Table Container */
+    .table-container {
+        padding: 20px 15px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    
+    .table-container h2 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        word-break: break-word;
+    }
+    
+    .table-container h2 i {
+        font-size: 16px;
+    }
+    
+    /* Table Responsive */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    
+    table {
+        min-width: 800px;
+        width: 100%;
+    }
+    
+    th {
+        padding: 12px 10px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    td {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+    
+    .review-img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .review-text {
+        max-width: 250px;
+        font-size: 13px;
+    }
+    
+    .action-buttons {
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+    
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+    
+    /* No Data */
+    .no-data {
+        padding: 40px 15px;
+    }
+    
+    .no-data i {
+        font-size: 48px;
+        margin-bottom: 12px;
+    }
+    
+    .no-data p {
+        font-size: 14px;
+    }
+}
+
+/* Mobile Portrait (max-width: 575px) */
+@media (max-width: 575px) {
+    /* Statistics Card */
+    .stats {
+        margin-bottom: 15px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .stat-info h3 {
+        font-size: 24px;
+        margin-bottom: 2px;
+    }
+    
+    .stat-info p {
+        font-size: 12px;
+    }
+    
+    /* Alerts */
+    .alert {
+        padding: 10px 12px;
+        margin-bottom: 15px;
+        font-size: 12px;
+    }
+    
+    .alert i {
+        font-size: 16px;
+    }
+    
+    /* Form Container */
+    .form-container {
+        padding: 15px 12px;
+        margin-bottom: 15px;
+    }
+    
+    .form-container h2 {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+    
+    .form-container h2 i {
+        font-size: 14px;
+    }
+    
+    /* Form Elements */
+    .form-row {
+        gap: 12px;
+    }
+    
+    .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 12px;
+    }
+    
+    .form-group input[type="text"],
+    .form-group input[type="file"],
+    .form-group textarea {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+    
+    .form-group textarea {
+        min-height: 90px;
+    }
+    
+    /* File Input */
+    .form-group input[type="file"] {
+        padding: 8px;
+        font-size: 12px;
+    }
+    
+    .form-group input[type="file"]::file-selector-button {
+        padding: 8px 12px;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    
+    /* Current Image */
+    .current-image {
+        padding: 10px;
+        margin: 6px 0;
+    }
+    
+    .current-image p {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+    
+    .current-image img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .image-note {
+        font-size: 10px;
+        margin-top: 3px;
+    }
+    
+    /* Form Actions */
+    .form-actions {
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+    
+    .btn i {
+        font-size: 12px;
+    }
+    
+    /* Table Container */
+    .table-container {
+        padding: 15px 10px;
+    }
+    
+    .table-container h2 {
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+    
+    .table-container h2 i {
+        font-size: 14px;
+    }
+    
+    /* Table */
+    table {
+        min-width: 700px;
+    }
+    
+    th {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+    
+    td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+    
+    .review-img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .review-text {
+        max-width: 200px;
+        font-size: 12px;
+    }
+    
+    .action-buttons {
+        gap: 5px;
+    }
+    
+    .btn-action {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    /* No Data */
+    .no-data {
+        padding: 30px 12px;
+    }
+    
+    .no-data i {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+    
+    .no-data p {
+        font-size: 13px;
+    }
+}

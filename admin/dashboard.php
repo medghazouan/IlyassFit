@@ -1,96 +1,334 @@
 <?php
+require_once '../includes/config/db_config.php';
 require_once '../includes/functions/auth.php';
+require_once '../includes/functions/crud.php';
 
-// Protect this page - redirect to login if not authenticated
 requireLogin();
+
+// Handle marking message as seen
+if (isset($_GET['mark_seen'])) {
+    $messageId = filter_var($_GET['mark_seen'], FILTER_VALIDATE_INT);
+    if ($messageId) {
+        update($pdo, 'messages', ['status' => 'seen'], $messageId);
+        header("Location: manage_messages.php?view=" . $messageId);
+        exit();
+    }
+}
+
+// Get statistics
+$totalMessages = countRecords($pdo, 'messages');
+$totalReviews = countRecords($pdo, 'reviews');
+$totalGallery = countRecords($pdo, 'gallery');
+$unseenMessages = countRecords($pdo, 'messages', 'status', 'not seen');
+
+// Get unseen messages
+$stmt = $pdo->prepare("SELECT * FROM messages WHERE status = 'not seen' ORDER BY id DESC");
+$stmt->execute();
+$unseenMessagesList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fc0404">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IF Admin">
     <title>Admin Dashboard</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .navbar {
-            background: #333;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar h1 { font-size: 24px; }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            background: #667eea;
-            border-radius: 5px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .welcome {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .menu-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .menu-card:hover { transform: translateY(-5px); }
-        .menu-card a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-        <h1>Admin Dashboard</h1>
-        <div>
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
-            <a href="logout.php">Logout</a>
-        </div>
-    </div>
+    <?php include 'includes/navbar.php'; ?>
     
-    <div class="container">
-        <div class="welcome">
-            <h2>Welcome to Admin Panel</h2>
-            <p>Manage your bodybuilding website content from here.</p>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+            </div>
         </div>
         
-        <div class="menu-grid">
-            <div class="menu-card">
-                <a href="manage_reviews.php">📝 Manage Reviews</a>
+        <div class="content-wrapper">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon messages">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalMessages; ?></h2>
+                        <p>Total Messages</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon reviews">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalReviews; ?></h2>
+                        <p>Total Reviews</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon gallery">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h2><?php echo $totalGallery; ?></h2>
+                        <p>Gallery Items</p>
+                    </div>
+                </div>
             </div>
-            <div class="menu-card">
-                <a href="manage_gallery.php">🖼️ Manage Gallery</a>
-            </div>
-            <div class="menu-card">
-                <a href="manage_messages.php">💬 View Messages</a>
-            </div>
-            <div class="menu-card">
-                <a href="manage_pricing.php">💰 Manage Pricing</a>
+            
+            <!-- Unseen Messages Section -->
+            <div class="messages-section">
+                <div class="section-header">
+                    <h2>Unseen Messages</h2>
+                    <span class="badge"><?php echo $unseenMessages; ?> New</span>
+                </div>
+                
+                <?php if (count($unseenMessagesList) > 0): ?>
+                    <div class="messages-list">
+                        <?php foreach ($unseenMessagesList as $msg): ?>
+                            <div class="message-item">
+                                <div class="message-header">
+                                    <div class="sender-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span class="sender-name"><?php echo htmlspecialchars($msg['full_name']); ?></span>
+                                    </div>
+                                    <span class="message-id">#<?php echo $msg['id']; ?></span>
+                                </div>
+                                
+                                <div class="detail-item contact-email" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['email']); ?>', 'Email')" style="cursor: pointer;" title="Click to copy email">
+                                    <i class="fas fa-envelope"></i>
+                                    <span><?php echo htmlspecialchars($msg['email']); ?></span>
+                                    <i class="fas fa-copy copy-icon"></i>
+                                </div>
+                                
+                                <div class="detail-item contact-phone" onclick="copyToClipboard('<?php echo htmlspecialchars($msg['telephone']); ?>', 'Phone')" style="cursor: pointer;" title="Click to copy phone">
+                                    <i class="fas fa-phone"></i>
+                                    <span class="phone-number"><?php echo htmlspecialchars($msg['telephone']); ?></span>
+                                    <i class="fas fa-copy copy-icon"></i>
+                                </div>
+                                
+                                <div class="message-content">
+                                    <p><?php echo htmlspecialchars($msg['message']); ?></p>
+                                </div>
+                                
+                                <div class="message-actions">
+                                    <a href="dashboard.php?mark_seen=<?php echo $msg['id']; ?>" class="btn-view">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </a>
+                                </div>
+                            </div> <!-- ✅ ONLY closing div for message-item -->
+                        <?php endforeach; ?>
+                    </div>
+
+                <?php else: ?>
+                    <div class="no-messages">
+                        <i class="fas fa-check-circle"></i>
+                        <p>No unseen messages. You're all caught up!</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+// ============================================
+// NOTIFICATION SYSTEM FOR NEW MESSAGES
+// ============================================
+
+let lastUnseenCount = <?php echo $unseenMessages; ?>;
+let notificationPermission = Notification.permission;
+
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => {
+                console.log('Service Worker registered');
+            })
+            .catch(err => console.log('Service Worker registration failed:', err));
+    });
+}
+
+// Request notification permission
+async function requestNotificationPermission() {
+    if (!('Notification' in window)) {
+        console.log('This browser does not support notifications');
+        return false;
+    }
+    
+    if (Notification.permission === 'granted') {
+        return true;
+    }
+    
+    if (Notification.permission !== 'denied') {
+        const permission = await Notification.requestPermission();
+        notificationPermission = permission;
+        return permission === 'granted';
+    }
+    
+    return false;
+}
+
+// Show notification
+function showNotification(title, body, tag) {
+    if (notificationPermission !== 'granted') return;
+    
+    const options = {
+        body: body,
+        icon: 'logo.png',
+        badge: 'logo.png',
+        tag: tag || 'ilyassfit-message',
+        requireInteraction: true,
+        vibrate: [200, 100, 200],
+        data: {
+            url: 'manage_messages.php'
+        }
+    };
+    
+    // Try to use service worker notification first (works even when minimized)
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification(title, options);
+        });
+    } else {
+        // Fallback to regular notification
+        const notification = new Notification(title, options);
+        notification.onclick = function() {
+            window.focus();
+            window.location.href = 'manage_messages.php';
+            notification.close();
+        };
+    }
+}
+
+// Check for new messages
+async function checkForNewMessages() {
+    try {
+        const response = await fetch('check_messages.php');
+        const data = await response.json();
+        
+        if (data.success && data.unseenCount > lastUnseenCount) {
+            // New message received!
+            const newCount = data.unseenCount - lastUnseenCount;
+            const message = data.latestMessage;
+            
+            if (message) {
+                const title = `${newCount} New Message${newCount > 1 ? 's' : ''}`;
+                const body = `From: ${message.full_name}\n${message.message.substring(0, 100)}...`;
+                showNotification(title, body, `msg-${message.id}`);
+            }
+            
+            // Update the badge count on page
+            updateBadgeCount(data.unseenCount);
+        }
+        
+        lastUnseenCount = data.unseenCount;
+        
+    } catch (error) {
+        console.log('Error checking messages:', error);
+    }
+}
+
+// Update badge count in UI
+function updateBadgeCount(count) {
+    const badge = document.querySelector('.badge');
+    if (badge) {
+        badge.textContent = count + ' New';
+    }
+    
+    // Update page title with count
+    if (count > 0) {
+        document.title = `(${count}) Admin Dashboard`;
+    } else {
+        document.title = 'Admin Dashboard';
+    }
+}
+
+// Initialize notification system
+document.addEventListener('DOMContentLoaded', async () => {
+    // Request permission on first visit
+    await requestNotificationPermission();
+    
+    // Check for new messages every 10 seconds (faster response)
+    setInterval(checkForNewMessages, 10000);
+    
+    // Check immediately on page load
+    checkForNewMessages();
+});
+
+function copyToClipboard(text, type) {
+    if (!text) return;
+    
+    // Modern API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Show toast or alert
+            const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+            // Use existing showNotification or simple alert if preferred, but existing notification is for external msgs.
+            // Let's use a simple temporary alert/toast styling or reuse existing alert logic if feasible.
+            // For now simplest is a quick alert or no-op if user wants silent. 
+            // Better: create a temporary toast.
+            showToast(msg);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    } else {
+        // Fallback
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            const msg = type ? `${type} copied to clipboard!` : 'Copied to clipboard!';
+            showToast(msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+function showToast(message) {
+    // Check if toast container exists
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; pointer-events: none;';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = 'background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 5px; margin-top: 10px; transition: opacity 0.5s ease; opacity: 0;';
+    container.appendChild(toast);
+    
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+    });
+    
+    // Remove after 3s
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+</script>
 </html>

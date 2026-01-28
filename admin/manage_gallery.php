@@ -3,11 +3,20 @@ require_once '../includes/config/db_config.php';
 require_once '../includes/functions/auth.php';
 require_once '../includes/functions/crud.php';
 require_once '../includes/functions/upload.php';
+require_once 'image_processor.php'; // NEW: Add image processor
 
 requireLogin();
 
 $success = '';
 $error = '';
+
+const MAX_IMAGES = 12;
+
+// Initialize image processor
+$imageProcessor = new ImageProcessor('../images/uploads/', '../images/uploads/thumbnails/');
+
+// Auto-cleanup orphaned files on page load to ensure storage efficiency
+cleanupUploadsFolder($pdo);
 
 // Handle delete
 if (isset($_GET['delete'])) {
@@ -15,76 +24,101 @@ if (isset($_GET['delete'])) {
     if ($id) {
         $image = readOne($pdo, 'gallery', $id);
         if ($image) {
-            // Delete image file
-            deleteImage($image['image_path'], '../public/images/uploads/');
+            // Delete both original and thumbnail using image processor
+            $imageProcessor->deleteImage($image['image_path']);
             
+            // Then delete from database
             if (delete($pdo, 'gallery', $id)) {
                 $success = "Image deleted successfully";
+                cleanupUploadsFolder($pdo);
             } else {
-                $error = "Failed to delete image";
+                $error = "Failed to delete image from database";
             }
         }
     }
 }
 
-// Handle single image upload
+// Handle single image upload with AUTOMATIC OPTIMIZATION
 if (isset($_POST['upload_image']) && isset($_FILES['image'])) {
-    $uploadResult = uploadImage($_FILES['image'], '../public/images/uploads/');
+    $currentCount = countRecords($pdo, 'gallery');
     
-    if ($uploadResult['success']) {
-        $data = [
-            'image_path' => $uploadResult['filename']
-        ];
-        
-        if (create($pdo, 'gallery', $data)) {
-            $success = "Image uploaded successfully";
-        } else {
-            $error = "Failed to save image to database";
-            deleteImage($uploadResult['filename']);
-        }
+    if ($currentCount >= MAX_IMAGES) {
+        $error = "Gallery limit reached. Maximum " . MAX_IMAGES . " images allowed. Please delete an image before uploading a new one.";
     } else {
-        $error = "Upload failed: " . $uploadResult['error'];
+        // NEW: Use image processor for automatic optimization
+        $filename = $imageProcessor->processUpload($_FILES['image']);
+        
+        if ($filename !== false) {
+            $data = ['image_path' => $filename];
+            
+            if (create($pdo, 'gallery', $data)) {
+                $success = "Image uploaded and optimized successfully! (Original resized + thumbnail created)";
+                cleanupUploadsFolder($pdo);
+            } else {
+                $error = "Failed to save image to database";
+                $imageProcessor->deleteImage($filename);
+            }
+        } else {
+            $error = "Upload failed: Please upload a valid JPG, PNG, or GIF image.";
+        }
     }
 }
 
-// Handle multiple images upload
+// Handle multiple images upload with AUTOMATIC OPTIMIZATION
 if (isset($_POST['upload_multiple']) && isset($_FILES['images'])) {
-    $uploadedCount = 0;
-    $failedCount = 0;
+    $currentCount = countRecords($pdo, 'gallery');
+    $remainingSpots = MAX_IMAGES - $currentCount;
     
-    $totalFiles = count($_FILES['images']['name']);
-    
-    for ($i = 0; $i < $totalFiles; $i++) {
-        if ($_FILES['images']['error'][$i] === UPLOAD_ERR_OK) {
-            $file = [
-                'name' => $_FILES['images']['name'][$i],
-                'type' => $_FILES['images']['type'][$i],
-                'tmp_name' => $_FILES['images']['tmp_name'][$i],
-                'error' => $_FILES['images']['error'][$i],
-                'size' => $_FILES['images']['size'][$i]
-            ];
+    if ($remainingSpots <= 0) {
+        $error = "Gallery limit reached. Maximum " . MAX_IMAGES . " images allowed.";
+    } else {
+        $uploadedCount = 0;
+        $failedCount = 0;
+        $limitReached = false;
+        
+        $totalFiles = count($_FILES['images']['name']);
+        
+        for ($i = 0; $i < $totalFiles; $i++) {
+            if ($uploadedCount >= $remainingSpots) {
+                $limitReached = true;
+                break;
+            }
             
-            $uploadResult = uploadImage($file, '../public/images/uploads/');
-            
-            if ($uploadResult['success']) {
-                $data = ['image_path' => $uploadResult['filename']];
-                if (create($pdo, 'gallery', $data)) {
-                    $uploadedCount++;
+            if ($_FILES['images']['error'][$i] === UPLOAD_ERR_OK) {
+                $file = [
+                    'name' => $_FILES['images']['name'][$i],
+                    'type' => $_FILES['images']['type'][$i],
+                    'tmp_name' => $_FILES['images']['tmp_name'][$i],
+                    'error' => $_FILES['images']['error'][$i],
+                    'size' => $_FILES['images']['size'][$i]
+                ];
+                
+                // NEW: Use image processor for automatic optimization
+                $filename = $imageProcessor->processUpload($file);
+                
+                if ($filename !== false) {
+                    $data = ['image_path' => $filename];
+                    if (create($pdo, 'gallery', $data)) {
+                        $uploadedCount++;
+                    } else {
+                        $imageProcessor->deleteImage($filename);
+                        $failedCount++;
+                    }
                 } else {
-                    deleteImage($uploadResult['filename']);
                     $failedCount++;
                 }
-            } else {
-                $failedCount++;
             }
         }
-    }
-    
-    if ($uploadedCount > 0) {
-        $success = "$uploadedCount image(s) uploaded successfully";
-    }
-    if ($failedCount > 0) {
-        $error = "$failedCount image(s) failed to upload";
+        
+        if ($uploadedCount > 0) {
+            $success = "$uploadedCount image(s) uploaded and optimized successfully! (Resized + thumbnails created)";
+            cleanupUploadsFolder($pdo);
+        }
+        if ($limitReached) {
+            $error = "Some images were not uploaded because the " . MAX_IMAGES . " image limit was reached.";
+        } elseif ($failedCount > 0) {
+            $error .= " $failedCount image(s) failed to upload.";
+        }
     }
 }
 
@@ -97,241 +131,189 @@ $totalImages = countRecords($pdo, 'gallery');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fc0404">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Manage Gallery</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .navbar {
-            background: #333;
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar h1 { font-size: 24px; }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 15px;
-            background: #667eea;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .stats {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .stats h3 { color: #667eea; font-size: 32px; }
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .upload-section {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #eee;
-        }
-        .upload-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px dashed #667eea;
-            border-radius: 5px;
-            background: #f8f9ff;
-        }
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #5568d3;
-        }
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-danger:hover {
-            background: #c82333;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .gallery-item {
-            position: relative;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-        .gallery-item-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            padding: 15px;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover .gallery-item-overlay {
-            transform: translateY(0);
-        }
-        .gallery-item-id {
-            color: white;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-        .no-data {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-            background: white;
-            border-radius: 10px;
-        }
-        .no-data h3 {
-            margin-bottom: 10px;
-            color: #999;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/manage_gallery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-        <h1>Manage Gallery</h1>
-        <div>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
+    <?php include 'includes/navbar.php'; ?>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Manage Gallery</h1>
+            <div class="user-info">
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+            </div>
+        </div>
+        
+        <div class="content-wrapper">
+            <!-- Alerts -->
+            <?php if ($success): ?>
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <?php echo htmlspecialchars($success); ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($error): ?>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Statistics -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><?php echo $totalImages; ?> / <?php echo MAX_IMAGES; ?></h3>
+                        <p>Total Images in Gallery</p>
+                    </div>
+                </div>
+
+                <?php if ($totalImages >= MAX_IMAGES): ?>
+                <div class="stat-card warning">
+                    <div class="stat-icon" style="color: #ff9800;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Limit Reached</h3>
+                        <p>You must delete an image to upload a new one.</p>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Upload Forms -->
+            <div class="upload-container">
+                <div class="upload-section">
+                    <h2><i class="fas fa-upload"></i> Upload Single Image</h2>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="image">Select Image</label>
+                            <input type="file" id="image" name="image" accept="image/jpeg,image/jpg,image/png,image/gif" required>
+                        </div>
+                        <button type="submit" name="upload_image" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
+                            <i class="fas fa-cloud-upload-alt"></i> Upload & Optimize Image
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="upload-section">
+                    <h2><i class="fas fa-images"></i> Upload Multiple Images</h2>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="images">Select Multiple Images</label>
+                            <input type="file" id="images" name="images[]" accept="image/jpeg,image/jpg,image/png,image/gif" multiple required>
+                            <p class="helper-text">
+                                <i class="fas fa-info-circle"></i>
+                                Hold Ctrl (Cmd on Mac) to select multiple images
+                            </p>
+                        </div>
+                        <button type="submit" name="upload_multiple" class="btn btn-primary" <?php echo ($totalImages >= MAX_IMAGES) ? 'disabled' : ''; ?>>
+                            <i class="fas fa-cloud-upload-alt"></i> Upload & Optimize Multiple Images
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Gallery Section -->
+            <div class="gallery-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-th"></i> Gallery Images</h2>
+                    <p class="text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        Showing optimized thumbnails (full images load on website when clicked)
+                    </p>
+                </div>
+                
+                <?php if (count($images) > 0): ?>
+                    <div class="gallery-grid">
+                        <?php foreach ($images as $img): ?>
+                            <div class="gallery-item">
+                                <?php 
+                                $ext = strtolower(pathinfo($img['image_path'], PATHINFO_EXTENSION));
+                                // Check if thumbnail exists, otherwise use original
+                                $thumbPath = '../images/uploads/thumbnails/' . $img['image_path'];
+                                $imagePath = file_exists($thumbPath) ? $thumbPath : '../images/uploads/' . $img['image_path'];
+                                
+                                if ($ext === 'webm'): 
+                                ?>
+                                    <video src="<?php echo htmlspecialchars($imagePath); ?>" 
+                                           class="gallery-preview-video" autoplay loop muted playsinline
+                                           style="width: 100%; height: 100%; object-fit: cover;">
+                                    </video>
+                                <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars($imagePath); ?>" 
+                                         alt="Gallery Image"
+                                         loading="lazy">
+                                <?php endif; ?>
+                                <div class="gallery-overlay">
+                                    <div class="image-id">
+                                        <i class="fas fa-hashtag"></i>
+                                        <?php echo $img['id']; ?>
+                                    </div>
+                                    <?php if (file_exists($thumbPath)): ?>
+                                        <div class="optimized-badge">
+                                            <i class="fas fa-check-circle"></i> Optimized
+                                        </div>
+                                    <?php endif; ?>
+                                    <a href="?delete=<?php echo $img['id']; ?>" 
+                                       class="btn-delete" 
+                                       onclick="return confirm('Delete this image?')">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="no-data">
+                        <i class="fas fa-images"></i>
+                        <p>No images in gallery yet. Upload your first image above.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
     
-    <div class="container">
-        <?php if ($success): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
-        <?php endif; ?>
+    <style>
+
+        .optimized-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
         
-        <?php if ($error): ?>
-            <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
+        .optimized-badge i {
+            margin-right: 5px;
+        }
         
-        <div class="stats">
-            <h3><?php echo $totalImages; ?></h3>
-            <p>Total Images in Gallery</p>
-        </div>
-        
-        <div class="form-container">
-            <div class="upload-section">
-                <h2>Upload Single Image</h2>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="image">Select Image</label>
-                        <input type="file" id="image" name="image" accept="image/*" required>
-                    </div>
-                    <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
-                </form>
-            </div>
-            
-            <div class="upload-section">
-                <h2>Upload Multiple Images</h2>
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="images">Select Multiple Images</label>
-                        <input type="file" id="images" name="images[]" accept="image/*" multiple required>
-                        <small style="color: #666; display: block; margin-top: 5px;">Hold Ctrl (Cmd on Mac) to select multiple images</small>
-                    </div>
-                    <button type="submit" name="upload_multiple" class="btn btn-primary">Upload Multiple Images</button>
-                </form>
-            </div>
-        </div>
-        
-        <h2 style="margin-bottom: 20px;">Gallery Images</h2>
-        
-        <?php if (count($images) > 0): ?>
-            <div class="gallery-grid">
-                <?php foreach ($images as $img): ?>
-                    <div class="gallery-item">
-                        <img src="../public/images/uploads/<?php echo htmlspecialchars($img['image_path']); ?>" 
-                             alt="Gallery Image">
-                        <div class="gallery-item-overlay">
-                            <div class="gallery-item-id">ID: <?php echo $img['id']; ?></div>
-                            <a href="?delete=<?php echo $img['id']; ?>" 
-                               class="btn btn-danger" 
-                               onclick="return confirm('Delete this image?')"
-                               style="width: 100%; text-align: center; text-decoration: none;">
-                                Delete Image
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else: ?>
-            <div class="no-data">
-                <h3>📸 No Images Yet</h3>
-                <p>Upload your first image using the form above</p>
-            </div>
-        <?php endif; ?>
-    </div>
+        .text-muted {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
 </body>
 </html>

@@ -1,0 +1,325 @@
+/* Dashboard specific styles */
+
+/* Statistics Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: var(--dark-secondary);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.stat-icon.messages {
+    background: rgba(252, 4, 4, 0.2);
+    color: var(--primary-red);
+}
+
+.stat-icon.reviews {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.stat-icon.gallery {
+    background: rgba(0, 123, 255, 0.2);
+    color: #007bff;
+}
+
+.stat-info h2 {
+    font-size: 36px;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.stat-info p {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* Messages Section */
+.messages-section {
+    background: var(--dark-secondary);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(252, 4, 4, 0.3);
+}
+
+.section-header h2 {
+    font-size: 24px;
+    color: var(--white);
+}
+
+.badge {
+    background: var(--primary-red);
+    color: var(--white);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message-item {
+    background: var(--dark-bg);
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 4px solid var(--primary-red);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.message-item:hover {
+    box-shadow: 0 4px 15px rgba(252, 4, 4, 0.2);
+    transform: scale(1.01);
+    z-index: 2;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.sender-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sender-info i {
+    font-size: 24px;
+    color: var(--primary-red);
+}
+
+.sender-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.message-id {
+    background: rgba(252, 4, 4, 0.2);
+    color: var(--primary-red);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.message-details {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Increased gap */
+    color: var(--gray);
+    font-size: 14px;
+    position: relative;
+    padding: 8px 10px;
+    /* clickable area padding */
+    border-radius: 6px;
+    transition: background-color 0.2s, transform 0.1s;
+    cursor: pointer;
+    /* Ensure pointer is always shown if clickable */
+}
+
+.detail-item:active {
+    transform: scale(0.98);
+}
+
+.detail-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Copy Icon Styles */
+.copy-icon {
+    font-size: 14px !important;
+    color: var(--gray) !important;
+    opacity: 0.5;
+    /* Always slightly visible */
+    transition: opacity 0.2s, color 0.2s;
+    margin-left: 10px;
+}
+
+.detail-item:hover .copy-icon {
+    opacity: 1;
+    color: var(--white) !important;
+}
+
+/* New Styles for Phone and Email */
+.contact-phone .phone-number {
+    color: var(--white);
+    user-select: all;
+    background: rgba(255, 255, 255, 0.05);
+    /* keep background consistent */
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: monospace;
+    transition: border-color 0.2s;
+}
+
+/* Adjust hover state for phone container */
+.contact-phone:hover .phone-number {
+    border-color: var(--primary-red);
+}
+
+.contact-email span {
+    transition: color 0.2s;
+}
+
+.contact-email:hover span {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+.detail-item i:first-child {
+    color: var(--primary-red);
+    font-size: 16px;
+}
+
+.message-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.message-content p {
+    color: var(--white);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.message-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary-red);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-view:hover {
+    background: #d00303;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 4, 4, 0.3);
+}
+
+.no-messages {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.no-messages i {
+    font-size: 64px;
+    color: var(--primary-red);
+    margin-bottom: 20px;
+}
+
+.no-messages p {
+    color: var(--gray);
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Improved mobile layout for message details */
+    .message-details {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .contact-phone,
+    .contact-email {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        /* Increase tap target size for mobile */
+        padding: 12px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+    .contact-phone .phone-number {
+        flex-grow: 1;
+        /* fill space */
+        margin-right: 5px;
+    }
+
+    .contact-email span {
+        flex-grow: 1;
+        word-break: break-all;
+        /* handle long emails */
+        margin-right: 5px;
+    }
+
+    .copy-icon {
+        opacity: 0.8;
+        /* Make it clearly visible on mobile */
+        font-size: 16px !important;
+        padding: 5px;
+    }
+}
